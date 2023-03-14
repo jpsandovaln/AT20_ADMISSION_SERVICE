@@ -7,6 +7,8 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Questions from './Questions.json';
+import FormGroup from '@mui/material/FormGroup';
+import Checkbox from '@mui/material/Checkbox';
 
 const Aptitude = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
@@ -21,14 +23,33 @@ const Aptitude = () => {
   };
 
   const handleSelectAnswer = (event) => {
-    const { name, value } = event.target;
-    setSelectedOptions((prevSelectedOptions) => ({
-      ...prevSelectedOptions,
-      [name]: value,
-    }));
-    console.log(selectedOptions);
+    const { name, value, type, checked } = event.target;
+  
+    if (type === "checkbox") {
+      setSelectedOptions((prevSelectedOptions) => {
+        const prevSelectedValues = prevSelectedOptions[name] || [];
+        let updatedSelectedValues;
+  
+        if (checked) {
+          updatedSelectedValues = [...prevSelectedValues, value];
+        } else {
+          updatedSelectedValues = prevSelectedValues.filter(
+            (selectedValue) => selectedValue !== value
+          );
+        }
+  
+        return {
+          ...prevSelectedOptions,
+          [name]: updatedSelectedValues,
+        };
+      });
+    } else if (type === "radio") {
+      setSelectedOptions((prevSelectedOptions) => ({
+        ...prevSelectedOptions,
+        [name]: value,
+      }));
+    }
   };
-
   const currentQuestion = Questions[currentQuestionIndex];
 
   return (
@@ -39,20 +60,46 @@ const Aptitude = () => {
         {currentQuestion.question}
       </Typography>
       <FormControl component="fieldset">
-        <RadioGroup
-          aria-label="quiz"
-          name={`${currentQuestionIndex}`}
-          value={selectedOptions[`${currentQuestionIndex}`] || ''}
-          onChange={handleSelectAnswer}
-        >
-          {currentQuestion.options.map((option, index) => (
-            <FormControlLabel
-              value={option.value}
-              control={<Radio />}
-              label={option.label}
-            />
-          ))}
-        </RadioGroup>
+        {currentQuestion.type === "radioButton" && (
+          <RadioGroup
+            aria-label="quiz"
+            name={`${currentQuestionIndex}`}
+            value={selectedOptions[`${currentQuestionIndex}`] || ''}
+            onChange={handleSelectAnswer}
+          >
+            {currentQuestion.options.map((option, index) => (
+              <FormControlLabel
+                key={index}
+                value={option.value}
+                control={<Radio />}
+                label={option.label}
+              />
+            ))}
+          </RadioGroup>
+        )}
+        {currentQuestion.type === "checkBox" && (
+          <FormGroup>
+            {currentQuestion.options.map((option, index) => (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={
+                      selectedOptions[`${currentQuestionIndex}`] &&
+                      selectedOptions[`${currentQuestionIndex}`].includes(
+                        option.value
+                      )
+                    }
+                    onChange={handleSelectAnswer}
+                    name={`${currentQuestionIndex}`}
+                    value={option.value}
+                  />
+                }
+                label={option.label}
+              />
+            ))}
+          </FormGroup>
+        )}
       </FormControl>
       <Stack spacing={2} direction="row">
         {currentQuestionIndex > 0 && (
