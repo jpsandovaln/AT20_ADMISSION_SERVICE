@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Topbar from './scenes/global/Topbar';
 import Sidebar from "./scenes/global/Sidebar";
 import Dashborard from "./scenes/dashboard";
+import Aptitude from "./scenes/aptitude";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Topbar/>
               <Routes>
                 <Route path="/" element={<Dashborard />} />
+                <Route path="/aptitude" element={<Aptitude />} />
               </Routes>        
           </main>
         </div>
