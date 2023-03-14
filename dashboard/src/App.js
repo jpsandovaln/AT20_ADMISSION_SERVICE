@@ -5,7 +5,10 @@ import Topbar from './scenes/global/Topbar';
 import Sidebar from "./scenes/global/Sidebar";
 import Dashborard from "./scenes/dashboard";
 import Aptitude from "./scenes/aptitude";
-
+import Concentration from "./scenes/concentration";
+import Logical from "./scenes/logical";
+import Reasoning from "./scenes/reasoning";
+import Spatial from "./scenes/spatial";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -20,6 +23,10 @@ function App() {
               <Routes>
                 <Route path="/" element={<Dashborard />} />
                 <Route path="/aptitude" element={<Aptitude />} />
+                <Route path="/concentration" element={<Concentration />} />
+                <Route path="/logical" element={<Logical />} />
+                <Route path="/reasoning" element={<Reasoning />} />
+                <Route path="/spatial" element={<Spatial />} />
               </Routes>        
           </main>
         </div>

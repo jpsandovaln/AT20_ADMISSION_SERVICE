@@ -10,7 +10,7 @@ import Questions from './Questions.json';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
 
-const Aptitude = () => {
+const Reasoning = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
   const [selectedOptions, setSelectedOptions] = React.useState({});
 
@@ -54,7 +54,7 @@ const Aptitude = () => {
 
   return (
     <>
-      <Typography variant="h2" gutterBottom>Aptitude test</Typography>
+      <Typography variant="h2" gutterBottom>Reasoning test</Typography>
       <Typography variant="h3" gutterBottom>Please answer the following question:</Typography>
       <Typography variant="h4" gutterBottom>
         {currentQuestion.question}
@@ -120,4 +120,4 @@ const Aptitude = () => {
   );
 };
 
-export default Aptitude;
+export default Reasoning;
