@@ -1,15 +1,26 @@
-import * as React from 'react';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Questions from './Questions.json';
-import FormGroup from '@mui/material/FormGroup';
-import Checkbox from '@mui/material/Checkbox';
+/*
+@node_command.js Copyright (c) 2023 Jalasoft
+2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+Av. General Inofuentes esquina Calle 20, Edificio Union No 1376, La Paz, Bolivia All rights reserved
+This software is the confidential and proprietary information of
+Jalasoft, Confidential Information "). You shall not
+disclose such Confidential Information and shall use it only in
+accordance with the terms of the license agreement you entered into with Jalasoft
+*/
 
+import * as React from "react";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Questions from "./Questions.json";
+import FormGroup from "@mui/material/FormGroup";
+import Checkbox from "@mui/material/Checkbox";
+
+// builds the logical test page
 const Logical = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
   const [selectedOptions, setSelectedOptions] = React.useState({});
@@ -43,6 +54,8 @@ const Logical = () => {
           [name]: updatedSelectedValues,
         };
       });
+
+    // saves a data when is a radio in the selectedOptions object
     } else if (type === "radio") {
       setSelectedOptions((prevSelectedOptions) => ({
         ...prevSelectedOptions,
@@ -64,7 +77,7 @@ const Logical = () => {
           <RadioGroup
             aria-label="quiz"
             name={`${currentQuestionIndex}`}
-            value={selectedOptions[`${currentQuestionIndex}`] || ''}
+            value={selectedOptions[`${currentQuestionIndex}`] || ""}
             onChange={handleSelectAnswer}
           >
             {currentQuestion.options.map((option, index) => (
