@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Topbar from './scenes/global/Topbar';
 import Sidebar from "./scenes/global/Sidebar";
 import Dashborard from "./scenes/dashboard";
+import NewMeeting from "./scenes/meeting";
 
 
 function App() {
@@ -18,8 +19,9 @@ function App() {
             <Topbar/>
               <Routes>
                 <Route path="/" element={<Dashborard />} />
+                <Route path="/meeting" element={<NewMeeting />} />
               </Routes>        
-          </main>
+          </main> 
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>

@@ -11,6 +11,7 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import BugReportIcon from '@mui/icons-material/BugReport';
+import VideoCallIcon from '@mui/icons-material/VideoCall';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -124,6 +125,22 @@ const Sidebar = () => {
               title="Profile Form"
               to="/form"
               icon={<PersonOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Typography
+              variant="h5"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Meeting
+            </Typography>
+
+            <Item
+              title="New meeting"
+              to="/meeting"
+              icon={<VideoCallIcon />}
               selected={selected}
               setSelected={setSelected}
             />
