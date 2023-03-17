@@ -14,6 +14,8 @@ import { Routes, Route } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashborard from "./scenes/dashboard";
+import NewMeeting from "./scenes/meeting";
+
 import Aptitude from "./scenes/aptitude";
 import Concentration from "./scenes/concentration";
 import Logical from "./scenes/logical";
@@ -32,13 +34,14 @@ function App() {
             <Topbar/>
               <Routes>
                 <Route path="/" element={<Dashborard />} />
+                <Route path="/meeting" element={<NewMeeting />} />
                 <Route path="/aptitude" element={<Aptitude />} />
                 <Route path="/concentration" element={<Concentration />} />
                 <Route path="/logical" element={<Logical />} />
                 <Route path="/reasoning" element={<Reasoning />} />
                 <Route path="/spatial" element={<Spatial />} />
               </Routes>        
-          </main>
+          </main> 
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>

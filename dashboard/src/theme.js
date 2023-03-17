@@ -174,7 +174,7 @@ export const themeSettings = (mode) => {
     },
     typography: {
       fontFamily: ["Ubuntu", "sans-serif"].join(","),
-      fontSize: 14,
+      fontSize: 12,
       h1: {
         fontFamily: ["Ubuntu", "sans-serif"].join(","),
         fontSize: 40,
@@ -189,7 +189,7 @@ export const themeSettings = (mode) => {
       },
       h4: {
         fontFamily: ["Ubuntu", "sans-serif"].join(","),
-        fontSize: 20,
+        fontSize: 16,
       },
       h5: {
         fontFamily: ["Ubuntu", "sans-serif"].join(","),
