@@ -11,6 +11,7 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import BugReportIcon from '@mui/icons-material/BugReport';
+//import initialValues from "../profileform";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -30,11 +31,15 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
+
+
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+
+
 
   return (
     <Box
@@ -102,10 +107,10 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Pepito
+                  pepito
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  Perez
+                 user
                 </Typography>
               </Box>
             </Box>
@@ -120,9 +125,9 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Item
+            <Item    
               title="Profile Form"
-              to="/form"
+              to="/profile-form"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -138,7 +143,7 @@ const Sidebar = () => {
 
             <Item
               title="Informative Interview"
-              to="/interview"
+              to="/informative-interview"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -146,7 +151,7 @@ const Sidebar = () => {
             
             <Item
               title="Psicologic Interview"
-              to="/interview"
+              to="/psicologic-interview"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -154,7 +159,7 @@ const Sidebar = () => {
 
             <Item
               title="English Interview"
-              to="/interview"
+              to="/english-interview"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -169,35 +174,35 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Aptitude Tests"
-              to="/aptitude"
+              to="/aptitude-test"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Reasoning Tests"
-              to="/reasoning"
+              to="/reasoning-test"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Logical Tests"
-              to="/logical"
+              to="/logical-test"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Spatial Tests"
-              to="/spatial"
+              to="/spatial-test"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Concentration Tests"
-              to="/concentration"
+              to="/concentration-test"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
