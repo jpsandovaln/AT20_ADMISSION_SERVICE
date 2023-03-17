@@ -22,51 +22,51 @@ import Checkbox from "@mui/material/Checkbox";
 
 // builds the reasoning test page
 const Reasoning = () => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
-  const [selectedOptions, setSelectedOptions] = React.useState({});
+    const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
+    const [selectedOptions, setSelectedOptions] = React.useState({});
 
-  const handleNextQuestion = () => {
-    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-  };
+    const handleNextQuestion = () => {
+        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    };
 
-  const handlePreviousQuestion = () => {
-    setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
-  };
+    const handlePreviousQuestion = () => {
+        setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
+    };
 
-  const handleSelectAnswer = (event) => {
-    const { name, value, type, checked } = event.target;
-  
-    // saves an array when is a checkbox in the selectedOptions object
-    if (type === "checkbox") {
-      setSelectedOptions((prevSelectedOptions) => {
-        const prevSelectedValues = prevSelectedOptions[name] || [];
-        let updatedSelectedValues;
-  
-        if (checked) {
-          updatedSelectedValues = [...prevSelectedValues, value];
-        } else {
-          updatedSelectedValues = prevSelectedValues.filter(
-            (selectedValue) => selectedValue !== value
-          );
-        }
-  
-        return {
-          ...prevSelectedOptions,
-          [name]: updatedSelectedValues,
-        };
-      });
+    const handleSelectAnswer = (event) => {
+        const { name, value, type, checked } = event.target;
     
-    // saves a data when is a radio in the selectedOptions object
-    } else if (type === "radio") {
-      setSelectedOptions((prevSelectedOptions) => ({
-        ...prevSelectedOptions,
-        [name]: value,
-      }));
-    }
-  };
-  const currentQuestion = Questions[currentQuestionIndex];
+        // saves an array when is a checkbox in the selectedOptions object
+        if (type === "checkbox") {
+        setSelectedOptions((prevSelectedOptions) => {
+            const prevSelectedValues = prevSelectedOptions[name] || [];
+            let updatedSelectedValues;
+    
+            if (checked) {
+                updatedSelectedValues = [...prevSelectedValues, value];
+            } else {
+                updatedSelectedValues = prevSelectedValues.filter(
+                (selectedValue) => selectedValue !== value
+            );
+            }
+    
+            return {
+            ...prevSelectedOptions,
+            [name]: updatedSelectedValues,
+            };
+        });
+        
+        // saves a data when is a radio in the selectedOptions object
+        } else if (type === "radio") {
+        setSelectedOptions((prevSelectedOptions) => ({
+            ...prevSelectedOptions,
+            [name]: value,
+        }));
+        }
+    };
+    const currentQuestion = Questions[currentQuestionIndex];
 
-  return (
+    return (
     <>
       <Typography variant="h2" gutterBottom>Reasoning test</Typography>
       <Typography variant="h3" gutterBottom>Please answer the following question:</Typography>
@@ -75,12 +75,12 @@ const Reasoning = () => {
       </Typography>
       <FormControl component="fieldset">
         {currentQuestion.type === "radioButton" && (
-          <RadioGroup
-            aria-label="quiz"
-            name={`${currentQuestionIndex}`}
-            value={selectedOptions[`${currentQuestionIndex}`] || ""}
-            onChange={handleSelectAnswer}
-          >
+            <RadioGroup
+                aria-label="quiz"
+                name={`${currentQuestionIndex}`}
+                value={selectedOptions[`${currentQuestionIndex}`] || ""}
+                onChange={handleSelectAnswer}
+            >
             {currentQuestion.options.map((option, index) => (
               <FormControlLabel
                 key={index}
@@ -99,9 +99,9 @@ const Reasoning = () => {
                 control={
                   <Checkbox
                     checked={
-                      selectedOptions[`${currentQuestionIndex}`] &&
-                      selectedOptions[`${currentQuestionIndex}`].includes(
-                        option.value
+                        selectedOptions[`${currentQuestionIndex}`] &&
+                        selectedOptions[`${currentQuestionIndex}`].includes(
+                            option.value
                       )
                     }
                     onChange={handleSelectAnswer}
@@ -117,21 +117,21 @@ const Reasoning = () => {
       </FormControl>
       <Stack spacing={2} direction="row">
         {currentQuestionIndex > 0 && (
-          <Button variant="contained" onClick={handlePreviousQuestion}>
-            Previous
-          </Button>
+            <Button variant="contained" onClick={handlePreviousQuestion}>
+                Previous
+            </Button>
         )}
         {currentQuestionIndex < Questions.length - 1 && (
-          <Button variant="contained" onClick={handleNextQuestion}>
-            Next
-          </Button>
+            <Button variant="contained" onClick={handleNextQuestion}>
+                Next
+            </Button>
         )}
         {currentQuestionIndex === Questions.length - 1 && (
-          <Button variant="contained">Submit</Button>
+            <Button variant="contained">Submit</Button>
         )}
       </Stack>
     </>
-  );
+    );
 };
 
 export default Reasoning;
