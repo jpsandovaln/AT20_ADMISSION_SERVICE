@@ -11,7 +11,6 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import BugReportIcon from '@mui/icons-material/BugReport';
-//import initialValues from "../profileform";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -33,7 +32,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 
 
 
-const Sidebar = () => {
+const Sidebar = ({ initialValues }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -107,10 +106,12 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  pepito
+                  {initialValues.firstName}
+                  Pepito
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                 user
+                {initialValues.rol}
+                Student
                 </Typography>
               </Box>
             </Box>

@@ -13,6 +13,7 @@ import ConcentrationTest from "./scenes/test_sector/concentration";
 import LogicalTest from "./scenes/test_sector/logical";
 import ReasoningTest from "./scenes/test_sector/reasoning";
 import SpatialTest from "./scenes/test_sector/spatial";
+import initialValues from "./scenes/profileform";
 
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline/>
         <div className="app">
-          <Sidebar />
+          <Sidebar initialValues={initialValues} />
           <main className="content">
             <Topbar/>
               <Routes>
