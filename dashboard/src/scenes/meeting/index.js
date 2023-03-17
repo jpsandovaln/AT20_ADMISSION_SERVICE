@@ -24,17 +24,17 @@ export default function NewMeeting() {
         <div >
             <h2 style={{textAlign: "center"}}>NEW MEETING</h2>
             {/* <p style={{textAlign: "center"}}></p> */}
-            
+
             <Box
                 component="form"
                 sx={{
-                '& > :not(style)': { m: 1, width: '50ch' },
+                '& > :not(style)': { width: '55ch' },
                 }}
                 noValidate
                 autoComplete="off"
                 textAlign="center"
             >
-                <br></br>Meeting Name: <br></br>
+                Meeting Name<br></br>
                 <TextField 
                 id="outlined-basic" 
                 label="Meeting" 
@@ -45,12 +45,12 @@ export default function NewMeeting() {
             <Box
                 component="form"
                 sx={{
-                '& .MuiTextField-root': { m: 1, width: '50ch' },
+                '& .MuiTextField-root': { width: '55ch' },
                 }}
                 noValidate                
                 textAlign="center"
             >
-                Description (Optional):
+                Description (Optional)
                 <div>
                     <TextField
                     id="outlined-multiline-flexible"
@@ -62,28 +62,26 @@ export default function NewMeeting() {
             </Box>
 
         <h4 style={{textAlign: "center"}}>Schedule</h4>
-
             <Box component="form"
                 sx={{
-                '& .MuiTextField-root': { mx: 40, width: '50ch' },
+                '& .MuiTextField-root': { mb:1, mx: 42, width: '55ch' },
                 }} 
-                justifyContent="center"
                 textAlign="center"       
                 >
-                Date
+                Date                
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['DatePicker']} >
                         <DatePicker label="Select a Date" />
                     </DemoContainer>
                 </LocalizationProvider>                
             </Box>
-            <Stack spacing={2} direction="row"
+            <Stack spacing={3} direction="row"
                 textAlign="center"
-                sx={{'& > :not(style)': { ml: 40,}}}>
+                sx={{'& > :not(style)': { ml: 42,}}}>
                 
                 <Box component="form"
                     sx={{
-                    '& .MuiTextField-root': { width: '24ch' },
+                    '& .MuiTextField-root': { width: '26ch' },
                     }}
                     >
                     Star                    
@@ -96,7 +94,7 @@ export default function NewMeeting() {
 
                 <Box component="form"
                     sx={{
-                    '& .MuiTextField-root': { width: '24ch' },
+                    '& .MuiTextField-root': { width: '26ch' },
                     }}>
                     Final Time                    
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -113,7 +111,7 @@ export default function NewMeeting() {
                     disablePortal
                     id="combo-box-demo"
                     options={timeZone}
-                    sx={{ mt:1, mx:40, width: '50ch' }}
+                    sx={{ mx:42, width: '55ch' }}
                     renderInput={(params) => <TextField {...params} label="Time Zone" />}
                 />
             </Box>
@@ -125,7 +123,7 @@ export default function NewMeeting() {
                     disablePortal
                     id="combo-box-demo"
                     options={host}
-                    sx={{ mt:1, mx:40, width: '50ch' }}
+                    sx={{ mt:1, mx:42, width: '55ch' }}
                     renderInput={(params) => <TextField {...params} label="Select Host" />}
                 />   
             </Box>
@@ -150,8 +148,8 @@ export default function NewMeeting() {
                             {option.name}
                         </li>
                     )}
-                    style={{ width: '50ch' }}
-                    sx={{ mt:1, mx:40, width: '50ch' }}
+                    style={{ width: '55ch' }}
+                    sx={{ mt:1, mx:42, width: '55ch' }}
                     renderInput={(params) => (
                         <TextField {...params} label="Select Guests" placeholder=" " />
                         )}
