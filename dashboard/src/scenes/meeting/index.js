@@ -1,3 +1,13 @@
+/*
+@node_command.js Copyright (c) 2023 Jalasoft
+2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+Av. General Inofuentes esquina Calle 20, Edificio Union No 1376, La Paz, Bolivia All rights reserved
+This software is the confidential and proprietary information of
+Jalasoft, Confidential Information "). You shall not
+disclose such Confidential Information and shall use it only in
+accordance with the terms of the license agreement you entered into with Jalasoft
+*/
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -23,8 +33,7 @@ export default function NewMeeting() {
     return (
         <div >
             <h2 style={{textAlign: "center"}}>NEW MEETING</h2>
-            {/* <p style={{textAlign: "center"}}></p> */}
-
+            
             <Box
                 component="form"
                 sx={{
@@ -61,7 +70,8 @@ export default function NewMeeting() {
                 </div>
             </Box>
 
-        <h4 style={{textAlign: "center"}}>Schedule</h4>
+            <h4 style={{textAlign: "center"}}>Schedule</h4>
+            
             <Box component="form"
                 sx={{
                 '& .MuiTextField-root': { mb:1, mx: 42, width: '55ch' },
@@ -115,7 +125,9 @@ export default function NewMeeting() {
                     renderInput={(params) => <TextField {...params} label="Time Zone" />}
                 />
             </Box>
-        <h4 style={{textAlign: "center"}}>Participants</h4>
+            
+            <h4 style={{textAlign: "center"}}>Participants</h4>
+            
             <Box
             textAlign="center">
                 Host
