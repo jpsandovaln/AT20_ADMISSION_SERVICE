@@ -1,20 +1,30 @@
+/*
+@node_command.js Copyright (c) 2023 Jalasoft
+2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+Av. General Inofuentes esquina Calle 20, Edificio Union No 1376, La Paz, Bolivia All rights reserved
+This software is the confidential and proprietary information of
+Jalasoft, Confidential Information "). You shall not
+disclose such Confidential Information and shall use it only in
+accordance with the terms of the license agreement you entered into with Jalasoft
+*/
+
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
-import Topbar from './scenes/global/Topbar';
+import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashborard from "./scenes/dashboard";
 import Form from "./scenes/profileform";
 import InterviewEnglish from "./scenes/english";
 import InterviewInformative from "./scenes/informative";
 import InterviewPsicologic from "./scenes/psicologic";
-import AptitudeTest from "./scenes/aptitude";
-import ConcentrationTest from "./scenes/concentration";
-import LogicalTest from "./scenes/logical";
-import ReasoningTest from "./scenes/reasoning";
-import SpatialTest from "./scenes/spatial";
 import initialValues from "./scenes/profileform";
-
+import NewMeeting from "./scenes/meeting";
+import Aptitude from "./scenes/aptitude";
+import Concentration from "./scenes/concentration";
+import Logical from "./scenes/logical";
+import Reasoning from "./scenes/reasoning";
+import Spatial from "./scenes/spatial";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -32,13 +42,14 @@ function App() {
                 <Route path="/informative" element={<InterviewInformative />} />
                 <Route path="/psicologic" element={<InterviewPsicologic />} />
                 <Route path="/english" element={<InterviewEnglish />} />
-                <Route path="/aptitude" element={<AptitudeTest />} />
-                <Route path="/reasoning" element={<ReasoningTest />} />
-                <Route path="/logical" element={<LogicalTest />} />
-                <Route path="/spatial" element={<SpatialTest />} />
-                <Route path="/concentration" element={<ConcentrationTest />} />
+                <Route path="/meeting" element={<NewMeeting />} />
+                <Route path="/aptitude" element={<Aptitude />} />
+                <Route path="/concentration" element={<Concentration />} />
+                <Route path="/logical" element={<Logical />} />
+                <Route path="/reasoning" element={<Reasoning />} />
+                <Route path="/spatial" element={<Spatial />} />
               </Routes>        
-          </main>
+          </main> 
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
