@@ -13,6 +13,7 @@ import ConcentrationTest from "./scenes/test_sector/concentration";
 import LogicalTest from "./scenes/test_sector/logical";
 import ReasoningTest from "./scenes/test_sector/reasoning";
 import SpatialTest from "./scenes/test_sector/spatial";
+import { JitsiComponent } from "./scenes/meeting/JistiComponent.jsx";
 
 
 function App() {
@@ -36,7 +37,8 @@ function App() {
                 <Route path="/logical-test" element={<LogicalTest />} />
                 <Route path="/spatial-test" element={<SpatialTest />} />
                 <Route path="/concentration-test" element={<ConcentrationTest />} />
-              </Routes>        
+                <Route path="/meeting" element={<JitsiComponent user={{displayName: 'Pepito', email: 'pepito@gmail.com'}}/>} />
+              </Routes>
           </main>
         </div>
       </ThemeProvider>
