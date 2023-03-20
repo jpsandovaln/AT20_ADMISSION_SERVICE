@@ -32,13 +32,11 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 
 
 
-const Sidebar = ({ initialValues }) => {
+const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-
-
 
   return (
     <Box
@@ -106,12 +104,10 @@ const Sidebar = ({ initialValues }) => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  {initialValues.firstName}
                   Pepito
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                {initialValues.rol}
-                Student
+                  Perez
                 </Typography>
               </Box>
             </Box>
@@ -128,7 +124,7 @@ const Sidebar = ({ initialValues }) => {
 
             <Item    
               title="Profile Form"
-              to="/profile-form"
+              to="/form"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -144,7 +140,7 @@ const Sidebar = ({ initialValues }) => {
 
             <Item
               title="Informative Interview"
-              to="/informative-interview"
+              to="/informative"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -152,7 +148,7 @@ const Sidebar = ({ initialValues }) => {
             
             <Item
               title="Psicologic Interview"
-              to="/psicologic-interview"
+              to="/psicologic"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -160,7 +156,7 @@ const Sidebar = ({ initialValues }) => {
 
             <Item
               title="English Interview"
-              to="/english-interview"
+              to="/english"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -175,35 +171,35 @@ const Sidebar = ({ initialValues }) => {
             </Typography>
             <Item
               title="Aptitude Tests"
-              to="/aptitude-test"
+              to="/aptitude"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Reasoning Tests"
-              to="/reasoning-test"
+              to="/reasoning"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Logical Tests"
-              to="/logical-test"
+              to="/logical"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Spatial Tests"
-              to="/spatial-test"
+              to="/spatial"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Concentration Tests"
-              to="/concentration-test"
+              to="/concentration"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
