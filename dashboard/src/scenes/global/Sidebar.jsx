@@ -22,6 +22,7 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import BugReportIcon from '@mui/icons-material/BugReport';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
@@ -137,6 +138,13 @@ const Sidebar = () => {
                 icon={<PersonOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
+            />
+            <Item
+              title="Add User"
+              to="/"
+              icon={<PersonAddIcon/>}
+              selected={selected}
+              setSelected={setSelected}
             />
 
             <Typography
