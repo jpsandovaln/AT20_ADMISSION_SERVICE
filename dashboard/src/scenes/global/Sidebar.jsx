@@ -42,6 +42,8 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
     );
 };
 
+
+
 const Sidebar = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -174,27 +176,27 @@ const Sidebar = () => {
             </Typography>
 
             <Item
-                title="Informative Interview"
-                to="/interview"
-                icon={<PeopleOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
+              title="Informative Interview"
+              to="/informative"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
             />
             
             <Item
-                title="Psicologic Interview"
-                to="/interview"
-                icon={<PeopleOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
+              title="Psicologic Interview"
+              to="/psicologic"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
             />
 
             <Item
-                title="English Interview"
-                to="/interview"
-                icon={<PeopleOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
+              title="English Interview"
+              to="/english"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
             />
 
             <Typography
