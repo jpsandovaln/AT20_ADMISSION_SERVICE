@@ -14,8 +14,12 @@ import { Routes, Route } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashborard from "./scenes/dashboard";
+import Form from "./scenes/profileform";
+import InterviewEnglish from "./scenes/english";
+import InterviewInformative from "./scenes/informative";
+import InterviewPsicologic from "./scenes/psicologic";
+import initialValues from "./scenes/profileform";
 import NewMeeting from "./scenes/meeting";
-
 import Aptitude from "./scenes/aptitude";
 import Concentration from "./scenes/concentration";
 import Logical from "./scenes/logical";
@@ -29,11 +33,15 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline/>
         <div className="app">
-          <Sidebar />
+          <Sidebar initialValues={initialValues} />
           <main className="content">
             <Topbar/>
               <Routes>
                 <Route path="/" element={<Dashborard />} />
+                <Route path="/form" element={<Form />} />
+                <Route path="/informative" element={<InterviewInformative />} />
+                <Route path="/psicologic" element={<InterviewPsicologic />} />
+                <Route path="/english" element={<InterviewEnglish />} />
                 <Route path="/meeting" element={<NewMeeting />} />
                 <Route path="/aptitude" element={<Aptitude />} />
                 <Route path="/concentration" element={<Concentration />} />
