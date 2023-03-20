@@ -21,6 +21,7 @@ import Concentration from "./scenes/concentration";
 import Logical from "./scenes/logical";
 import Reasoning from "./scenes/reasoning";
 import Spatial from "./scenes/spatial";
+import UserList from "./scenes/newUser";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/logical" element={<Logical />} />
                 <Route path="/reasoning" element={<Reasoning />} />
                 <Route path="/spatial" element={<Spatial />} />
+                <Route path="/newUser" element={<UserList />} />
               </Routes>        
           </main> 
         </div>

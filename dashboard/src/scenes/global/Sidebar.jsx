@@ -141,7 +141,7 @@ const Sidebar = () => {
             />
             <Item
               title="Add User"
-              to="/"
+              to="/newUser"
               icon={<PersonAddIcon/>}
               selected={selected}
               setSelected={setSelected}
