@@ -16,6 +16,7 @@ import Sidebar from "./scenes/global/Sidebar";
 import Dashborard from "./scenes/dashboard";
 import NewMeeting from "./scenes/meeting";
 
+import QuestionnaireForm from "./scenes/questionnaire_form";
 import Aptitude from "./scenes/aptitude";
 import Concentration from "./scenes/concentration";
 import Logical from "./scenes/logical";
@@ -35,6 +36,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Dashborard />} />
                 <Route path="/meeting" element={<NewMeeting />} />
+              <Route path="/questionnaire_form" element={<QuestionnaireForm />} />
                 <Route path="/aptitude" element={<Aptitude />} />
                 <Route path="/concentration" element={<Concentration />} />
                 <Route path="/logical" element={<Logical />} />
