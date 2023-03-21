@@ -14,6 +14,11 @@ import { Routes, Route } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashborard from "./scenes/dashboard";
+import Form from "./scenes/profileform";
+import InterviewEnglish from "./scenes/english";
+import InterviewInformative from "./scenes/informative";
+import InterviewPsicologic from "./scenes/psicologic";
+import initialValues from "./scenes/profileform";
 import NewMeeting from "./scenes/meeting";
 
 import QuestionnaireForm from "./scenes/questionnaire_form";
@@ -22,28 +27,34 @@ import Concentration from "./scenes/concentration";
 import Logical from "./scenes/logical";
 import Reasoning from "./scenes/reasoning";
 import Spatial from "./scenes/spatial";
+import UserList from "./scenes/newUser";
 
 function App() {
   const [theme, colorMode] = useMode();
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <CssBaseline/>
+        <CssBaseline />
         <div className="app">
-          <Sidebar />
+          <Sidebar initialValues={initialValues} />
           <main className="content">
-            <Topbar/>
-              <Routes>
-                <Route path="/" element={<Dashborard />} />
-                <Route path="/meeting" element={<NewMeeting />} />
+            <Topbar />
+            <Routes>
+              <Route path="/" element={<Dashborard />} />
+              <Route path="/form" element={<Form />} />
+              <Route path="/informative" element={<InterviewInformative />} />
+              <Route path="/psicologic" element={<InterviewPsicologic />} />
+              <Route path="/english" element={<InterviewEnglish />} />
+              <Route path="/meeting" element={<NewMeeting />} />
               <Route path="/questionnaire_form" element={<QuestionnaireForm />} />
-                <Route path="/aptitude" element={<Aptitude />} />
-                <Route path="/concentration" element={<Concentration />} />
-                <Route path="/logical" element={<Logical />} />
-                <Route path="/reasoning" element={<Reasoning />} />
-                <Route path="/spatial" element={<Spatial />} />
-              </Routes>        
-          </main> 
+              <Route path="/aptitude" element={<Aptitude />} />
+              <Route path="/concentration" element={<Concentration />} />
+              <Route path="/logical" element={<Logical />} />
+              <Route path="/reasoning" element={<Reasoning />} />
+              <Route path="/spatial" element={<Spatial />} />
+              <Route path="/newUser" element={<UserList />} />
+            </Routes>
+          </main>
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>

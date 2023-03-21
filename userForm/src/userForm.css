@@ -1,0 +1,27 @@
+@import '~semantic-ui-css/semantic.min.css';
+.changeColor {
+  background-color: red;
+}
+.changeMargin{
+  margin: 30px
+}
+input {
+  display: flex;
+  width: 600px;
+  height: 40px;
+  margin: 5px;
+}
+h2 {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: xx-large;
+  align-self: center;
+  margin: 15px;
+}
+label {
+  font-weight: bold;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: large;
+}
+p{
+  color: red;
+}
