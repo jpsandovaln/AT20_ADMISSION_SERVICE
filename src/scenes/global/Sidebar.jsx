@@ -1,3 +1,13 @@
+/*
+@node_command.js Copyright (c) 2023 Jalasoft
+2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+Av. General Inofuentes esquina Calle 20, Edificio Union No 1376, La Paz, Bolivia All rights reserved
+This software is the confidential and proprietary information of
+Jalasoft, Confidential Information "). You shall not
+disclose such Confidential Information and shall use it only in
+accordance with the terms of the license agreement you entered into with Jalasoft
+*/
+
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
@@ -11,53 +21,52 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import BugReportIcon from '@mui/icons-material/BugReport';
-//import initialValues from "../profileform";
+import VideoCallIcon from '@mui/icons-material/VideoCall';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  return (
-    <MenuItem
-      active={selected === title}
-      style={{
-        color: colors.grey[100],
-      }}
-      onClick={() => setSelected(title)}
-      icon={icon}
-    >
-      <Typography>{title}</Typography>
-      <Link to={to} />
-    </MenuItem>
-  );
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    return (
+        <MenuItem
+        active={selected === title}
+        style={{
+            color: colors.grey[100],
+        }}
+        onClick={() => setSelected(title)}
+        icon={icon}
+        >
+        <Typography>{title}</Typography>
+        <Link to={to} />
+        </MenuItem>
+    );
 };
 
 
 
 const Sidebar = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [selected, setSelected] = useState("Dashboard");
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [selected, setSelected] = useState("Dashboard");
 
-
-
-  return (
+    return (
     <Box
       sx={{
         "& .pro-sidebar-inner": {
-          background: `${colors.primary[400]} !important`,
+            background: `${colors.primary[400]} !important`,
         },
         "& .pro-icon-wrapper": {
-          backgroundColor: "transparent !important",
+            backgroundColor: "transparent !important",
         },
         "& .pro-inner-item": {
-          padding: "5px 35px 5px 20px !important",
+            padding: "5px 35px 5px 20px !important",
         },
         "& .pro-inner-item:hover": {
-          color: "#868dfb !important",
+            color: "#868dfb !important",
         },
         "& .pro-menu-item.active": {
-          color: "#6870fa !important",
+            color: "#6870fa !important",
         },
       }}
     >
@@ -68,8 +77,8 @@ const Sidebar = () => {
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
-              margin: "10px 0 20px 0",
-              color: colors.grey[100],
+                margin: "10px 0 20px 0",
+                color: colors.grey[100],
             }}
           >
             {!isCollapsed && (
@@ -80,10 +89,10 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  JALASOFT
+                    JALASOFT
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
-                  <MenuOutlinedIcon />
+                    <MenuOutlinedIcon />
                 </IconButton>
               </Box>
             )}
@@ -93,24 +102,24 @@ const Sidebar = () => {
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
                 <img
-                  alt="profile-user"
-                  width="100px"
-                  height="100px"
-                  src={`../../assets/user.jpg`}
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
+                    alt="profile-user"
+                    width="100px"
+                    height="100px"
+                    src={`../../assets/user.jpg`}
+                    style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
               <Box textAlign="center">
                 <Typography
-                  variant="h2"
-                  color={colors.grey[100]}
-                  fontWeight="bold"
-                  sx={{ m: "10px 0 0 0" }}
+                    variant="h2"
+                    color={colors.grey[100]}
+                    fontWeight="bold"
+                    sx={{ m: "10px 0 0 0" }}
                 >
-                  pepito
+                    Pepito
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                 user
+                    Perez
                 </Typography>
               </Box>
             </Box>
@@ -118,17 +127,41 @@ const Sidebar = () => {
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
-              title="Dashboard"
-              to="/"
-              icon={<HomeOutlinedIcon />}
+                title="Dashboard"
+                to="/"
+                icon={<HomeOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+            />
+
+            <Item
+                title="Profile Form"
+                to="/form"
+                icon={<PersonOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+            />
+            <Item
+              title="Add User"
+              to="/newUser"
+              icon={<PersonAddIcon/>}
               selected={selected}
               setSelected={setSelected}
             />
 
+            <Typography
+              variant="h5"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+
+              Meeting
+            </Typography>
+
             <Item
-              title="Profile Form"
-              to="/profile-form"
-              icon={<PersonOutlinedIcon />}
+              title="New meeting"
+              to="/meeting"
+              icon={<VideoCallIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -139,11 +172,12 @@ const Sidebar = () => {
               sx={{ m: "15px 0 5px 20px" }}
             >
               Interviews
+                Interviews
             </Typography>
 
             <Item
               title="Informative Interview"
-              to="/informative-interview"
+              to="/informative"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -151,7 +185,7 @@ const Sidebar = () => {
 
             <Item
               title="Psicologic Interview"
-              to="/psicologic-interview"
+              to="/psicologic"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -159,16 +193,16 @@ const Sidebar = () => {
 
             <Item
               title="English Interview"
-              to="/english-interview"
+              to="/english"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
 
             <Typography
-              variant="h5"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
+                variant="h5"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
             >
               Meeting
             </Typography>
@@ -188,67 +222,67 @@ const Sidebar = () => {
               Test
             </Typography>
             <Item
-              title="Aptitude Tests"
-              to="/aptitude-test"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+                title="Aptitude Tests"
+                to="/aptitude"
+                icon={<ReceiptOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
             />
             <Item
-              title="Reasoning Tests"
-              to="/reasoning-test"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+                title="Reasoning Tests"
+                to="/reasoning"
+                icon={<ReceiptOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
             />
             <Item
-              title="Logical Tests"
-              to="/logical-test"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+                title="Logical Tests"
+                to="/logical"
+                icon={<ReceiptOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
             />
             <Item
-              title="Spatial Tests"
-              to="/spatial-test"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+                title="Spatial Tests"
+                to="/spatial"
+                icon={<ReceiptOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
             />
             <Item
-              title="Concentration Tests"
-              to="/concentration-test"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+                title="Concentration Tests"
+                to="/concentration"
+                icon={<ReceiptOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
             />
             <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Workshops
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+                >
+                Workshops
             </Typography>
             <Item
-              title="Workshop 1"
-              to="/workshop"
-              icon={<BugReportIcon />}
-              selected={selected}
-              setSelected={setSelected}
+                title="Workshop 1"
+                to="/workshop"
+                icon={<BugReportIcon />}
+                selected={selected}
+                setSelected={setSelected}
             />
             <Item
-              title="Workshop 2"
-              to="/workshop"
-              icon={<BugReportIcon />}
-              selected={selected}
-              setSelected={setSelected}
+                title="Workshop 2"
+                to="/workshop"
+                icon={<BugReportIcon />}
+                selected={selected}
+                setSelected={setSelected}
             />
             <Item
-              title="FAQ Page"
-              to="/faq"
-              icon={<HelpOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+                title="FAQ Page"
+                to="/faq"
+                icon={<HelpOutlineOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
             />
           </Box>
         </Menu>
