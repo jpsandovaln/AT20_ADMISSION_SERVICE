@@ -2,7 +2,7 @@
     {
         "id": 4,
         "Name": "Interview meeting",
-        "Description": "",
+        "Description": "Meeting to provide general information about the AT specialization",
         "Date" : "03/28/2023",
         "Start": "18:00 PM",
         "Final": "19:00 PM",
