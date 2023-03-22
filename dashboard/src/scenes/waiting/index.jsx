@@ -9,31 +9,33 @@ accordance with the terms of the license agreement you entered into with Jalasof
 */
 
 import React from 'react';
-//import Typography from "@mui/material/Typography";
+import CountdownTimer from './CountDownTimer';
 import meeting from "./meeting.json";
 
 const actualMeeting = meeting[0];
-const separator = "/";
+const separator = "-";
+const meetingStartData = actualMeeting.start_time.split(" ");
+const meetingHour = meetingStartData[0];
 let dates = actualMeeting.Date.split(separator);
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const daysInWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-let dateObject = new Date(`${month[parseInt(dates[0])-1]} ${parseInt(dates[1])}, ${parseInt(dates[2])}`);
+let dateObject = new Date(`${month[parseInt(dates[1])-1]} ${dates[2]}, ${dates[0]} ${meetingHour}:00`);
 let dayOfWeek = dateObject.getDay();
+const meetingDateTime = dateObject.getTime();
 
 export default function WaitingRoom() {
     return (
         <div >
             <h4 style={{textAlign: "center"}}>WAITING ROOM</h4>
             <h1 style={{textAlign: "center"}}>Your meeting is schedulet to:</h1>
-            <h1 style={{textAlign: "center"}}>{daysInWeek[dayOfWeek]}, {month[parseInt(dates[0])-1]} {dates[1]}, {actualMeeting.Start}, {dates[2]}</h1>
-            <br></br>
-            <h3 style={{textAlign: "center"}}>Name: {actualMeeting.Name}</h3>
-            <h3 style={{textAlign: "center"}}>Meeting ID: {actualMeeting.id}</h3>
-            <h3 style={{textAlign: "center"}}>Description: {actualMeeting.Description}</h3>
-            <h3 style={{textAlign: "center"}}>Final time: {actualMeeting.Final}</h3>
-            <h3 style={{textAlign: "center"}}>Time zone: {actualMeeting['Time zone']}</h3>
-            <h3 style={{textAlign: "center"}}>Host: {actualMeeting.Host}</h3>
-            <h3 style={{textAlign: "center"}}>Guests: {actualMeeting.Quests.map((data) => (
+            <h1 style={{textAlign: "center"}}>{daysInWeek[dayOfWeek]}, {month[parseInt(dates[1])-1]} {dates[2]} from {actualMeeting.start_time} to {actualMeeting.end_time}, {dates[0]}</h1>
+            <CountdownTimer targetDate={meetingDateTime} />
+            <h3 style={{textAlign: "center"}}>{actualMeeting.meeting_name}</h3>
+            <h3 style={{textAlign: "center"}}>ID: {actualMeeting.id}</h3>
+            <h3 style={{textAlign: "center"}}>Description: {actualMeeting.description}</h3>
+            <h3 style={{textAlign: "center"}}>Time zone: {actualMeeting.time_zone}</h3>
+            <h3 style={{textAlign: "center"}}>Host: {actualMeeting.host}</h3>
+            <h3 style={{textAlign: "center"}}>Guests: {actualMeeting.quests.map((data) => (
                 <li>{data.name}</li>
             ))}</h3>
         </div>
