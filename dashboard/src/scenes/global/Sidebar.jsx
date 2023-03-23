@@ -43,12 +43,27 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 
+const filterItemsbyRole = () =>{
+  const role = "student";
+  let filteredItem =[];
+  if (role === "admin") {
+    filteredItem = ["Dashboard", "Add User", "Meetings", "Interviews", "Tests","Workshops"];
+  }else if (role === "trainer") {
+    filteredItem = ["Dashboard", "Meetings", "Interviews", "Workshops"];
+  }else if (role === "student") {
+    filteredItem = ["Dashboard", "Profile form", "Interviews", "Tests", "Workshops"];
+  }
+  return filteredItem;
 
-const Sidebar = () => {
+};
+
+const Sidebar = ({role}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [selected, setSelected] = useState("Dashboard");
+    const filteredItem = filterItemsbyRole(role);
+
 
     return (
     <Box
@@ -70,6 +85,7 @@ const Sidebar = () => {
         },
       }}
     >
+
       <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
@@ -116,16 +132,17 @@ const Sidebar = () => {
                     fontWeight="bold"
                     sx={{ m: "10px 0 0 0" }}
                 >
-                    Pepito
+                    Pepito Perez
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                    Perez
+                    Admin
                 </Typography>
               </Box>
             </Box>
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          {filteredItem.includes("Dashboard") && (
             <Item
                 title="Dashboard"
                 to="/"
@@ -133,7 +150,9 @@ const Sidebar = () => {
                 selected={selected}
                 setSelected={setSelected}
             />
+          )}
 
+          {filteredItem.includes("Profile form") && (
             <Item
                 title="Profile Form"
                 to="/form"
@@ -141,6 +160,9 @@ const Sidebar = () => {
                 selected={selected}
                 setSelected={setSelected}
             />
+          )}
+
+          {filteredItem.includes("Add User") && (
             <Item
               title="Add User"
               to="/newUser"
@@ -148,7 +170,10 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+          )}
 
+          {filteredItem.includes("Meetings") && (
+            <>
             <Typography
               variant="h5"
               color={colors.grey[300]}
@@ -165,15 +190,18 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
+            </>
+          )}
+          {filteredItem.includes("Interviews") && (
+            <>
             <Typography
               variant="h5"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
               Interviews
-                Interviews
             </Typography>
+
 
             <Item
               title="Informative Interview"
@@ -182,7 +210,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            
+
             <Item
               title="Psicologic Interview"
               to="/psicologic"
@@ -198,49 +226,59 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            </>
 
+          )}
+
+          {filteredItem.includes("Tests") && (
+           <>
             <Typography
                 variant="h5"
                 color={colors.grey[300]}
                 sx={{ m: "15px 0 5px 20px" }}
             >
-              Test
+              Tests
             </Typography>
             <Item
-                title="Aptitude Tests"
+                title="Aptitude Test"
                 to="/aptitude"
                 icon={<ReceiptOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
             />
             <Item
-                title="Reasoning Tests"
+                title="Reasoning Test"
                 to="/reasoning"
                 icon={<ReceiptOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
             />
             <Item
-                title="Logical Tests"
+                title="Logical Test"
                 to="/logical"
                 icon={<ReceiptOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
             />
             <Item
-                title="Spatial Tests"
+                title="Spatial Test"
                 to="/spatial"
                 icon={<ReceiptOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
             />
             <Item
-                title="Concentration Tests"
+                title="Concentration Test"
                 to="/concentration"
                 icon={<ReceiptOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
             />
+           </>
+          )}
+
+          {filteredItem.includes("Workshops") && (
+            <>
             <Typography
                 variant="h6"
                 color={colors.grey[300]}
@@ -262,6 +300,8 @@ const Sidebar = () => {
                 selected={selected}
                 setSelected={setSelected}
             />
+          </>
+          )}
             <Item
                 title="FAQ Page"
                 to="/faq"
