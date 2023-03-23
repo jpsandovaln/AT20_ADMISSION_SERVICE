@@ -1,28 +1,36 @@
 /*
-* @index.jsx Copyright(c) 2023 Jalasoft
-* 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
-* Av.General Inofuentes esquina Calle20, Edificio Union No1376, La Paz, Bolivia
-* All rights reserved
-* This software is the confidential and proprietary information of
-* Jalasoft,ConfidentialInformation"). You shall not
-* disclose such Confidential Information and shall use it only in
-* accordance with the terms of the license agreement you entered into
-* with Jalasoft
-*/
+ * @index.jsx Copyright(c) 2023 Jalasoft
+ * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+ * Av.General Inofuentes esquina Calle20, Edificio Union No1376, La Paz, Bolivia
+ * All rights reserved
+ * This software is the confidential and proprietary information of
+ * Jalasoft,ConfidentialInformation"). You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Jalasoft
+ */
 
 import React from 'react';
 import CountdownTimer from './CountDownTimer';
 import meeting from "./meeting.json";
 
+// Getting the first element of the meeting.json file
 const actualMeeting = meeting[0];
-const separator = "-";
+// Split the start time of the meeting into an array of strings.
 const meetingStartData = actualMeeting.start_time.split(" ");
 const meetingHour = meetingStartData[0];
+// Split the date into an array of strings with an specific separator.
+const separator = "-";
 let dates = actualMeeting.Date.split(separator);
+// An array of months.
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+//An array of days of the week.
 const daysInWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+// Creating a new date object with the date and time of the meeting.
 let dateObject = new Date(`${month[parseInt(dates[1])-1]} ${dates[2]}, ${dates[0]} ${meetingHour}:00`);
+// Getting the day of the week in the meeting date.
 let dayOfWeek = dateObject.getDay();
+// Getting the time in milliseconds of the meeting date.
 const meetingDateTime = dateObject.getTime();
 
 export default function WaitingRoom() {
