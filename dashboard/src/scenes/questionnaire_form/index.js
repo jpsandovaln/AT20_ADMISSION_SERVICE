@@ -22,18 +22,9 @@ const checkoutSchema = yup.object().shape({
 
 export default function newQuestionnaireForm() {
     const handleFormSubmit = (values, { resetForm }) => {
-        //resetForm();
-        //e.preventDefault();here you send the values to an API
-        console.log(values);
         let question = JSON.stringify(values)
-        console.log(question);
-        // fetch('http://localhost:3000/', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: question,
-        // });
+        //Here send the question to Backend 
+        resetForm();
     };
     return (
         <>
