@@ -5,8 +5,7 @@ import useCountDown from './useCountDown';
 const ExpiredNotice = () => {
   return (
     <div className="expired-notice">
-      <span>Expired!!!</span>
-      <p>Please select a future date and time.</p>
+      <span>Meeting Time</span>
     </div>
   );
 };
@@ -14,20 +13,13 @@ const ExpiredNotice = () => {
 const ShowCounter = ({ days, hours, minutes, seconds }) => {
   return (
     <div className="show-counter">
-      <a
-        className="countdown-link"
-        href="https://tapasadhikary.com"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <DateTimeDisplay isDanger={days <= 3} type="Days" value={days} />
-        <p>:</p>
-        <DateTimeDisplay isDanger={false} type="Hours" value={hours} />
-        <p>:</p>
-        <DateTimeDisplay isDanger={false} type="Mins" value={minutes} />
-        <p>:</p>
-        <DateTimeDisplay isDanger={false} type="Seconds" value={seconds} />
-      </a>
+      <DateTimeDisplay type="Days" value={days} />
+      <p>:</p>
+      <DateTimeDisplay type="Hours" value={hours} />
+      <p>:</p>
+      <DateTimeDisplay type="Mins" value={minutes} />
+      <p>:</p>
+      <DateTimeDisplay type="Seconds" value={seconds} />
     </div>
   );
 };

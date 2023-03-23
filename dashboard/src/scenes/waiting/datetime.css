@@ -39,7 +39,7 @@
     padding: 0.5rem;
   }
 
-  .show-counter .countdown-link {
+  .show-counter {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -64,10 +64,6 @@
     flex-direction: column;
   }
 
-  .show-counter .countdown.danger {
-    color: #ff0000;
-  }
-
   .show-counter .countdown > p {
     margin: 0;
   }
@@ -82,9 +78,5 @@
     .show-counter .countdown > span {
       font-size: 1rem;
       line-height: 1rem;
-    }
-
-    .show-counter .countdown-link {
-      font-size: 1.5rem;
     }
   }

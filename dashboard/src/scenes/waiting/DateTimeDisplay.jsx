@@ -1,6 +1,6 @@
-const DateTimeDisplay = ({ value, type, isDanger }) => {
+const DateTimeDisplay = ({ value, type}) => {
     return (
-      <div className={isDanger ? 'countdown danger' : 'countdown'}>
+      <div className='countdown'>
         <p>{value}</p>
         <span>{type}</span>
       </div>
