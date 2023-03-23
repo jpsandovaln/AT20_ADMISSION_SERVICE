@@ -15,6 +15,12 @@ import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashborard from "./scenes/dashboard";
 import Form from "./scenes/profileform";
+import InterviewEnglish from "./scenes/interview/english";
+import InterviewInformative from "./scenes/interview/informative";
+import InterviewPsicologic from "./scenes/interview/psicologic";
+
+import { JitsiComponent } from "./scenes/meeting/JistiComponent.jsx";
+
 import InterviewEnglish from "./scenes/english";
 import InterviewInformative from "./scenes/informative";
 import InterviewPsicologic from "./scenes/psicologic";
@@ -36,9 +42,7 @@ function App() {
         <div className="app">
           <Sidebar initialValues={initialValues} />
           <main className="content">
-            <Topbar/>
               <Routes>
-                <Route path="/" element={<Dashborard />} />
                 <Route path="/form" element={<Form />} />
                 <Route path="/informative" element={<InterviewInformative />} />
                 <Route path="/psicologic" element={<InterviewPsicologic />} />
@@ -50,8 +54,9 @@ function App() {
                 <Route path="/reasoning" element={<Reasoning />} />
                 <Route path="/spatial" element={<Spatial />} />
                 <Route path="/newUser" element={<UserList />} />
-              </Routes>        
-          </main> 
+                <Route path="/meeting" element={<JitsiComponent user={{displayName: 'Pepito', email: 'pepito@gmail.com'}}/>} />
+              </Routes>
+          </main>
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
