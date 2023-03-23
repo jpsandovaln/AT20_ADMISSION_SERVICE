@@ -7,6 +7,7 @@ import * as yup from "yup";
 const initialValues = {
     test: '',
     question: '',
+    type: '',
     answer1: '',
     answer2: '',
     answer3: '',
@@ -21,15 +22,23 @@ const checkoutSchema = yup.object().shape({
 
 export default function newQuestionnaireForm() {
     const handleFormSubmit = (values, { resetForm }) => {
-        resetForm();
+        //resetForm();
         //e.preventDefault();here you send the values to an API
         console.log(values);
-        console.log('the bottom works');
+        let question = JSON.stringify(values)
+        console.log(question);
+        // fetch('http://localhost:3000/', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: question,
+        // });
     };
     return (
         <>
             <Box m="20px">
-                <Typography variant="h2" gutterBottom align="center">Questionnaire Form</Typography>
+                <Typography variant="h3" gutterBottom align="center">Questionnaire Form</Typography>
                 <Formik onSubmit={handleFormSubmit}
                     initialValues={initialValues}
                     validationSchema={checkoutSchema}
@@ -54,7 +63,7 @@ export default function newQuestionnaireForm() {
                                     type="text"
                                     label="Type of Test"
                                     name="test"
-                                    value={values.question}
+                                    value={values.test}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     error={!!touched.test && !!errors.test}
@@ -75,14 +84,8 @@ export default function newQuestionnaireForm() {
                                     sx={{ gridColumn: "span 4" }}
                                 />
                                 <FormControl>
-                                    <InputLabel id="type-of-question">Type of Question</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        //value={value.Select}
-                                        label="Age"
-                                        onChange={handleChange}
-                                    >
+                                    <InputLabel>Type of Question</InputLabel>
+                                    <Select name="type" value={values.type} onChange={handleChange}>
                                         <MenuItem value='checkBox'>CheckBox</MenuItem>
                                         <MenuItem value='radioButton'>RadioButton</MenuItem>
                                     </Select>
@@ -93,7 +96,7 @@ export default function newQuestionnaireForm() {
                                     type="text"
                                     label="Answer"
                                     name="answer1"
-                                    value={values.question}
+                                    value={values.answer1}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     error={!!touched.answer1 && !!errors.answer1}
@@ -106,7 +109,7 @@ export default function newQuestionnaireForm() {
                                     type="text"
                                     label="Answer"
                                     name="answer2"
-                                    value={values.answer}
+                                    value={values.answer2}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     error={!!touched.answer2 && !!errors.answer2}
@@ -119,7 +122,7 @@ export default function newQuestionnaireForm() {
                                     type="text"
                                     label="Answer"
                                     name="answer3"
-                                    value={values.answer}
+                                    value={values.answer3}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     error={!!touched.answer3 && !!errors.answer3}
@@ -129,7 +132,7 @@ export default function newQuestionnaireForm() {
                             </Box>
                             <Box display="flex" justifyContent="end" mt="20px">
                                 <Button type="submit" color="secondary" variant="contained">
-                                    Send Questions
+                                    Send Question
                                 </Button>
                             </Box>
                         </form>
