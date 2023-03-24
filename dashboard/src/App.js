@@ -15,11 +15,13 @@ import { Routes, Route } from 'react-router-dom';
 import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
 import Dashborard from './scenes/dashboard';
-import { Form, initialValues } from './scenes/profileform';
+// import Form from './scenes/profileform';
+import { initialValues, Form } from './scenes/profileform';
 import InterviewEnglish from './scenes/english';
 import InterviewInformative from './scenes/informative';
 import InterviewPsicologic from './scenes/psicologic';
 import NewMeeting from './scenes/meeting';
+import QuestionnaireForm from './scenes/questionnaire_form';
 import Aptitude from './scenes/aptitude';
 import Concentration from './scenes/concentration';
 import Logical from './scenes/logical';
@@ -32,11 +34,11 @@ function App () {
     return (
         <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
-                <CssBaseline/>
+                <CssBaseline />
                 <div className="app">
                     <Sidebar initialValues={initialValues} />
                     <main className="content">
-                        <Topbar/>
+                        <Topbar />
                         <Routes>
                             <Route path="/" element={<Dashborard />} />
                             <Route path="/form" element={<Form />} />
@@ -44,6 +46,7 @@ function App () {
                             <Route path="/psicologic" element={<InterviewPsicologic />} />
                             <Route path="/english" element={<InterviewEnglish />} />
                             <Route path="/meeting" element={<NewMeeting />} />
+                            <Route path="/questionnaire_form" element={<QuestionnaireForm />} />
                             <Route path="/aptitude" element={<Aptitude />} />
                             <Route path="/concentration" element={<Concentration />} />
                             <Route path="/logical" element={<Logical />} />

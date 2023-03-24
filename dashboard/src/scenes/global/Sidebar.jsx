@@ -11,7 +11,7 @@ accordance with the terms of the license agreement you entered into with Jalasof
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -22,6 +22,7 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import BugReportIcon from '@mui/icons-material/BugReport';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -197,6 +198,21 @@ const Sidebar = () => {
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
+            />
+
+            <Typography
+                variant="h5"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+            >
+              Create Questionnaire
+            </Typography>
+            <Item
+                title="New Questionnaire"
+                to="/questionnaire_form"
+                icon={<FormatListBulletedIcon/>}
+                selected={selected}
+                setSelected={setSelected}
             />
 
             <Typography
