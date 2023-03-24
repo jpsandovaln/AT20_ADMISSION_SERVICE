@@ -29,119 +29,119 @@ import guests from './guests';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function NewMeeting() {
+export default function NewMeeting () {
     return (
         <div >
-            <h2 style={{textAlign: "center"}}>NEW MEETING</h2>
-            
+            <h2 style={{ textAlign: 'center' }}>NEW MEETING</h2>
+
             <Box
                 component="form"
                 sx={{
-                '& > :not(style)': { width: '55ch' },
+                    '& > :not(style)': { width: '55ch' }
                 }}
                 noValidate
                 autoComplete="off"
                 textAlign="center"
             >
                 Meeting Name<br></br>
-                <TextField 
-                id="outlined-basic" 
-                label="Meeting" 
-                variant="outlined" 
+                <TextField
+                    id="outlined-basic"
+                    label="Meeting"
+                    variant="outlined"
                 />
             </Box>
 
             <Box
                 component="form"
                 sx={{
-                '& .MuiTextField-root': { width: '55ch' },
+                    '& .MuiTextField-root': { width: '55ch' }
                 }}
-                noValidate                
+                noValidate
                 textAlign="center"
             >
                 Description (Optional)
                 <div>
                     <TextField
-                    id="outlined-multiline-flexible"
-                    label="Description"
-                    multiline
-                    maxRows={4}
+                        id="outlined-multiline-flexible"
+                        label="Description"
+                        multiline
+                        maxRows={4}
                     />
                 </div>
             </Box>
 
-            <h4 style={{textAlign: "center"}}>Schedule</h4>
-            
+            <h4 style={{ textAlign: 'center' }}>Schedule</h4>
+
             <Box component="form"
                 sx={{
-                '& .MuiTextField-root': { mb:1, mx: 42, width: '55ch' },
-                }} 
-                textAlign="center"       
-                >
-                Date                
+                    '& .MuiTextField-root': { mb: 1, mx: 42, width: '55ch' }
+                }}
+                textAlign="center"
+            >
+                Date
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['DatePicker']} >
                         <DatePicker label="Select a Date" />
                     </DemoContainer>
-                </LocalizationProvider>                
+                </LocalizationProvider>
             </Box>
             <Stack spacing={3} direction="row"
                 textAlign="center"
-                sx={{'& > :not(style)': { ml: 42,}}}>
-                
+                sx={{ '& > :not(style)': { ml: 42 } }}>
+
                 <Box component="form"
                     sx={{
-                    '& .MuiTextField-root': { width: '26ch' },
+                        '& .MuiTextField-root': { width: '26ch' }
                     }}
-                    >
-                    Star                    
+                >
+                    Star
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer components={['TimePicker']}>
                             <TimePicker label="Star time" />
                         </DemoContainer>
-                    </LocalizationProvider>            
+                    </LocalizationProvider>
                 </Box>
 
                 <Box component="form"
                     sx={{
-                    '& .MuiTextField-root': { width: '26ch' },
+                        '& .MuiTextField-root': { width: '26ch' }
                     }}>
-                    Final Time                    
+                    Final Time
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer components={['TimePicker']}>
                             <TimePicker label="End time" />
                         </DemoContainer>
-                    </LocalizationProvider>            
+                    </LocalizationProvider>
                 </Box>
             </Stack>
             <Box
-            textAlign="center">
+                textAlign="center">
                 Time Zone
                 <Autocomplete
                     disablePortal
                     id="combo-box-demo"
                     options={timeZone}
-                    sx={{ mx:42, width: '55ch' }}
+                    sx={{ mx: 42, width: '55ch' }}
                     renderInput={(params) => <TextField {...params} label="Time Zone" />}
                 />
             </Box>
-            
-            <h4 style={{textAlign: "center"}}>Participants</h4>
-            
+
+            <h4 style={{ textAlign: 'center' }}>Participants</h4>
+
             <Box
-            textAlign="center">
+                textAlign="center">
                 Host
                 <Autocomplete
                     disablePortal
                     id="combo-box-demo"
                     options={host}
-                    sx={{ mt:1, mx:42, width: '55ch' }}
+                    sx={{ mt: 1, mx: 42, width: '55ch' }}
                     renderInput={(params) => <TextField {...params} label="Select Host" />}
-                />   
+                />
             </Box>
 
             <Box
-            textAlign="center">
+                textAlign="center">
                 Guests
                 <Autocomplete
                     multiple
@@ -161,25 +161,25 @@ export default function NewMeeting() {
                         </li>
                     )}
                     style={{ width: '55ch' }}
-                    sx={{ mt:1, mx:42, width: '55ch' }}
+                    sx={{ mt: 1, mx: 42, width: '55ch' }}
                     renderInput={(params) => (
                         <TextField {...params} label="Select Guests" placeholder=" " />
-                        )}
+                    )}
                 />
             </Box>
             <Box
-            textAlign="center"
+                textAlign="center"
             >
                 <br></br>
                 <Stack spacing={2} direction="row"
-                textAlign="center"
-                sx={{'& > :not(style)': { ml: 75,}}}>
+                    textAlign="center"
+                    sx={{ '& > :not(style)': { ml: 75 } }}>
                     <Button variant="contained" color='secondary' href="#outlined-buttons">Save</Button>
                     <Button variant="contained" color='primary'>Cancel</Button>
                 </Stack>
                 <br></br>
-                Organized by: Pepito Perez<br></br><br></br>                
+                Organized by: Pepito Perez<br></br><br></br>
             </Box>
         </div>
     );
-  }
+}

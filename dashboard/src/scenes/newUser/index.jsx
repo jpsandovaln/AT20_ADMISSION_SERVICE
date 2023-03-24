@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createUser, getUsers, updateUserById, deleteUserById } from "/home/fundalap-nh35/Videos/AT20_ADMISSION_SERVICE/dashboard/src/apis/userService.js";
+import { createUser, getUsers, updateUserById, deleteUserById } from "../../apis/userService.js";
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
