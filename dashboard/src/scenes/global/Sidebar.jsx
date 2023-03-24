@@ -182,7 +182,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
+            
             <Item
               title="Psicologic Interview"
               to="/psicologic"
@@ -203,21 +203,6 @@ const Sidebar = () => {
                 variant="h5"
                 color={colors.grey[300]}
                 sx={{ m: "15px 0 5px 20px" }}
-            >
-              Meeting
-            </Typography>
-            <Item
-              title="Start Meeting"
-              to="/meeting"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Typography
-              variant="h5"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
             >
               Test
             </Typography>
