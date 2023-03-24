@@ -25,7 +25,7 @@ const useCountDown = (targetDate) => {
 
     // A function that is called every time the component is rendered.
     useEffect(() => {
-        //Sets an interval to update the countDown state every second.
+        // Sets an interval to update the countDown state every second.
         const interval = setInterval(() => {
             setCountDown(countDownDate - new Date().getTime());
         }, 1000);
@@ -42,14 +42,13 @@ const useCountDown = (targetDate) => {
  * @returns {[number,number,number,number]} The array of numbers.
  */
 const getReturnValues = (countDown) => {
-
     // Calculate the number of days left until the target date.
     const days = Math.floor(countDown / (1000 * 60 * 60 * 24));
-    //Calculate the number of hours left until the target date.
+    // Calculate the number of hours left until the target date.
     const hours = Math.floor((countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    //Calculate the number of minutes left until the target date.
+    // Calculate the number of minutes left until the target date.
     const minutes = Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60));
-    //Calculate the number of seconds left until the target date.
+    // Calculate the number of seconds left until the target date.
     const seconds = Math.floor((countDown % (1000 * 60)) / 1000);
 
     return [days, hours, minutes, seconds];
