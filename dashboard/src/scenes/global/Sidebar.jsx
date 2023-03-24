@@ -42,7 +42,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
     );
 };
 
-
+// This function verifies the rol and filter the items to show on the sidebar menu
 const filterItemsbyRole = () =>{
   const role = "student";
   let filteredItem =[];
@@ -54,7 +54,6 @@ const filterItemsbyRole = () =>{
     filteredItem = ["Dashboard", "Profile form", "Interviews", "Tests", "Workshops"];
   }
   return filteredItem;
-
 };
 
 const Sidebar = ({role}) => {
