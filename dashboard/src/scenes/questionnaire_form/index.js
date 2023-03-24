@@ -12,6 +12,7 @@ import { Formik } from "formik";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import * as yup from "yup";
+import React, { useState } from 'react';
 
 const initialValues = {
     test: '',
@@ -29,16 +30,32 @@ const checkoutSchema = yup.object().shape({
     answer3: yup.string().required("Answer is required"),
 });
 
-export default function newQuestionnaireForm() {
+export default function NewQuestionnaireForm() {
+    const [count, setCount] = useState(0);
+    const [questions, setQuestions] = useState([]);
+
     const handleFormSubmit = (values, { resetForm }) => {
-        let question = JSON.stringify(values)
-        //Here send the question to Backend 
+        const question = JSON.stringify(values);
+        setQuestions([...questions, question]);
+        questions.push(question);
         resetForm();
     };
+
+    const handleButtonClick = () => {
+        setCount(count + 1);
+    };
+
+    const handleButtonClickSend = () => {
+        setCount(0);
+        //Here you can send the all questions to backend
+        //console.log('Send all questions');
+        //console.log(questions);
+    };
+
     return (
         <>
             <Box m="20px">
-                <Typography variant="h3" gutterBottom align="center">Questionnaire Form</Typography>
+                <Typography variant="h3" gutterBottom align="center">Create Question</Typography>
                 <Formik onSubmit={handleFormSubmit}
                     initialValues={initialValues}
                     validationSchema={checkoutSchema}
@@ -86,8 +103,8 @@ export default function newQuestionnaireForm() {
                                 <FormControl>
                                     <InputLabel>Type of Question</InputLabel>
                                     <Select name="type" value={values.type} onChange={handleChange}>
-                                        <MenuItem value='checkBox'>CheckBox</MenuItem>
-                                        <MenuItem value='radioButton'>RadioButton</MenuItem>
+                                        <MenuItem value='checkBox'>Multiple Response</MenuItem>
+                                        <MenuItem value='radioButton'>Single Response</MenuItem>
                                     </Select>
                                 </FormControl>
                                 <TextField
@@ -131,9 +148,16 @@ export default function newQuestionnaireForm() {
                                 />
                             </Box>
                             <Box display="flex" justifyContent="end" mt="20px">
-                                <Button type="submit" color="secondary" variant="contained">
-                                    Send Question
-                                </Button>
+                                <Box mr={2}>
+                                    <Button type="submit" color="secondary" variant="contained" onClick={handleButtonClick}>
+                                        Save Question ({count})
+                                    </Button>
+                                </Box>
+                                <Box mr={2}>
+                                    <Button type="submit" color="secondary" variant="contained" onClick={handleButtonClickSend}>
+                                        Send All
+                                    </Button>
+                                </Box>
                             </Box>
                         </form>
                     )}
