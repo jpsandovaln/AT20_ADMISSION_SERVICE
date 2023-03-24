@@ -275,7 +275,7 @@ const Sidebar = ({role}) => {
                  </>
                 )}
 
-              {filteredItem.includes("Workshops") && (
+                {filteredItem.includes("Workshops") && (
                   <>
                   <Typography
                       variant="h6"
@@ -298,8 +298,8 @@ const Sidebar = ({role}) => {
                       selected={selected}
                       setSelected={setSelected}
                   />
-                </>
-              )}
+                 </>
+                )}
             <Item
                 title="FAQ Page"
                 to="/faq"
