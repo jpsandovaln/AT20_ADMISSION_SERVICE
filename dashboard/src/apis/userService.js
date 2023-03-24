@@ -1,5 +1,5 @@
-import axios from "axios";
-const API_URL = "http://localhost:8080";
+import axios from 'axios';
+const API_URL = 'http://localhost:8080';
 
 export const createUser = async (userData) => {
     const response = await axios.post(`${API_URL}/users`, userData);
@@ -24,11 +24,6 @@ export const updateUserById = async (id, userData) => {
 };
 
 export const deleteUserById = async (id) => {
-    try {
-        const response = await axios.delete(`${API_URL}/users/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error("Error in deleteUserById:", error.response || error);
-        throw error;
-    }
+    const response = await axios.delete(`${API_URL}/users/${id}`);
+    return response.data;
 };
