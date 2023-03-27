@@ -43,13 +43,28 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
     );
 };
 
+// This function verifies the rol and filter the items to show on the sidebar menu
+const filterItemsbyRole =() =>{
+  const role = "admin";
+  let filteredItem =[];
+  if (role === "admin") {
+    filteredItem = ["Dashboard", "Add User", "Meetings", "Interviews", "Tests","Create Questionaries", "Workshops"];
+  }else if (role === "trainer") {
+    filteredItem = ["Dashboard", "Meetings", "Interviews","Create Questionaries", "Workshops"];
+  }else if (role === "student") {
+    filteredItem = ["Dashboard", "Profile form", "Interviews", "Tests", "Workshops"];
+  }
+  return filteredItem;
+};
 
 
-const Sidebar = () => {
+
+const Sidebar = ({role}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [selected, setSelected] = useState("Dashboard");
+    const filteredItem = filterItemsbyRole(role);
 
     return (
     <Box
@@ -126,158 +141,185 @@ const Sidebar = () => {
             </Box>
           )}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <Item
-                title="Dashboard"
-                to="/"
-                icon={<HomeOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-            />
+           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+                {filteredItem.includes("Dashboard") && (
+                  <Item
+                      title="Dashboard"
+                      to="/"
+                      icon={<HomeOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                  />
+                )}
 
-            <Item
-                title="Profile Form"
-                to="/form"
-                icon={<PersonOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-            />
-            <Item
-              title="Add User"
-              to="/newUser"
-              icon={<PersonAddIcon/>}
-              selected={selected}
-              setSelected={setSelected}
-            />
+                {filteredItem.includes("Profile form") && (
+                  <Item
+                      title="Profile Form"
+                      to="/form"
+                      icon={<PersonOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                  />
+                )}
 
-            <Typography
-              variant="h5"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
+                {filteredItem.includes("Add User") && (
+                  <Item
+                    title="Add User"
+                    to="/newUser"
+                    icon={<PersonAddIcon/>}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                )}
 
-              Meeting
-            </Typography>
+                {filteredItem.includes("Meetings") && (
+                  <>
+                  <Typography
+                    variant="h5"
+                    color={colors.grey[300]}
+                    sx={{ m: "15px 0 5px 20px" }}
+                  >
 
-            <Item
-              title="New meeting"
-              to="/meeting"
-              icon={<VideoCallIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+                    Meeting
+                  </Typography>
 
-            <Typography
-              variant="h5"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Interviews
-                Interviews
-            </Typography>
+                  <Item
+                    title="New meeting"
+                    to="/meeting"
+                    icon={<VideoCallIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                  </>
+                )}
+                {filteredItem.includes("Interviews") && (
+                  <>
+                  <Typography
+                    variant="h5"
+                    color={colors.grey[300]}
+                    sx={{ m: "15px 0 5px 20px" }}
+                  >
+                    Interviews
+                  </Typography>
 
-            <Item
-              title="Informative Interview"
-              to="/informative"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            
-            <Item
-              title="Psicologic Interview"
-              to="/psicologic"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
 
-            <Item
-              title="English Interview"
-              to="/english"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+                  <Item
+                    title="Informative Interview"
+                    to="/informative"
+                    icon={<PeopleOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
 
-            <Typography
-                variant="h5"
-                color={colors.grey[300]}
-                sx={{ m: "15px 0 5px 20px" }}
-            >
-              Create Questionnaire
-            </Typography>
-            <Item
-                title="New Questionnaire"
-                to="/questionnaire_form"
-                icon={<FormatListBulletedIcon/>}
-                selected={selected}
-                setSelected={setSelected}
-            />
+                  <Item
+                    title="Psicologic Interview"
+                    to="/psicologic"
+                    icon={<PeopleOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
 
-            <Typography
-                variant="h5"
-                color={colors.grey[300]}
-                sx={{ m: "15px 0 5px 20px" }}
-            >
-              Test
-            </Typography>
-            <Item
-                title="Aptitude Tests"
-                to="/aptitude"
-                icon={<ReceiptOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-            />
-            <Item
-                title="Reasoning Tests"
-                to="/reasoning"
-                icon={<ReceiptOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-            />
-            <Item
-                title="Logical Tests"
-                to="/logical"
-                icon={<ReceiptOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-            />
-            <Item
-                title="Spatial Tests"
-                to="/spatial"
-                icon={<ReceiptOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-            />
-            <Item
-                title="Concentration Tests"
-                to="/concentration"
-                icon={<ReceiptOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-            />
-            <Typography
-                variant="h6"
-                color={colors.grey[300]}
-                sx={{ m: "15px 0 5px 20px" }}
-                >
-                Workshops
-            </Typography>
-            <Item
-                title="Workshop 1"
-                to="/workshop"
-                icon={<BugReportIcon />}
-                selected={selected}
-                setSelected={setSelected}
-            />
-            <Item
-                title="Workshop 2"
-                to="/workshop"
-                icon={<BugReportIcon />}
-                selected={selected}
-                setSelected={setSelected}
-            />
+                  <Item
+                    title="English Interview"
+                    to="/english"
+                    icon={<PeopleOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                  </>
+                )}
+
+                {filteredItem.includes("Create Questionaries") && (
+                  <>
+                  <Typography
+                      variant="h5"
+                      color={colors.grey[300]}
+                      sx={{ m: "15px 0 5px 20px" }}
+                  >
+                    Create Questionnaire
+                  </Typography>
+                  <Item
+                      title="New Questionnaire"
+                      to="/questionnaire_form"
+                      icon={<FormatListBulletedIcon/>}
+                      selected={selected}
+                      setSelected={setSelected}
+                  />
+                  </>
+                )}
+
+                {filteredItem.includes("Tests") && (
+                  <>
+                  <Typography
+                    variant="h5"
+                    color={colors.grey[300]}
+                    sx={{ m: "15px 0 5px 20px" }}
+                  >
+                    Test
+                  </Typography>
+                  <Item
+                      title="Aptitude Tests"
+                      to="/aptitude"
+                      icon={<ReceiptOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                  />
+                  <Item
+                      title="Reasoning Test"
+                      to="/reasoning"
+                      icon={<ReceiptOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                  />
+                  <Item
+                      title="Logical Test"
+                      to="/logical"
+                      icon={<ReceiptOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                  />
+                  <Item
+                      title="Spatial Test"
+                      to="/spatial"
+                      icon={<ReceiptOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                  />
+                  <Item
+                      title="Concentration Test"
+                      to="/concentration"
+                      icon={<ReceiptOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                  />
+                 </>
+                )}
+
+                {filteredItem.includes("Workshops") && (
+                  <>
+                  <Typography
+                      variant="h6"
+                      color={colors.grey[300]}
+                      sx={{ m: "15px 0 5px 20px" }}
+                      >
+                      Workshops
+                  </Typography>
+                  <Item
+                      title="Workshop 1"
+                      to="/workshop"
+                      icon={<BugReportIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                  />
+                  <Item
+                      title="Workshop 2"
+                      to="/workshop"
+                      icon={<BugReportIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                  />
+                 </>
+                )}
             <Item
                 title="FAQ Page"
                 to="/faq"
