@@ -1,4 +1,4 @@
-import {Box } from "@mui/material";
+import { Box } from "@mui/material";
 import Header from "../../components/header";
 
 /*
@@ -14,7 +14,7 @@ accordance with the terms of the license agreement you entered into with Jalasof
 
 const Dashboard = () => {
     return (
-        <Box m="20px">
+        <Box m="50px">
           <Header title="DASHBOARD" subtitle="Dashboard" />
         </Box>
       );

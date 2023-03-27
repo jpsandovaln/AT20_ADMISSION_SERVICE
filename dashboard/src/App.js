@@ -8,7 +8,7 @@ disclose such Confidential Information and shall use it only in
 accordance with the terms of the license agreement you entered into with Jalasoft
 */
 
-import { ColorModeContext, useMode } from "./theme";
+import { ColorModeContext, useMode } from "./alternative_theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
@@ -34,7 +34,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline/>
         <div className="app">
-          <Sidebar initialValues={initialValues} />
+          <Sidebar initialValues={ initialValues } />
           <main className="content">
             <Topbar/>
               <Routes>
@@ -50,8 +50,8 @@ function App() {
                 <Route path="/reasoning" element={<Reasoning />} />
                 <Route path="/spatial" element={<Spatial />} />
                 <Route path="/newUser" element={<UserList />} />
-              </Routes>        
-          </main> 
+              </Routes>
+          </main>
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>

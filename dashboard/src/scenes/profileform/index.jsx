@@ -3,6 +3,8 @@ import {Formik} from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/header";
+import { useTheme } from "@mui/material";
+import { tokens } from '../../alternative_theme';
 
 export const initialValues = {
     firstName: "",
@@ -23,15 +25,17 @@ const checkoutSchema = yup.object().shape({
 
 const Form = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
-  
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     const handleFormSubmit = (values) => {
       console.log(values);
     };
-  
+
     return (
-      <Box m="20px">
+      <Box m="50px">
         <Header title="EDIT USER" subtitle="Edit User Profile" />
-        
+
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={initialValues}
@@ -108,7 +112,7 @@ const Form = () => {
                 />
               </Box>
               <Box display="flex" justifyContent="end" mt="20px">
-                <Button type="submit" color="secondary" variant="contained">
+                <Button type="submit" style={{background: colors.primary[100], }} variant="contained">
                   Edit profile
                 </Button>
               </Box>
@@ -118,5 +122,5 @@ const Form = () => {
       </Box>
     );
   };
-  
+
 export default Form;

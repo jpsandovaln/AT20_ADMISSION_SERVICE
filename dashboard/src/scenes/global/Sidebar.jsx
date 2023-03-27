@@ -10,10 +10,10 @@ accordance with the terms of the license agreement you entered into with Jalasof
 
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
-import { tokens } from "../../theme";
+import { tokens } from "../../alternative_theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
@@ -31,7 +31,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
         <MenuItem
         active={selected === title}
         style={{
-            color: colors.grey[100],
+            color: colors.secondary[100],
         }}
         onClick={() => setSelected(title)}
         icon={icon}
@@ -54,7 +54,7 @@ const Sidebar = () => {
     <Box
       sx={{
         "& .pro-sidebar-inner": {
-            background: `${colors.primary[400]} !important`,
+            background: `${colors.body[200]} !important`,
         },
         "& .pro-icon-wrapper": {
             backgroundColor: "transparent !important",
@@ -63,10 +63,12 @@ const Sidebar = () => {
             padding: "5px 35px 5px 20px !important",
         },
         "& .pro-inner-item:hover": {
-            color: "#868dfb !important",
+            // color: "#868dfb !important",
+            color: `${colors.primary[100]} !important`,
         },
         "& .pro-menu-item.active": {
-            color: "#6870fa !important",
+            // color: "#6870fa !important",
+            color: `${colors.primary[100]} !important`,
         },
       }}
     >
@@ -78,7 +80,7 @@ const Sidebar = () => {
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
                 margin: "10px 0 20px 0",
-                color: colors.grey[100],
+                color: colors.primary[100],
             }}
           >
             {!isCollapsed && (
@@ -88,7 +90,7 @@ const Sidebar = () => {
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h3" color={colors.grey[100]}>
+                <Typography variant="h3" color={colors.primary[100]}>
                     JALASOFT
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
@@ -112,13 +114,13 @@ const Sidebar = () => {
               <Box textAlign="center">
                 <Typography
                     variant="h2"
-                    color={colors.grey[100]}
-                    fontWeight="bold"
+                    color={colors.title[100]}
+                    // fontWeight="bold"
                     sx={{ m: "10px 0 0 0" }}
                 >
                     Pepito
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
+                <Typography variant="h5" color={colors.lightText[100]}>
                     Perez
                 </Typography>
               </Box>
@@ -133,7 +135,6 @@ const Sidebar = () => {
                 selected={selected}
                 setSelected={setSelected}
             />
-
             <Item
                 title="Profile Form"
                 to="/form"
@@ -148,14 +149,12 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
             <Typography
               variant="h5"
-              color={colors.grey[300]}
+              color={colors.title[100]}
               sx={{ m: "15px 0 5px 20px" }}
-            >
-
-              Meeting
+              >
+              {!isCollapsed ? 'Meeting' : <Divider sx={{ width: '80%' }} />}
             </Typography>
 
             <Item
@@ -168,11 +167,10 @@ const Sidebar = () => {
 
             <Typography
               variant="h5"
-              color={colors.grey[300]}
+              color={colors.title[100]}
               sx={{ m: "15px 0 5px 20px" }}
-            >
-              Interviews
-                Interviews
+              >
+              {!isCollapsed ? 'Interviews' : <Divider sx={{ width: '80%' }} />}
             </Typography>
 
             <Item
@@ -182,7 +180,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            
+
             <Item
               title="Psicologic Interview"
               to="/psicologic"
@@ -198,13 +196,12 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
             <Typography
                 variant="h5"
-                color={colors.grey[300]}
+                color={colors.title[100]}
                 sx={{ m: "15px 0 5px 20px" }}
-            >
-              Test
+                >
+                {!isCollapsed ? 'Test' : <Divider sx={{ width: '80%' }} />}
             </Typography>
             <Item
                 title="Aptitude Tests"
@@ -243,10 +240,10 @@ const Sidebar = () => {
             />
             <Typography
                 variant="h6"
-                color={colors.grey[300]}
+                color={colors.title[100]}
                 sx={{ m: "15px 0 5px 20px" }}
                 >
-                Workshops
+                {!isCollapsed ? 'Workshops' : <Divider sx={{ width: '80%' }} />}
             </Typography>
             <Item
                 title="Workshop 1"

@@ -20,6 +20,7 @@ import Questions from "./Questions.json";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import { Box } from '@mui/system';
+import Header from "../../components/header";
 
 // builds the reasoning test page
 const Aptitude = () => {
@@ -40,7 +41,7 @@ const Aptitude = () => {
         setSelectedOptions((prevSelectedOptions) => {
             const prevSelectedValues = prevSelectedOptions[name] || [];
             let updatedSelectedValues;
-    
+
             if (checked) {
                 updatedSelectedValues = [...prevSelectedValues, value];
                 } else {
@@ -48,7 +49,7 @@ const Aptitude = () => {
                     (selectedValue) => selectedValue !== value
                 );
             }
-    
+
             return {
                 ...prevSelectedOptions,
                 [name]: updatedSelectedValues,
@@ -66,8 +67,8 @@ const Aptitude = () => {
 
     return (
     <>
-        <Typography variant="h2" gutterBottom align="center">Reasoning test</Typography>
-        <Box style={{marginLeft: '20px'}}>
+        <Box sx={{ m: '50px' }}>
+            <Header title="TEST" subtitle="Reasoning test" />
             <Typography variant="h3" gutterBottom>Please answer the following question:</Typography>
             <Typography variant="h4" gutterBottom>
                 {currentQuestion.question}
