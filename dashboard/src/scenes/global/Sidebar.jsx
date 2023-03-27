@@ -212,6 +212,14 @@ const Sidebar = ({role}) => {
                   />
 
                   <Item
+                    title="Interviews"
+                    to="/interviewTable"
+                    icon={<PeopleOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+
+                  <Item
                     title="Psicologic Interview"
                     to="/psicologic"
                     icon={<PeopleOutlinedIcon />}

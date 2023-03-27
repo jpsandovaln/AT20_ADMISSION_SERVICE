@@ -25,19 +25,58 @@ import Checkbox from '@mui/material/Checkbox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import guests from './guests';
+import axios from "axios";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function NewMeeting () {
+export default function NewMeeting() {
+
+    // A React Hook that allows you to use state in a functional component.
+    const [selectedDate, setSelectedDate] = React.useState(null);
+    const [timeZoneA, setTimeZone] = React.useState([]);
+    const [meeting_name, setMeeting_name] = React.useState('');
+    const [description, setDescription] = React.useState('');
+    const [start_time, setStart_time] = React.useState('');
+    const [end_time, setEnd_time] = React.useState(null);
+    const [host_global_id, setHost_global_id] = React.useState([]);
+    const [guest_global_id, setGuest_global_id] = React.useState([]);
+
+    const handleGuestChange = (event, guest_global_id) => {
+        setGuest_global_id(guest_global_id);
+      };
+
+      /**
+       * Send a POST request to my backend server with the data I've collected from the
+       * form.
+       */
+    const handleSubmit = async () => {
+        const data = {
+        host_global_id : host_global_id ? host_global_id.label : '',
+        guest_global_id: guest_global_id,
+        meeting_name : meeting_name,
+        description: description,
+        date: selectedDate,
+        start_time: start_time,
+        end_time: end_time,
+        time_zone: timeZoneA,
+        };
+        try {
+          const response = await axios.post('http://localhost:8080/api/v1/interview/save', data);
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+    };
+
     return (
         <div >
-            <h2 style={{ textAlign: 'center' }}>NEW MEETING</h2>
+            <h2 style={{textAlign: "center"}}>NEW MEETING</h2>
 
             <Box
                 component="form"
                 sx={{
-                    '& > :not(style)': { width: '55ch' }
+                '& > :not(style)': { width: '55ch' },
                 }}
                 noValidate
                 autoComplete="off"
@@ -45,16 +84,18 @@ export default function NewMeeting () {
             >
                 Meeting Name<br></br>
                 <TextField
-                    id="outlined-basic"
-                    label="Meeting"
-                    variant="outlined"
+                id="outlined-basic"
+                label="Meeting"
+                variant="outlined"
+                value={meeting_name}
+                onChange={(e) => setMeeting_name(e.target.value)}
                 />
             </Box>
 
             <Box
                 component="form"
                 sx={{
-                    '& .MuiTextField-root': { width: '55ch' }
+                '& .MuiTextField-root': { width: '55ch' },
                 }}
                 noValidate
                 textAlign="center"
@@ -62,86 +103,115 @@ export default function NewMeeting () {
                 Description (Optional)
                 <div>
                     <TextField
-                        id="outlined-multiline-flexible"
-                        label="Description"
-                        multiline
-                        maxRows={4}
+                    id="outlined-multiline-flexible"
+                    label="Description"
+                    multiline
+                    maxRows={4}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
             </Box>
 
-            <h4 style={{ textAlign: 'center' }}>Schedule</h4>
+            <h4 style={{textAlign: "center"}}>Schedule</h4>
 
             <Box component="form"
                 sx={{
-                    '& .MuiTextField-root': { mb: 1, mx: 42, width: '55ch' }
+                '& .MuiTextField-root': { mb:1, mx: 42, width: '55ch' },
                 }}
                 textAlign="center"
-            >
+                >
                 Date
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['DatePicker']} >
-                        <DatePicker label="Select a Date" />
+                        <DatePicker
+                        label="Select Date"
+                        value={selectedDate}
+                        selected={selectedDate}
+                        onChange={(date) => setSelectedDate(date)}
+                        />
                     </DemoContainer>
                 </LocalizationProvider>
             </Box>
             <Stack spacing={3} direction="row"
                 textAlign="center"
-                sx={{ '& > :not(style)': { ml: 42 } }}>
+                sx={{'& > :not(style)': { ml: 42,}}}>
 
                 <Box component="form"
                     sx={{
-                        '& .MuiTextField-root': { width: '26ch' }
+                    '& .MuiTextField-root': { width: '26ch' },
                     }}
-                >
-                    Star
+                    >
+                    Start
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer components={['TimePicker']}>
-                            <TimePicker label="Star time" />
+                            <TimePicker
+                            label="Start time"
+                            value={start_time}
+                            onChange={(newValue) => {
+                              setStart_time(newValue);
+                            }}
+                            />
                         </DemoContainer>
                     </LocalizationProvider>
                 </Box>
 
                 <Box component="form"
                     sx={{
-                        '& .MuiTextField-root': { width: '26ch' }
+                    '& .MuiTextField-root': { width: '26ch' },
                     }}>
                     Final Time
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer components={['TimePicker']}>
-                            <TimePicker label="End time" />
+                            <TimePicker
+                             label="End time"
+                             value={end_time}
+                            onChange={(newValue) => {
+                              setEnd_time(newValue);
+                            }}/>
                         </DemoContainer>
                     </LocalizationProvider>
                 </Box>
             </Stack>
             <Box
-                textAlign="center">
+            textAlign="center">
                 Time Zone
                 <Autocomplete
                     disablePortal
                     id="combo-box-demo"
                     options={timeZone}
-                    sx={{ mx: 42, width: '55ch' }}
+                    value={timeZoneA}
+                    onChange={(event, newValue) => {
+                        setTimeZone(newValue);
+                      }}
+                    sx={{ mx:42, width: '55ch' }}
                     renderInput={(params) => <TextField {...params} label="Time Zone" />}
+
                 />
             </Box>
 
-            <h4 style={{ textAlign: 'center' }}>Participants</h4>
+            <h4 style={{textAlign: "center"}}>Participants</h4>
 
             <Box
-                textAlign="center">
+            textAlign="center">
                 Host
                 <Autocomplete
                     disablePortal
                     id="combo-box-demo"
                     options={host}
-                    sx={{ mt: 1, mx: 42, width: '55ch' }}
+                    getOptionLabel={(option) => option.label}
+                    value={host_global_id}
+                    onChange={(event, newValue) => {
+                        setHost_global_id(newValue);
+                      }}
+                    sx={{ mt:1, mx:42, width: '55ch' }}
                     renderInput={(params) => <TextField {...params} label="Select Host" />}
+
                 />
             </Box>
 
             <Box
-                textAlign="center">
+            textAlign="center">
                 Guests
                 <Autocomplete
                     multiple
@@ -161,20 +231,26 @@ export default function NewMeeting () {
                         </li>
                     )}
                     style={{ width: '55ch' }}
-                    sx={{ mt: 1, mx: 42, width: '55ch' }}
+                    sx={{ mt:1, mx:42, width: '55ch' }}
+                    onChange={handleGuestChange}
+                    value={guest_global_id}
                     renderInput={(params) => (
-                        <TextField {...params} label="Select Guests" placeholder=" " />
-                    )}
+                        <TextField {...params}
+                        label="Select Guests"
+                        placeholder=" " />
+                        )}
+
+
                 />
             </Box>
             <Box
-                textAlign="center"
+            textAlign="center"
             >
                 <br></br>
                 <Stack spacing={2} direction="row"
-                    textAlign="center"
-                    sx={{ '& > :not(style)': { ml: 75 } }}>
-                    <Button variant="contained" color='secondary' href="#outlined-buttons">Save</Button>
+                textAlign="center"
+                sx={{'& > :not(style)': { ml: 75,}}}>
+                    <Button variant="contained" color='secondary'  onClick={handleSubmit} >Save</Button>
                     <Button variant="contained" color='primary'>Cancel</Button>
                 </Stack>
                 <br></br>
@@ -182,4 +258,4 @@ export default function NewMeeting () {
             </Box>
         </div>
     );
-}
+  }

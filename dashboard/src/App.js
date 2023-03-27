@@ -28,6 +28,7 @@ import Logical from './scenes/logical';
 import Reasoning from './scenes/reasoning';
 import Spatial from './scenes/spatial';
 import UserList from './scenes/newUser';
+import TableInterview from "./scenes/interviews";
 
 function App () {
     const [theme, colorMode] = useMode();
@@ -46,6 +47,7 @@ function App () {
                             <Route path="/psicologic" element={<InterviewPsicologic />} />
                             <Route path="/english" element={<InterviewEnglish />} />
                             <Route path="/meeting" element={<NewMeeting />} />
+                            <Route path="/interviewTable" element={<TableInterview/>} />
                             <Route path="/questionnaire_form" element={<QuestionnaireForm />} />
                             <Route path="/aptitude" element={<Aptitude />} />
                             <Route path="/concentration" element={<Concentration />} />
