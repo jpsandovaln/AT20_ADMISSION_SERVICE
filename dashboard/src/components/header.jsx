@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { Typography, Box, useTheme } from '@mui/material';
 import { tokens } from '../alternative_theme';
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 /*
 @node_command.js Copyright (c) 2023 Jalasoft
 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
@@ -30,6 +31,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     return (
+        // eslint-disable-next-line react/react-in-jsx-scope
         <MenuItem
             active={ selected === title }
             style={{

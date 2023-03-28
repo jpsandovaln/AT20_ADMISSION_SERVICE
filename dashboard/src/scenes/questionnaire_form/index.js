@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 /*
 @node_command.js Copyright (c) 2023 Jalasoft
 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
