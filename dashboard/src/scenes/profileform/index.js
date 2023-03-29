@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable react/react-in-jsx-scope */
 import { Box, Button, TextField } from '@mui/material';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -25,7 +25,7 @@ const checkoutSchema = yup.object().shape({
 export default function Form () {
     const isNonMobile = useMediaQuery('(min-width:600px)');
 
-    const handleFormSubmit = (values) => {
+    const handleFormSubmit = () => {
         // console.info(values);
     };
 
@@ -120,5 +120,5 @@ export default function Form () {
             </Box>
         </>
     );
-};
+}
 export { initialValues, Form };

@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 /*
 @node_command.js Copyright (c) 2023 Jalasoft
 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
@@ -7,12 +8,13 @@ Jalasoft, Confidential Information "). You shall not
 disclose such Confidential Information and shall use it only in
 accordance with the terms of the license agreement you entered into with Jalasoft
 */
-import { Box, Button, TextField, InputLabel, Select, MenuItem } from '@mui/material';
+import { Box, Button, TextField, InputLabel, Select, MenuItem, useTheme } from '@mui/material';
 import { Formik } from 'formik';
-import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import * as yup from 'yup';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import Header from '../../components/header';
+import { tokens } from '../../alternative_theme';
 
 export const initialValues = {
     test: '',
@@ -52,10 +54,13 @@ export default function NewQuestionnaireForm () {
         // console.info(questions);
     };
 
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     return (
         <>
-            <Box m="20px">
-                <Typography variant="h3" gutterBottom align="center">Create Question</Typography>
+            <Box m="50px">
+                <Header title='QUESTIONNAIRE' subtitle='Create Question' />
                 <Formik onSubmit={handleFormSubmit}
                     initialValues={initialValues}
                     validationSchema={checkoutSchema}
@@ -100,7 +105,7 @@ export default function NewQuestionnaireForm () {
                                     helperText={touched.question && errors.question}
                                     sx={{ gridColumn: 'span 4' }}
                                 />
-                                <FormControl>
+                                <FormControl variant="filled">
                                     <InputLabel>Type of Question</InputLabel>
                                     <Select name="type" value={values.type} onChange={handleChange}>
                                         <MenuItem value='checkBox'>Multiple Response</MenuItem>
@@ -149,12 +154,12 @@ export default function NewQuestionnaireForm () {
                             </Box>
                             <Box display="flex" justifyContent="end" mt="20px">
                                 <Box mr={2}>
-                                    <Button type="submit" color="secondary" variant="contained" onClick={handleButtonClick}>
+                                    <Button type="submit" style={{ background: colors.success[100] }} variant="contained" onClick={handleButtonClick}>
                                         Save Question ({count})
                                     </Button>
                                 </Box>
                                 <Box mr={2}>
-                                    <Button type="submit" color="secondary" variant="contained" onClick={handleButtonClickSend}>
+                                    <Button type="submit" style={{ background: colors.primary[100] }} variant="contained" onClick={handleButtonClickSend}>
                                         Send All
                                     </Button>
                                 </Box>
@@ -165,4 +170,4 @@ export default function NewQuestionnaireForm () {
             </Box>
         </>
     );
-};
+}

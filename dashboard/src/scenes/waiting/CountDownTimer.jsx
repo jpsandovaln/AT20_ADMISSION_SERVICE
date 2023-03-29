@@ -4,7 +4,7 @@
  * Av.General Inofuentes esquina Calle20, Edificio Union No1376, La Paz, Bolivia
  * All rights reserved
  * This software is the confidential and proprietary information of
- * Jalasoft,ConfidentialInformation"). You shall not
+ * Jalasoft,ConfidentialInformation'). You shall not
  * disclose such Confidential Information and shall use it only in
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft
@@ -18,7 +18,7 @@ import useCountDown from './useCountDown';
  */
 const ExpiredNotice = () => {
     return (
-        <div style={{textAlign: "center"}}>
+        <div style={{ textAlign: 'center' }}>
             <h1>Meeting Time</h1>
         </div>
     );
@@ -33,9 +33,11 @@ const ExpiredNotice = () => {
  * @param {number} seconds Represents the count of seconds.
  * @returns A React component that displays the days, hours, minutes, and seconds.
  */
+
+// eslint-disable-next-line react/prop-types
 const ShowCounter = ({ days, hours, minutes, seconds }) => {
     return (
-        <div style={{textAlign: "center"}}>
+        <div style={{ textAlign: 'center' }}>
             <h1>{days}d : {hours}h : {minutes}m : {seconds}s </h1>
         </div>
     );
@@ -47,6 +49,7 @@ const ShowCounter = ({ days, hours, minutes, seconds }) => {
  * @param {number} targetDate The date time that represents the count.
  * @returns A React component.
  */
+// eslint-disable-next-line react/prop-types
 const CountDownTimer = ({ targetDate }) => {
     const [days, hours, minutes, seconds] = useCountDown(targetDate);
 
@@ -62,5 +65,5 @@ const CountDownTimer = ({ targetDate }) => {
     }
 };
 
-//Export the CountDownTimer component.
+// Export the CountDownTimer component.
 export default CountDownTimer;

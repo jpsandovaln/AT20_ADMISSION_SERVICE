@@ -7,11 +7,14 @@ module.exports = {
     extends: [
         'plugin:react/recommended',
         'standard'
+        // 'plugin:react/jsx-runtime'
+        // 'eslint:recommended'
     ],
     overrides: [
     ],
     parserOptions: {
         ecmaVersion: 'latest'
+        // sourceType: 'module'
     },
     plugins: [
         'react'

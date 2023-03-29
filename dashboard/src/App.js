@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 /*
 @node_command.js Copyright (c) 2023 Jalasoft
 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
@@ -8,8 +9,7 @@ disclose such Confidential Information and shall use it only in
 accordance with the terms of the license agreement you entered into with Jalasoft
 */
 
-import React from 'react';
-import { ColorModeContext, useMode } from './theme';
+import { ColorModeContext, useMode } from './alternative_theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 import Topbar from './scenes/global/Topbar';
