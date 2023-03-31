@@ -10,7 +10,7 @@
  * with Jalasoft
  */
 
-import useCountDown from './useCountDown';
+import useCountDown from '../helpers/useCountDown';
 
 /**
  * This component just define a message that says 'Meeting Time'.
@@ -53,6 +53,7 @@ const ShowCounter = ({ days, hours, minutes, seconds }) => {
 const CountDownTimer = ({ targetDate }) => {
     const [days, hours, minutes, seconds] = useCountDown(targetDate);
 
+    // console.log('hola');
     /**
      * This is a conditional statement that checks if the days + hours + minutes + seconds is less than
      * or equal to 0. If it is, then it returns the ExpiredNotice component, otherwise it returns the

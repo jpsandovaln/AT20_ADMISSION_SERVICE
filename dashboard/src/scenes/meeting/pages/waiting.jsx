@@ -10,17 +10,16 @@
  * with Jalasoft
  */
 
-import CountdownTimer from './CountDownTimer';
-import meeting from './meeting.json';
-
-// Getting the first element of the meeting.json file
-const actualMeeting = meeting[0];
+import CountdownTimer from '../components/CountDownTimer';
+import meetings from '../helpers/meetings.json';
+// Getting the first element of the meetings.json file
+const actualMeeting = meetings[0];
 // Split the start time of the meeting into an array of strings.
 const meetingStartData = actualMeeting.start_time.split(' ');
 const meetingHour = meetingStartData[0];
 // Split the date into an array of strings with an specific separator.
 const separator = '-';
-const dates = actualMeeting.Date.split(separator);
+const dates = actualMeeting.date.split(separator);
 // An array of months.
 const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 // An array of days of the week.
@@ -46,7 +45,7 @@ export default function WaitingRoom () {
             <h3 style={{ textAlign: 'center' }}>Host: {actualMeeting.host}</h3>
             <h3 style={{ textAlign: 'center' }}>Guests: {actualMeeting.quests.map((data) => (
                 // eslint-disable-next-line react/jsx-key
-                <li>{data.name}</li>
+                <li key={data.name}>{data.name}</li>
             ))}</h3>
         </div>
     );

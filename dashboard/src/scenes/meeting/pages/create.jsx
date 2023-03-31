@@ -19,31 +19,40 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import timeZone from './timezone';
-import host from './hosts';
 import Checkbox from '@mui/material/Checkbox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import guests from './guests';
-import Header from '../../components/header';
+import Header from '../../../components/header';
 import { useTheme } from '@mui/material';
-import { tokens } from '../../alternative_theme';
+import { tokens } from '../../../alternative_theme';
 import useMediaQuery from '@mui/material/useMediaQuery';
+
+// HELPERS
+import guests from '../helpers/guests';
+import host from '../helpers/hosts';
+import timeZone from '../helpers/timezone';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
 const checkedIcon = <CheckBoxIcon fontSize='small' />;
 
 export default function NewMeeting () {
+
     const isNonMobile = useMediaQuery('(min-width:600px)');
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+
+    const onSubmitForm = ( event ) => {
+        alert('Meeting Submitted');
+    }
+
+
     return (
         <Box m='50px'>
             <Header title='MEETING' subtitle='Create new Meeting' />
 
             <div style={{ width: '100%' }}>
                 <Box
-                    sx={{
+                     sx={{
                         display: 'grid',
                         columnGap: 2,
                         rowGap: 1,
@@ -169,7 +178,18 @@ export default function NewMeeting () {
                 <Stack spacing={2} direction='row'
                     textAlign='center'
                     sx={{ '& > :not(style)': { ml: 'auto' } }}>
-                    <Button variant='contained' style={{ background: colors.success[100] }} size='medium' href='#outlined-buttons'>Save</Button>
+                    <Button
+                            variant='contained'
+                            style={{
+                            background:
+                            colors.success[100]
+                            }}
+                            size='medium'
+                            href='#outlined-buttons'
+                            onClick={ onSubmitForm }
+                    >
+                        Save
+                    </Button>
                     <Button variant='contained' style={{ background: colors.secondary[100] }} size='medium' href='#outlined-buttons'>Cancel</Button>
                 </Stack>
                 <p style={{
