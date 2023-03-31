@@ -58,7 +58,7 @@ function App () {
                             <Route path="/newUser" element={<UserList />} />
                             <Route path="/meeting" element={<NewMeeting />} />
                             <Route path="/meeting/new" element={<MyMeetings />} />
-                            <Route path="/waiting" element={<Waiting />} />
+                            <Route path="/meeting/waiting-room" element={<Waiting />} />
                         </Routes>
                     </main>
                 </div>

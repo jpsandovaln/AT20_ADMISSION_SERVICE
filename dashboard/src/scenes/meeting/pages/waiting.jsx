@@ -43,7 +43,7 @@ export default function WaitingRoom () {
             <h3 style={{ textAlign: 'center' }}>Description: {actualMeeting.description}</h3>
             <h3 style={{ textAlign: 'center' }}>Time zone: {actualMeeting.time_zone}</h3>
             <h3 style={{ textAlign: 'center' }}>Host: {actualMeeting.host}</h3>
-            <h3 style={{ textAlign: 'center' }}>Guests: {actualMeeting.quests.map((data) => (
+            <h3 style={{ textAlign: 'center' }}>Guests: {actualMeeting.guests.map((data) => (
                 // eslint-disable-next-line react/jsx-key
                 <li key={data.name}>{data.name}</li>
             ))}</h3>

@@ -2,7 +2,7 @@
     {
         "id": "7",
         "host": "Pepito Perez",
-        "quests": [
+        "guests": [
             { "name": "Juan Luis Guerra"},
             { "name": "Adele"},
             { "name": "Alejandro Sanz"},
@@ -12,14 +12,14 @@
         "meeting_name": "Informative meeting",
         "description": "Meeting to provide general information about the AT specialization.",
         "date" : "2023-3-31",
-        "start_time": "18:00 PM",
-        "end_time": "19:00 PM",
+        "start_time": "06:00 PM",
+        "end_time": "07:00 PM",
         "time_zone": "Bolivia CMT: -4"
     },
     {
-        "id": "7",
+        "id": "9",
         "host": "Dan Reynols",
-        "quests": [
+        "guests": [
             { "name": "Juan Luis Guerra"},
             { "name": "Adele"},
             { "name": "Alejandro Sanz"},
@@ -28,9 +28,9 @@
         ],
         "meeting_name": "Technical Interview",
         "description": "Interview to evaluate technical skills of the candidates.",
-        "date": "2023-3-31",
-        "start_time": "18:00 PM",
-        "end_time": "19:00 PM",
+        "date": "2023-3-32",
+        "start_time": "06:00 PM",
+        "end_time": "07:00 PM",
         "time_zone": "Bolivia CMT: -4"
     }
 

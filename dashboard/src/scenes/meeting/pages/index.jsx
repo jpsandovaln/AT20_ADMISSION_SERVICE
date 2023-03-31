@@ -29,6 +29,41 @@ const titleStyles = {
 
 
 const MeetingsTable = () => {
+
+    const tryJoinMeeting = (meeting) => {
+        //if meeting is not started yet, redirect to waiting room
+        //if meeting is started, redirect to meeting
+        const now = new Date();
+        const meetingDate = new Date(meeting.date);
+        const meetingStartTime = new Date(`${meeting.date} ${meeting.start_time}`);
+        const meetingEndTime = new Date(`${meeting.date} ${meeting.end_time}`);
+
+
+        if (now < meetingDate) {
+            //REDIRECT TO WAITING ROOM
+
+
+            window.location.href = `/meeting/waiting-room`;
+            return;
+        }
+
+        if (now > meetingDate && now < meetingStartTime) {
+            window.location.href = `/meeting/waiting-room`;
+            return;
+        }
+
+        if (now > meetingDate && now > meetingStartTime && now < meetingEndTime) {
+            alert("Meeting is in progress");
+            return;
+        }
+
+        if (now > meetingDate && now > meetingEndTime) {
+            alert("Meeting has ended");
+            return;
+        }
+        console.log("Joining meeting");
+    };
+
     return (
         <Box m="50px">
             <Header title='MY MEETINGS' subtitle='' />
@@ -74,9 +109,8 @@ const MeetingsTable = () => {
                                 <TableCell>
                                     <Button
                                         variant="outlined"
-                                        href={`https://yourmeetingroom.com/${meeting.id}`}
-                                        target="_blank"
                                         rel="noopener noreferrer"
+                                        onClick={(e) => tryJoinMeeting(meeting)}
                                     >
                                         Join Meeting
                                     </Button>
