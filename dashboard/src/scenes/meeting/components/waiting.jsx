@@ -10,28 +10,32 @@
  * with Jalasoft
  */
 
-import CountdownTimer from '../components/CountDownTimer';
+import CountdownTimer from './CountDownTimer';
 import meetings from '../helpers/meetings.json';
 // Getting the first element of the meetings.json file
-const actualMeeting = meetings[0];
-// Split the start time of the meeting into an array of strings.
-const meetingStartData = actualMeeting.start_time.split(' ');
-const meetingHour = meetingStartData[0];
-// Split the date into an array of strings with an specific separator.
-const separator = '-';
-const dates = actualMeeting.date.split(separator);
-// An array of months.
-const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-// An array of days of the week.
-const daysInWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-// Creating a new date object with the date and time of the meeting.
-const dateObject = new Date(`${month[parseInt(dates[1]) - 1]} ${dates[2]}, ${dates[0]} ${meetingHour}:00`);
-// Getting the day of the week in the meeting date.
-const dayOfWeek = dateObject.getDay();
-// Getting the time in milliseconds of the meeting date.
-const meetingDateTime = dateObject.getTime();
 
-export default function WaitingRoom () {
+
+export default function WaitingRoom({ meeting }) {
+
+    const actualMeeting = meeting;
+    // Split the start time of the meeting into an array of strings.
+    const meetingStartData = actualMeeting.start_time.split(' ');
+    const meetingHour = meetingStartData[0];
+    const meetingHourFormat = meetingStartData[1];
+    // Split the date into an array of strings with an specific separator.
+    const separator = '-';
+    const dates = actualMeeting.date.split(separator);
+    // An array of months.
+    const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    // An array of days of the week.
+    const daysInWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    // Creating a new date object with the date and time of the meeting.
+    const dateObject = new Date(`${month[parseInt(dates[1]) - 1]} ${dates[2]}, ${dates[0]} ${meetingHour}:00 ${meetingHourFormat}`);
+    // Getting the day of the week in the meeting date.
+    const dayOfWeek = dateObject.getDay();
+    // Getting the time in milliseconds of the meeting date.
+    const meetingDateTime = dateObject.getTime();
+
     return (
         <div >
             <h4 style={{ textAlign: 'center' }}>WAITING ROOM</h4>

@@ -23,7 +23,8 @@ import InterviewPsicologic from './scenes/psicologic';
 //MEETING
 import MyMeetings from './scenes/meeting/pages/create';
 import NewMeeting from './scenes/meeting/pages';
-import Waiting from './scenes/meeting/pages/waiting.jsx';
+import Waiting from './scenes/meeting/components/waiting.jsx';
+import Room from './scenes/meeting/pages/room.jsx'
 
 import QuestionnaireForm from './scenes/questionnaire_form';
 import Aptitude from './scenes/aptitude';
@@ -32,6 +33,7 @@ import Logical from './scenes/logical';
 import Reasoning from './scenes/reasoning';
 import Spatial from './scenes/spatial';
 import UserList from './scenes/newUser';
+
 
 function App () {
     const [theme, colorMode] = useMode();
@@ -59,6 +61,7 @@ function App () {
                             <Route path="/meeting" element={<NewMeeting />} />
                             <Route path="/meeting/new" element={<MyMeetings />} />
                             <Route path="/meeting/waiting-room" element={<Waiting />} />
+                            <Route path="/meeting/room/:id" element={<Room />} />
                         </Routes>
                     </main>
                 </div>

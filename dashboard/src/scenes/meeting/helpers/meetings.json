@@ -12,7 +12,7 @@
         "meeting_name": "Informative meeting",
         "description": "Meeting to provide general information about the AT specialization.",
         "date" : "2023-3-31",
-        "start_time": "06:00 PM",
+        "start_time": "02:00 AM",
         "end_time": "07:00 PM",
         "time_zone": "Bolivia CMT: -4"
     },
@@ -28,7 +28,7 @@
         ],
         "meeting_name": "Technical Interview",
         "description": "Interview to evaluate technical skills of the candidates.",
-        "date": "2023-3-32",
+        "date": "2023-4-01",
         "start_time": "06:00 PM",
         "end_time": "07:00 PM",
         "time_zone": "Bolivia CMT: -4"

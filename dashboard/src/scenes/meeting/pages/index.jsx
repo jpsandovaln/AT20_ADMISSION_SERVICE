@@ -17,7 +17,6 @@ import Header from "../../../components/header";
 
 import meetings from "../helpers/meetings";
 const tableStyles = {
-    minWidth: 650,
     padding: "16px",
 };
 
@@ -31,44 +30,14 @@ const titleStyles = {
 const MeetingsTable = () => {
 
     const tryJoinMeeting = (meeting) => {
-        //if meeting is not started yet, redirect to waiting room
-        //if meeting is started, redirect to meeting
-        const now = new Date();
-        const meetingDate = new Date(meeting.date);
-        const meetingStartTime = new Date(`${meeting.date} ${meeting.start_time}`);
-        const meetingEndTime = new Date(`${meeting.date} ${meeting.end_time}`);
-
-
-        if (now < meetingDate) {
-            //REDIRECT TO WAITING ROOM
-
-
-            window.location.href = `/meeting/waiting-room`;
-            return;
-        }
-
-        if (now > meetingDate && now < meetingStartTime) {
-            window.location.href = `/meeting/waiting-room`;
-            return;
-        }
-
-        if (now > meetingDate && now > meetingStartTime && now < meetingEndTime) {
-            alert("Meeting is in progress");
-            return;
-        }
-
-        if (now > meetingDate && now > meetingEndTime) {
-            alert("Meeting has ended");
-            return;
-        }
-        console.log("Joining meeting");
+        window.location.href = `/meeting/room/${meeting.id}`;
     };
 
     return (
-        <Box m="50px">
+        <Box m="50px" sx={{ display: "flex", flexDirection: "column", alignItems: "center"}}>
             <Header title='MY MEETINGS' subtitle='' />
-            <TableContainer component={Paper}>
-                <Table sx={tableStyles} aria-label="meetings table">
+            <TableContainer component={Paper} sx={{ maxWidth: "100%", overflowX: "auto"}}>
+                <Table aria-label="meetings table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Title</TableCell>
@@ -77,6 +46,7 @@ const MeetingsTable = () => {
                             <TableCell>Start Time</TableCell>
                             <TableCell>End Time</TableCell>
                             <TableCell>Host</TableCell>
+                            <TableCell>Join Meeting</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
