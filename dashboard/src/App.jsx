@@ -20,7 +20,12 @@ import { initialValues, Form } from './scenes/profileform';
 import InterviewEnglish from './scenes/english';
 import InterviewInformative from './scenes/informative';
 import InterviewPsicologic from './scenes/psicologic';
-import NewMeeting from './scenes/meeting';
+//MEETING
+import MyMeetings from './scenes/meeting/pages/create';
+import NewMeeting from './scenes/meeting/pages';
+import Waiting from './scenes/meeting/components/waiting.jsx';
+import Room from './scenes/meeting/pages/room.jsx'
+
 import QuestionnaireForm from './scenes/questionnaire_form';
 import Aptitude from './scenes/aptitude';
 import Concentration from './scenes/concentration';
@@ -28,6 +33,7 @@ import Logical from './scenes/logical';
 import Reasoning from './scenes/reasoning';
 import Spatial from './scenes/spatial';
 import UserList from './scenes/newUser';
+
 
 function App () {
     const [theme, colorMode] = useMode();
@@ -45,7 +51,6 @@ function App () {
                             <Route path="/informative" element={<InterviewInformative />} />
                             <Route path="/psicologic" element={<InterviewPsicologic />} />
                             <Route path="/english" element={<InterviewEnglish />} />
-                            <Route path="/meeting" element={<NewMeeting />} />
                             <Route path="/questionnaire_form" element={<QuestionnaireForm />} />
                             <Route path="/aptitude" element={<Aptitude />} />
                             <Route path="/concentration" element={<Concentration />} />
@@ -53,6 +58,10 @@ function App () {
                             <Route path="/reasoning" element={<Reasoning />} />
                             <Route path="/spatial" element={<Spatial />} />
                             <Route path="/newUser" element={<UserList />} />
+                            <Route path="/meeting" element={<NewMeeting />} />
+                            <Route path="/meeting/new" element={<MyMeetings />} />
+                            <Route path="/meeting/waiting-room" element={<Waiting />} />
+                            <Route path="/meeting/room/:id" element={<Room />} />
                         </Routes>
                     </main>
                 </div>

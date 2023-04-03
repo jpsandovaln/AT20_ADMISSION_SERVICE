@@ -22,10 +22,10 @@ import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import BugReportIcon from '@mui/icons-material/BugReport';
-import VideoCallIcon from '@mui/icons-material/VideoCall';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-
+import VideoCallIcon from '@mui/icons-material/VideoCall';
+import GroupsIcon from '@mui/icons-material/Groups';
 // eslint-disable-next-line react/prop-types
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
@@ -185,8 +185,15 @@ const Sidebar = ({ role }) => {
                                 </Typography>
 
                                 <Item
-                                    title='New meeting'
+                                    title='My meetings'
                                     to='/meeting'
+                                    icon={<GroupsIcon />}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                />
+                                <Item
+                                    title='New meeting'
+                                    to='/meeting/new'
                                     icon={<VideoCallIcon />}
                                     selected={selected}
                                     setSelected={setSelected}
