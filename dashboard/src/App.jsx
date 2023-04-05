@@ -20,11 +20,11 @@ import { initialValues, Form } from './scenes/profileform';
 import InterviewEnglish from './scenes/english';
 import InterviewInformative from './scenes/informative';
 import InterviewPsicologic from './scenes/psicologic';
-//MEETING
+// MEETING
 import MyMeetings from './scenes/meeting/pages/create';
 import NewMeeting from './scenes/meeting/pages';
 import Waiting from './scenes/meeting/components/waiting.jsx';
-import Room from './scenes/meeting/pages/room.jsx'
+import Room from './scenes/meeting/pages/room.jsx';
 
 import QuestionnaireForm from './scenes/questionnaire_form';
 import Aptitude from './scenes/aptitude';
@@ -33,8 +33,7 @@ import Logical from './scenes/logical';
 import Reasoning from './scenes/reasoning';
 import Spatial from './scenes/spatial';
 import UserList from './scenes/newUser';
-
-
+import SignIn from './scenes/login';
 function App () {
     const [theme, colorMode] = useMode();
     return (
@@ -46,7 +45,8 @@ function App () {
                     <main className="content">
                         <Topbar />
                         <Routes>
-                            <Route path="/" element={<Dashborard />} />
+                            <Route path="/" element={<SignIn />} />
+                            <Route path="/dashboard" element={<Dashborard />} />
                             <Route path="/form" element={<Form />} />
                             <Route path="/informative" element={<InterviewInformative />} />
                             <Route path="/psicologic" element={<InterviewPsicologic />} />
