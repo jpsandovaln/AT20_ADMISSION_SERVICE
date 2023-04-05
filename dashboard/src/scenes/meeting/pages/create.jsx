@@ -36,15 +36,13 @@ const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
 const checkedIcon = <CheckBoxIcon fontSize='small' />;
 
 export default function NewMeeting () {
-
     const isNonMobile = useMediaQuery('(min-width:600px)');
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const onSubmitForm = ( event ) => {
+    const onSubmitForm = (event) => {
         alert('Meeting Submitted');
-    }
-
+    };
 
     return (
         <Box m='50px'>
@@ -52,7 +50,7 @@ export default function NewMeeting () {
 
             <div style={{ width: '100%' }}>
                 <Box
-                     sx={{
+                    sx={{
                         display: 'grid',
                         columnGap: 2,
                         rowGap: 1,
@@ -179,14 +177,14 @@ export default function NewMeeting () {
                     textAlign='center'
                     sx={{ '& > :not(style)': { ml: 'auto' } }}>
                     <Button
-                            variant='contained'
-                            style={{
+                        variant='contained'
+                        style={{
                             background:
                             colors.success[100]
-                            }}
-                            size='medium'
-                            href='#outlined-buttons'
-                            onClick={ onSubmitForm }
+                        }}
+                        size='medium'
+                        href='#outlined-buttons'
+                        onClick={ onSubmitForm }
                     >
                         Save
                     </Button>

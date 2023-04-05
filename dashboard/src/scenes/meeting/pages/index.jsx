@@ -1,4 +1,6 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+// eslint-disable-next-line no-unused-vars
+import React from 'react';
 import {
     Table,
     TableBody,
@@ -8,35 +10,32 @@ import {
     TableRow,
     Paper,
     Tooltip,
-    Typography,
     Box,
-    Button,
-} from "@mui/material";
-import { AccessTime, Person } from "@mui/icons-material";
-import Header from "../../../components/header";
+    Button
+} from '@mui/material';
+import { AccessTime, Person } from '@mui/icons-material';
+import Header from '../../../components/header';
 
-import meetings from "../helpers/meetings";
+import meetings from '../helpers/meetings';
 const tableStyles = {
-    padding: "16px",
+    padding: '16px'
 };
 
 const titleStyles = {
-    fontSize: "2rem",
-    margin: "16px 0",
-    //center
+    fontSize: '2rem',
+    margin: '16px 0'
+    // center
 };
 
-
 const MeetingsTable = () => {
-
     const tryJoinMeeting = (meeting) => {
         window.location.href = `/meeting/room/${meeting.id}`;
     };
 
     return (
-        <Box m="50px" sx={{ display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <Box m="50px" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Header title='MY MEETINGS' subtitle='' />
-            <TableContainer component={Paper} sx={{ maxWidth: "100%", overflowX: "auto"}}>
+            <TableContainer component={Paper} sx={{ maxWidth: '100%', overflowX: 'auto' }}>
                 <Table aria-label="meetings table">
                     <TableHead>
                         <TableRow>
@@ -59,7 +58,7 @@ const MeetingsTable = () => {
                                     <Tooltip title={meeting.description}>
                                         <span>
                                             {meeting.description.substring(0, 20)}
-                                            {meeting.description.length > 20 && "..."}
+                                            {meeting.description.length > 20 && '...'}
                                         </span>
                                     </Tooltip>
                                 </TableCell>
