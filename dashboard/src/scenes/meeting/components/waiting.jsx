@@ -11,12 +11,12 @@
  */
 
 import CountdownTimer from './CountDownTimer';
+// eslint-disable-next-line no-unused-vars
 import meetings from '../helpers/meetings.json';
 // Getting the first element of the meetings.json file
 
-
-export default function WaitingRoom({ meeting }) {
-
+// eslint-disable-next-line react/prop-types
+export default function WaitingRoom ({ meeting }) {
     const actualMeeting = meeting;
     // Split the start time of the meeting into an array of strings.
     const meetingStartData = actualMeeting.start_time.split(' ');
@@ -53,4 +53,4 @@ export default function WaitingRoom({ meeting }) {
             ))}</h3>
         </div>
     );
-};
+}
