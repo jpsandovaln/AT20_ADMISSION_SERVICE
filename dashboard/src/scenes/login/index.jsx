@@ -1,5 +1,5 @@
+/* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable no-console */
-// eslint-disable-next-line no-unused-vars
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -15,53 +15,35 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-
-function Copyright (props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 const theme = createTheme();
+function Login () {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-export default function SignIn () {
-    const handleSubmit = (event) => {
+    async function login (event) {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password')
-        });
-    };
-
-    const state = {
-        form: {
-            email: '',
-            password: ''
-        }
-    };
-    const singIn = async () => {
-        const url = 'hp://localhost:9090/api/v1/user/login';
-
-        // eslint-disattble-next-line object-curly-newline
-        await axios.post(url, {
-            email: state.form.email, password: state.form.password // hardcore
-        })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
+        try {
+            await axios.post('http://localhost:9090/api/v1/user/login', {
+                email,
+                password
+            }).then((res) => {
+                const status = res.status;
+                if (status === 200) {
+                    alert('Login Successfully');
+                    navigate('/dashboard');
+                } else {
+                    alert('Login Failed');
+                }
+            }, fail => {
+                console.error(fail); // Error!
             });
-    };
+        } catch (err) {
+            alert(err);
+        }
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -81,7 +63,7 @@ export default function SignIn () {
                     <Typography component="h1" variant="h5">
                                 Sign in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={login} noValidate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
                             required
@@ -91,6 +73,10 @@ export default function SignIn () {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            value={email}
+                            onChange={(event) => {
+                                setEmail(event.target.value);
+                            }}
                         />
                         <TextField
                             margin="normal"
@@ -101,6 +87,10 @@ export default function SignIn () {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            value={password}
+                            onChange={(event) => {
+                                setPassword(event.target.value);
+                            }}
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
@@ -111,14 +101,13 @@ export default function SignIn () {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            onClick={singIn}
                         >
-              Sign In
+                            Sign In
                         </Button>
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
-                  Forgot password?
+                                    Forgot password?
                                 </Link>
                             </Grid>
                             <Grid item>
@@ -129,8 +118,9 @@ export default function SignIn () {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
         </ThemeProvider>
     );
 }
+
+export default Login;

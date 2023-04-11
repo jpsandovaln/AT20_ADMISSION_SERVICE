@@ -33,7 +33,7 @@ import Logical from './scenes/logical';
 import Reasoning from './scenes/reasoning';
 import Spatial from './scenes/spatial';
 import UserList from './scenes/newUser';
-import SignIn from './scenes/login';
+import Login from './scenes/login';
 function App () {
     const [theme, colorMode] = useMode();
     return (
@@ -45,7 +45,7 @@ function App () {
                     <main className="content">
                         <Topbar />
                         <Routes>
-                            <Route path="/" element={<SignIn />} />
+                            <Route path="/" element={<Login />} />
                             <Route path="/dashboard" element={<Dashborard />} />
                             <Route path="/form" element={<Form />} />
                             <Route path="/informative" element={<InterviewInformative />} />
