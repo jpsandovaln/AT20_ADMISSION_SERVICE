@@ -6,9 +6,10 @@ import Header from '../../components/header';
 import { tokens } from '../../alternative_theme';
 
 export const initialValues = {
-    firstName: '',
+    userName: '',
     lastName: '',
     email: '',
+    password:'',
     contact: '',
     rol: ''
 };
@@ -16,9 +17,10 @@ export const initialValues = {
 const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
 const checkoutSchema = yup.object().shape({
-    firstName: yup.string().required('First name is required'),
+    userName: yup.string().required('First name is required'),
     lastName: yup.string().required('Last name is required'),
     email: yup.string().email('invalid email').required('required'),
+    password: yup.string().password('invalid password').required('required'),
     contact: yup.string().matches(phoneRegExp, 'Phone number is not valid').required('required')
 });
 
@@ -27,8 +29,8 @@ const Form = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const handleFormSubmit = (values) => {
-        // console.log(values);
+    const handleFormSubmit = () => {
+
     };
 
     return (
@@ -64,10 +66,10 @@ const Form = () => {
                                 label='First Name'
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.firstName}
+                                value={values.userName}
                                 name='firstName'
-                                error={!!touched.firstName && !!errors.firstName}
-                                helperText={touched.firstName && errors.firstName}
+                                error={!!touched.userName && !!errors.userName}
+                                helperText={touched.userName && errors.userName}
                                 sx={{ gridColumn: 'span 2' }}
                             />
                             <TextField
