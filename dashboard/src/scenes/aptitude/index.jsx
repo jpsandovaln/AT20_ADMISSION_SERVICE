@@ -27,6 +27,7 @@ const Aptitude = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
     const [selectedOptions, setSelectedOptions] = React.useState({});
     const [formSubmitted, setFormSubmitted] = React.useState(false);
+    const [showThankYouMessage, setShowThankYouMessage] = React.useState(false);
 
     const handleNextQuestion = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
@@ -38,6 +39,7 @@ const Aptitude = () => {
 
     const handleSubmit = () => {
         setFormSubmitted(true);
+        setShowThankYouMessage(true); // Update the thank you message state
     };
 
     const handleSelectAnswer = (event) => {
@@ -73,7 +75,14 @@ const Aptitude = () => {
 
     return (
         <>
-            {/* <Typography variant='h2' gutterBottom align='center'>Aptitude test</Typography>         */}
+            {/* Add the thank you message */}
+            {showThankYouMessage && (
+                <Typography variant='h4' gutterBottom align='center'>
+                    It's complete, thank you!
+                </Typography>
+            )}
+    
+            {/* The rest of the components */}
             <Box sx={{ m: '50px' }}>
                 <Header title='TEST' subtitle='Aptitude test' />
                 <Typography variant='h3' gutterBottom>Please answer the following question:</Typography>
@@ -146,6 +155,6 @@ const Aptitude = () => {
             </Box>
         </>
     );
-};
+                    };
 
-export default Aptitude;
+export default Aptitude; 
