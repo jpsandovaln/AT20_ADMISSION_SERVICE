@@ -73,88 +73,99 @@ const Aptitude = () => {
     };
     const currentQuestion = Questions[currentQuestionIndex];
 
+    const renderThankYouMessage = () => (
+        <Typography variant='h4' gutterBottom align='center'>
+            It's complete, thank you!
+        </Typography>
+    );
+
+    const renderContent = () => {
+        if (showThankYouMessage) {
+            return renderThankYouMessage();
+        }
+
+        return (
+            <>
+                {/* The rest of the components */}
+                <Box sx={{ m: '50px' }}>
+                    <Header title='TEST' subtitle='Aptitude test' />
+                    <Typography variant='h3' gutterBottom>Please answer the following question:</Typography>
+                    <Typography variant='h4' gutterBottom>
+                        {currentQuestion.question}
+                    </Typography>
+                    <FormControl component='fieldset'>
+                        {currentQuestion.type === 'radioButton' && (
+                            <RadioGroup
+                                aria-label='quiz'
+                                name={`${currentQuestionIndex}`}
+                                value={selectedOptions[`${currentQuestionIndex}`] || ''}
+                                onChange={handleSelectAnswer}
+                            >
+                                {currentQuestion.options.map((option, index) => (
+                                    <FormControlLabel
+                                        key={index}
+                                        value={option.value}
+                                        control={<Radio />}
+                                        label={option.label}
+                                    />
+                                ))}
+                            </RadioGroup>
+                        )}
+                        {currentQuestion.type === 'checkBox' && (
+                            <FormGroup>
+                                {currentQuestion.options.map((option, index) => (
+                                    <FormControlLabel
+                                        key={index}
+                                        control={
+                                            <Checkbox
+                                                checked={
+                                                    selectedOptions[`${currentQuestionIndex}`] &&
+                                                    selectedOptions[`${currentQuestionIndex}`].includes(
+                                                        option.value
+                                                    )
+                                                }
+                                                onChange={handleSelectAnswer}
+                                                name={`${currentQuestionIndex}`}
+                                                value={option.value}
+                                            />
+                                        }
+                                        label={option.label}
+                                    />
+                                ))}
+                            </FormGroup>
+                        )}
+                    </FormControl>
+                    <Stack spacing={2} direction='row'>
+                        {currentQuestionIndex > 0 && (
+                            <Button variant='contained' onClick={handlePreviousQuestion}>
+                                Previous
+                            </Button>
+                        )}
+                        {currentQuestionIndex < Questions.length - 1 && (
+                            <Button variant='contained' onClick={handleNextQuestion}>
+                                Next
+                            </Button>
+                        )}
+                        {currentQuestionIndex === Questions.length - 1 && (
+                            <Button
+                                variant='contained'
+                                onClick={handleSubmit}
+                                disabled={formSubmitted}
+                            >
+                                Submit
+                            </Button>
+                        )}
+                    </Stack>
+                </Box>
+            </>
+        );
+    }
+
     return (
         <>
-            {/* Add the thank you message */}
-            {showThankYouMessage && (
-                <Typography variant='h4' gutterBottom align='center'>
-                    It's complete, thank you!
-                </Typography>
-            )}
-    
-            {/* The rest of the components */}
-            <Box sx={{ m: '50px' }}>
-                <Header title='TEST' subtitle='Aptitude test' />
-                <Typography variant='h3' gutterBottom>Please answer the following question:</Typography>
-                <Typography variant='h4' gutterBottom>
-                    {currentQuestion.question}
-                </Typography>
-                <FormControl component='fieldset'>
-                    {currentQuestion.type === 'radioButton' && (
-                        <RadioGroup
-                            aria-label='quiz'
-                            name={`${currentQuestionIndex}`}
-                            value={selectedOptions[`${currentQuestionIndex}`] || ''}
-                            onChange={handleSelectAnswer}
-                        >
-                            {currentQuestion.options.map((option, index) => (
-                                <FormControlLabel
-                                    key={index}
-                                    value={option.value}
-                                    control={<Radio />}
-                                    label={option.label}
-                                />
-                            ))}
-                        </RadioGroup>
-                    )}
-                    {currentQuestion.type === 'checkBox' && (
-                        <FormGroup>
-                            {currentQuestion.options.map((option, index) => (
-                                <FormControlLabel
-                                    key={index}
-                                    control={
-                                        <Checkbox
-                                            checked={
-                                                selectedOptions[`${currentQuestionIndex}`] &&
-                                                selectedOptions[`${currentQuestionIndex}`].includes(
-                                                    option.value
-                                                )
-                                            }
-                                            onChange={handleSelectAnswer}
-                                            name={`${currentQuestionIndex}`}
-                                            value={option.value}
-                                        />
-                                    }
-                                    label={option.label}
-                                />
-                            ))}
-                        </FormGroup>
-                    )}
-                </FormControl>
-                <Stack spacing={2} direction='row'>
-                    {currentQuestionIndex > 0 && (
-                        <Button variant='contained' onClick={handlePreviousQuestion}>
-                            Previous
-                        </Button>
-                    )}
-                    {currentQuestionIndex < Questions.length - 1 && (
-                        <Button variant='contained' onClick={handleNextQuestion}>
-                            Next
-                        </Button>
-                    )}
-                    {currentQuestionIndex === Questions.length - 1 && (
-                        <Button
-                            variant='contained'
-                            onClick={handleSubmit}
-                            disabled={formSubmitted}
-                        >
-                            Submit
-                        </Button>
-                    )}
-                </Stack>
-            </Box>
+            {renderContent()}
         </>
     );
-                    };
+};
 
 export default Aptitude; 
