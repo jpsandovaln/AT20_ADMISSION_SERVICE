@@ -40,6 +40,8 @@ const Aptitude = () => {
     const handleSubmit = () => {
         setFormSubmitted(true);
         setShowThankYouMessage(true); // Update the thank you message state
+        // Save the form submitted state to localStorage
+        localStorage.setItem('formSubmitted', true);
     };
 
     const handleSelectAnswer = (event) => {
@@ -80,7 +82,7 @@ const Aptitude = () => {
     );
 
     const renderContent = () => {
-        if (showThankYouMessage) {
+        if (showThankYouMessage || localStorage.getItem('formSubmitted') === 'true') {
             return renderThankYouMessage();
         }
 
