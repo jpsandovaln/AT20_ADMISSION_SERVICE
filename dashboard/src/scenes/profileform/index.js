@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable import/no-duplicates */
 /* eslint-disable react/react-in-jsx-scope */
 import { Box, Button, TextField, Input } from '@mui/material';
 import { Formik } from 'formik';
@@ -11,9 +13,6 @@ import { IconButton, InputAdornment } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-
-
-
 const initialValues = {
     userName: '',
     lastName: '',
@@ -21,7 +20,7 @@ const initialValues = {
     password: '',
     phone: '',
     rol: '',
-    file: null,
+    file: null
 };
 
 const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
@@ -31,55 +30,52 @@ const checkoutSchema = yup.object().shape({
     lastName: yup.string().required('Last name is required'),
     email: yup.string().email('invalid email').required('required'),
     password: yup.string().required('invalid password').required('required'),
-    phone: yup.string().matches(phoneRegExp, 'Phone number is not valid').required('required'),
+    phone: yup.string().matches(phoneRegExp, 'Phone number is not valid').required('required')
 });
 
 export default function Form () {
     const isNonMobile = useMediaQuery('(min-width:600px)');
     const [previewImage, setPreviewImage] = useState(null);
 
-        const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
-        const handleClickShowPassword = () => {
-          setShowPassword(!showPassword);
-        };
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
 
-        const handleMouseDownPassword = (event) => {
-          event.preventDefault();
-        };
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     const generateImagePreview = async (file) => {
+        // eslint-disable-next-line curly
         if (!file) return;
 
         const imageUrl = URL.createObjectURL(file);
         setPreviewImage(imageUrl);
 
         try {
-          const convertedImageUrl = await convertImage(file);
-          setPreviewImage(convertedImageUrl);
+            const convertedImageUrl = await convertImage(file);
+            setPreviewImage(convertedImageUrl);
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
-      };
+    };
 
-
-
-
-      const handleFormSubmit = async (values) => {
+    const handleFormSubmit = async (values) => {
         try {
-          // Convertir la imagen
-          const convertedImageUrl = await convertImage(values.image);
-          // Agregar la URL de la imagen convertida a los valores enviados al servicio de usuario
-          const user = { ...values, image: convertedImageUrl };
-          const result = await createUser(user);
-          console.log('Result:', result);
-          // Aquí puedes mostrar un mensaje de éxito al usuario o redirigirlo a otra página
+            // Convertir la imagen
+            const convertedImageUrl = await convertImage(values.image);
+            // Agregar la URL de la imagen convertida a los valores enviados al servicio de usuario
+            const user = { ...values, image: convertedImageUrl };
+            const result = await createUser(user);
+            console.log('Result:', result);
+            // Aquí puedes mostrar un mensaje de éxito al usuario o redirigirlo a otra página
         } catch (error) {
-          console.error('Error:', error);
-          // Aquí puedes mostrar un mensaje de error al usuario
+            console.error('Error:', error);
+            // Aquí puedes mostrar un mensaje de error al usuario
         }
-      };
-
+    };
 
     return (
         <>
@@ -162,17 +158,17 @@ export default function Form () {
                                     helperText={touched.password && errors.password}
                                     sx={{ gridColumn: 'span 4' }}
                                     InputProps={{
-                                      endAdornment: (
-                                        <InputAdornment position="end">
-                                          <IconButton
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                          >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                          </IconButton>
-                                        </InputAdornment>
-                                      ),
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
                                     }}
                                 />
                                 <TextField
@@ -194,7 +190,7 @@ export default function Form () {
                                     onChange={(event) => {
                                         setFieldValue('image', event.currentTarget.files[0]);
                                         generateImagePreview(event.target.files[0]);
-                                      }}
+                                    }}
                                     error={!!touched.image && !!errors.image}
                                     inputProps={{
                                         style: {
@@ -212,16 +208,15 @@ export default function Form () {
                                 )}
                             </Box>
                             {previewImage && (
-                            <Box display="flex" justifyContent="center">
-                                <img src={previewImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
-                            </Box>
+                                <Box display="flex" justifyContent="center">
+                                    <img src={previewImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                                </Box>
                             )}
                             <Box display="flex" justifyContent="end" mt="20px">
                                 <Button type="submit" color="secondary" variant="contained">
                                     Send
                                 </Button>
                             </Box>
-
 
                         </form>
                     )}

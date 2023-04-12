@@ -1,15 +1,15 @@
+/* eslint-disable no-console */
 import axios from 'axios';
 const API_URL = 'http://localhost:9090/api/v1/user';
 
 export const createUser = async (userData) => {
-    try{
-    const response = await axios.post(`${API_URL}/register`, userData);
-    return response.data;
-    }catch (error) {
-    console.error(error);
-    throw new Error('Error creating user');
+    try {
+        const response = await axios.post(`${API_URL}/register`, userData);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Error creating user');
     }
-
 };
 
 export const getUsers = async () => {
