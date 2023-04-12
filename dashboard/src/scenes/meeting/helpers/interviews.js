@@ -1,3 +1,4 @@
+/*
 const interview = [
     { label: 'Informative Interview' },
     { label: 'English Interview' },
@@ -6,3 +7,4 @@ const interview = [
 ];
 
 export default interview;
+*/
