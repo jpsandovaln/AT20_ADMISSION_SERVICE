@@ -47,14 +47,14 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 
 // This function verifies the rol and filter the items to show on the sidebar menu
 const filterItemsbyRole = () => {
-    const role = 'trainer';
+    const role = 'candidate';
     let filteredItem = [];
     if (role === 'admin') {
-        filteredItem = ['Dashboard', 'Add User', 'Meetings', 'Global Meetings', 'Tests', 'Create Questionaries', 'Workshops'];
+        filteredItem = ['Dashboard', 'Add User', 'Global Meetings', 'Tests', 'Create Questionaries', 'Workshops'];
     } else if (role === 'trainer') {
-        filteredItem = ['Dashboard', 'Meetings', 'Create Questionaries', 'Workshops'];
+        filteredItem = ['Dashboard', 'My meetings', 'Create Questionaries', 'Workshops'];
     } else if (role === 'candidate') {
-        filteredItem = ['Dashboard', 'Profile form', 'Tests', 'Workshops'];
+        filteredItem = ['Dashboard', 'Profile form', 'My meetings', 'Tests', 'Workshops'];
     }
     return filteredItem;
 };
@@ -174,7 +174,7 @@ const Sidebar = ({ role }) => {
                             />
                         )}
 
-                        {filteredItem.includes('Meetings') && (
+                        {filteredItem.includes('Global Meetings') && (
                             <>
                                 <Typography
                                     variant='h5'
@@ -185,24 +185,35 @@ const Sidebar = ({ role }) => {
                                 </Typography>
 
                                 <Item
-                                    title='Globlal Meetings'
+                                    title='New meeting'
+                                    to='/meeting/new'
+                                    icon={<VideoCallIcon />}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                />
+                                <Item
+                                    title='Global Meetings'
                                     to='/meeting'
                                     icon={<GroupsIcon />}
                                     selected={selected}
                                     setSelected={setSelected}
                                 />
+                            </>
+                        )}
+                        {filteredItem.includes('My meetings') && (
+                            <>
+                                <Typography
+                                    variant='h5'
+                                    color={colors.title[100]}
+                                    sx={{ m: '15px 0 5px 20px' }}
+                                >
+                                    {!isCollapsed ? 'Meeting' : <Divider sx={{ width: '80%' }} />}
+                                </Typography>
 
                                 <Item
                                     title='My meetings'
                                     to='/meeting'
                                     icon={<GroupsIcon />}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                />
-                                <Item
-                                    title='New meeting'
-                                    to='/meeting/new'
-                                    icon={<VideoCallIcon />}
                                     selected={selected}
                                     setSelected={setSelected}
                                 />
