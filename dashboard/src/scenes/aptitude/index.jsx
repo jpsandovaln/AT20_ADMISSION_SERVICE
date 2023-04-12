@@ -26,12 +26,18 @@ import Header from '../../components/header.jsx';
 const Aptitude = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
     const [selectedOptions, setSelectedOptions] = React.useState({});
+    const [formSubmitted, setFormSubmitted] = React.useState(false);
+
     const handleNextQuestion = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     };
 
     const handlePreviousQuestion = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
+    };
+
+    const handleSubmit = () => {
+        setFormSubmitted(true);
     };
 
     const handleSelectAnswer = (event) => {
@@ -128,7 +134,13 @@ const Aptitude = () => {
                         </Button>
                     )}
                     {currentQuestionIndex === Questions.length - 1 && (
-                        <Button variant='contained'>Submit</Button>
+                        <Button
+                            variant='contained'
+                            onClick={handleSubmit}
+                            disabled={formSubmitted}
+                        >
+                            Submit
+                        </Button>
                     )}
                 </Stack>
             </Box>
