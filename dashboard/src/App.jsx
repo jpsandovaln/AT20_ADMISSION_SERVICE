@@ -15,7 +15,6 @@ import { Routes, Route } from 'react-router-dom';
 import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
 import Dashborard from './scenes/dashboard';
-// import Form from './scenes/profileform';
 import { initialValues, Form } from './scenes/profileform';
 import InterviewEnglish from './scenes/english';
 import InterviewInformative from './scenes/informative';
@@ -33,6 +32,7 @@ import Logical from './scenes/logical';
 import Reasoning from './scenes/reasoning';
 import Spatial from './scenes/spatial';
 import UserList from './scenes/newUser';
+import Workshop from './scenes/workshop';
 
 function App () {
     const [theme, colorMode] = useMode();
@@ -61,6 +61,7 @@ function App () {
                             <Route path="/meeting/new" element={<MyMeetings />} />
                             <Route path="/meeting/waiting-room" element={<Waiting />} />
                             <Route path="/meeting/room/:id" element={<Room />} />
+                            <Route path="/workshop" element={<Workshop />} />
                         </Routes>
                     </main>
                 </div>
