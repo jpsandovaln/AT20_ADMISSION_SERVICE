@@ -17,6 +17,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Questions from './Questions.json';
+import Answers from './Answers.json';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/system';
@@ -39,14 +40,13 @@ const Aptitude = () => {
 
     const handleSubmit = () => {
         setFormSubmitted(true);
-        setShowThankYouMessage(true); // Update the thank you message state
-        // Save the form submitted state to localStorage
+        setShowThankYouMessage(true);
         localStorage.setItem('formSubmitted', true);
     };
 
     const handleSelectAnswer = (event) => {
         const { name, value, type, checked } = event.target;
-        // saves an array when is a checkbox in the selectedOptions object
+
         if (type === 'checkbox') {
             setSelectedOptions((prevSelectedOptions) => {
                 const prevSelectedValues = prevSelectedOptions[name] || [];
@@ -73,17 +73,51 @@ const Aptitude = () => {
             }));
         }
     };
+
     const currentQuestion = Questions[currentQuestionIndex];
 
-    const renderThankYouMessage = () => (
-        <Typography variant='h4' gutterBottom align='center'>
-            It's complete, thank you!
-        </Typography>
-    );
+    const calculateScore = () => {
+        const totalQuestions = Questions.length;
+        let correctAnswers = 0;
+
+        for (let i = 0; i < totalQuestions; i++) {
+            const correctAnswer = Answers[i].answer;
+            const userAnswer = selectedOptions[i];
+
+            if (correctAnswer === userAnswer) {
+                correctAnswers++;
+            } else if (Array.isArray(userAnswer)) {
+                const isAnswerCorrect = userAnswer.every((answer) =>
+                    correctAnswer.includes(answer)
+                );
+                if (isAnswerCorrect) {
+                    correctAnswers++;
+                }
+            }
+        }
+
+        const score = (correctAnswers / totalQuestions) * 100;
+        return score;
+    };
+
+    const renderThankYouMessage = (score) => {
+        const passOrFail = score >= 50 ? 'pass' : 'fail';
+        return (
+            <>
+                <Typography variant='h4' gutterBottom align='center'>
+                    It's complete, thank you!
+                </Typography>
+                <Typography variant='h5' gutterBottom align='center'>
+                    Your score is {score.toFixed(2)}% and you {passOrFail}.
+                </Typography>
+            </>
+        );
+    };
 
     const renderContent = () => {
-        if (showThankYouMessage || localStorage.getItem('formSubmitted') === 'true') {
-            return renderThankYouMessage();
+        if (showThankYouMessage) {
+            const score = calculateScore();
+            return renderThankYouMessage(score);
         }
 
         return (
@@ -161,7 +195,7 @@ const Aptitude = () => {
                 </Box>
             </>
         );
-    }
+    };
 
     return (
         <>
@@ -170,4 +204,4 @@ const Aptitude = () => {
     );
 };
 
-export default Aptitude; 
+export default Aptitude;
