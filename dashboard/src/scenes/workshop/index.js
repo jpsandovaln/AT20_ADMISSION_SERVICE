@@ -1,19 +1,12 @@
 // import * as React from 'react';
 import { useState } from 'react';
-//import TextareaAutosize from '@mui/base/TextareaAutosize';
+// import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { Box, Button, TextField, InputLabel, Select, MenuItem, useTheme, TextareaAutosize } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import { tokens } from '../../alternative_theme';
 import Header from '../../components/header';
+import { saveAs } from 'file-saver';
 
-export const initialValues = {
-    test: '',
-    question: '',
-    type: '',
-    answer1: '',
-    answer2: '',
-    answer3: ''
-};
 export default function Workshop() {
     // eslint-disable-next-line no-console
     console.log('is run from workshop');
@@ -21,7 +14,12 @@ export default function Workshop() {
 
     const handleChangeCodingText = (event) => {
         setCodingText(event.target.value);
-        console.log(event.target.value);
+        // const code = event.target.value;
+    };
+    const compileCode = () => {
+        // console.log(codingText);
+        const blob = new Blob([codingText], { type: 'text/plain;charset=utf-8' });
+        saveAs(blob, 'Test.txt');
     };
 
     const handleChangeLanguage = (event) => {
@@ -34,6 +32,9 @@ export default function Workshop() {
         <Box m="50px">
             <Header title='Technical test' subtitle='Resolve the problem' />
             <FormControl sx={{ width: '20ch' }} variant="filled">
+                <Button type="submit" style={{ background: colors.primary[100] }} variant="contained" onClick={compileCode}>
+                    Run
+                </Button>
                 <InputLabel>Select a Language</InputLabel>
                 <Select name="language" onChange={handleChangeLanguage}>
                     <MenuItem value='java'>Java</MenuItem>
