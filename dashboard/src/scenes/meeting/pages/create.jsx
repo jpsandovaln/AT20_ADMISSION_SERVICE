@@ -30,6 +30,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 // HELPERS
 import guests from '../helpers/guests';
 import host from '../helpers/hosts';
+import interview from '../helpers/interviews';
 import timeZone from '../helpers/timezone';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
@@ -58,11 +59,18 @@ export default function NewMeeting () {
                         '& > div': { gridColumn: isNonMobile ? undefined : 'span 4' }
                     }}
                 >
-                    <TextField fullWidth
+                    {/* <TextField fullWidth
                         id='filled-basic'
                         variant='filled'
                         label='Meeting'
                         sx={{ gridColumn: 'span 2' }}
+                    /> */}
+                    <Autocomplete
+                        disablePortal
+                        id='combo-box-demo'
+                        options={interview}
+                        sx={{ gridColumn: 'span 2' }}
+                        renderInput={(params) => <TextField {...params} id='filled-basic' variant='filled' label='Meeting' />}
                     />
                     <TextField fullWidth
                         id='filled-basic'
@@ -188,7 +196,7 @@ export default function NewMeeting () {
                     >
                         Save
                     </Button>
-                    <Button variant='contained' style={{ background: colors.secondary[100] }} size='medium' href='#outlined-buttons'>Cancel</Button>
+                    <Button variant='contained' style={{ background: colors.secondary[100] }} size='medium' href='#outlined-buttons'>Clear</Button>
                 </Stack>
                 <p style={{
                     color: colors.secondary[100],
