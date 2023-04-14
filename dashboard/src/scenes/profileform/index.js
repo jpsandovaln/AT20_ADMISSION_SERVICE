@@ -11,9 +11,6 @@ import { IconButton, InputAdornment } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-
-
-
 const initialValues = {
     userName: '',
     lastName: '',
@@ -37,8 +34,7 @@ const checkoutSchema = yup.object().shape({
 export default function Form () {
     const isNonMobile = useMediaQuery('(min-width:600px)');
     const [previewImage, setPreviewImage] = useState(null);
-
-        const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
         const handleClickShowPassword = () => {
           setShowPassword(!showPassword);
@@ -60,10 +56,7 @@ export default function Form () {
         } catch (error) {
           console.error(error);
         }
-      };
-
-
-
+    };
 
       const handleFormSubmit = async (values) => {
         try {
@@ -80,12 +73,10 @@ export default function Form () {
         }
       };
 
-
     return (
         <>
             <Box m="20px">
                 <Header title="EDIT USER" subtitle="Edit User Profile" />
-
                 <Formik
                     onSubmit={handleFormSubmit}
                     initialValues={initialValues}
@@ -109,7 +100,6 @@ export default function Form () {
                                     '& > div': { gridColumn: isNonMobile ? undefined : 'span 4' }
                                 }}
                             >
-
                                 <TextField
                                     fullWidth
                                     variant="filled"
