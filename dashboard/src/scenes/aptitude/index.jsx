@@ -38,10 +38,26 @@ const Aptitude = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setFormSubmitted(true);
         setShowThankYouMessage(true);
         localStorage.setItem('formSubmitted', true);
+
+        // Save selected answers to Notes.json
+        const selectedAnswers = Object.values(selectedOptions);
+        const notes = {
+            selectedAnswers: selectedAnswers
+        };
+        const json = JSON.stringify(notes);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'Notes.json';
+        link.click();
+
+        // Print JSON to console
+        console.log(json);
     };
 
     const handleSelectAnswer = (event) => {
