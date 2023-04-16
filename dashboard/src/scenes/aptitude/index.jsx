@@ -30,6 +30,10 @@ const Aptitude = () => {
     const [formSubmitted, setFormSubmitted] = React.useState(false);
     const [showThankYouMessage, setShowThankYouMessage] = React.useState(false);
 
+    const getTestName = () => {
+        return 'Aptitude Test';
+      };      
+
     const handleNextQuestion = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     };
@@ -47,7 +51,8 @@ const Aptitude = () => {
         const selectedAnswers = Object.values(selectedOptions);
         const notes = {
             selectedAnswers: selectedAnswers,
-            score: calculateScore()
+            score: calculateScore(),
+            testName: getTestName()
         };
 
         const json = JSON.stringify(notes);
