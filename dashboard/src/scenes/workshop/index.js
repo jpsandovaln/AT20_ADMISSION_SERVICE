@@ -4,9 +4,8 @@ import FormControl from '@mui/material/FormControl';
 import { tokens } from '../../alternative_theme';
 import Header from '../../components/header';
 import { compilerCode } from '../../apis/compilerService';
-//import { saveAs } from 'file-saver';
 
-export default function Workshop() {
+export default function Workshop () {
     const [codingText, setCodingText] = useState('');
     const [codeLanguage, setCodeLanguage] = useState('');
     const [compileCode, setCompileCode] = useState('');
@@ -17,19 +16,13 @@ export default function Workshop() {
     };
 
     const handleChangeCodingText = (event) => {
-        const code = event.target.value;
-        if (code === '') return console.info('Insert a valid code');
         setCodingText(event.target.value);
     };
     const buttonRunCode = async ({ resetForm }) => {
         const blob = new Blob([codingText], { type: 'text/plain;charset=utf-8' });
         const file = new File([blob], `code${codeLanguage}`, { type: 'text/plain;charset=utf-8' });
-        //saveAs(file);
         const result = await compilerCode(file, codeLanguage);
-        //here send the result to print in the last textfield
-        //resetForm(setCompileCode(''));
         setCompileCode(result);
-
     };
 
     const theme = useTheme();
@@ -47,7 +40,7 @@ export default function Workshop() {
                         <MenuItem value='.py'>Python</MenuItem>
                     </Select>
                 </FormControl>
-                <Button type="submit" style={{ background: colors.primary[100], size: "large" }} variant="contained" onClick={buttonRunCode}>
+                <Button type="submit" style={{ background: colors.primary[100], size: 'large' }} variant="contained" onClick={buttonRunCode}>
                     Run Your Code
                 </Button>
             </Stack>
@@ -55,7 +48,7 @@ export default function Workshop() {
                 mt: 1,
                 display: 'grid',
                 gridAutoColumns: '1fr',
-                gap: 1,
+                gap: 1
             }}>
                 <TextareaAutosize
                     maxRows={4}
@@ -65,23 +58,14 @@ export default function Workshop() {
                     onChange={handleChangeCodingText}
                     style={{ width: 650, height: 450 }}
                 />
-                {/* <TextareaAutosize
-                    maxRows={4}
-                    name='output'
-                    aria-label="maximum height"
-                    value={compileCode}
-                    // onChange={codingOutput}
-                    style={{ width: 650, height: 70 }}
-                /> */}
                 <TextField
-                    //id="outlined-multiline-static"
                     value={compileCode}
                     label="Output"
                     multiline
                     rows={4}
                     style={{ width: 650 }}
                     InputProps={{
-                        readOnly: true,
+                        readOnly: true
                     }}
                     sx={{ mt: 0.5 }}
                 />
