@@ -19,8 +19,6 @@ export const compilerCode = async (file, codeLanguage) => {
         });
         return response;
     } catch (error) {
-        // console.log(error);
-        // console.log(error.response.data.stdout);
         const output = error.response.data.stdout;
         return output;
     }
