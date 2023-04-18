@@ -16,7 +16,6 @@ import { Link } from 'react-router-dom';
 import 'react-pro-sidebar/dist/css/styles.css';
 import { tokens } from '../../alternative_theme';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
 import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
@@ -48,14 +47,14 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 
 // This function verifies the rol and filter the items to show on the sidebar menu
 const filterItemsbyRole = () => {
-    const role = 'candidate';
+    const role = 'admin';
     let filteredItem = [];
     if (role === 'admin') {
-        filteredItem = ['Dashboard', 'Add User', 'Meetings', 'Interviews', 'Tests', 'Create Questionaries', 'Workshops'];
+        filteredItem = ['Dashboard', 'Add User', 'Global Meetings', 'Tests', 'Create Questionaries', 'Workshops'];
     } else if (role === 'trainer') {
-        filteredItem = ['Dashboard', 'Meetings', 'Interviews', 'Create Questionaries', 'Workshops'];
+        filteredItem = ['Dashboard', 'My meetings', 'Create Questionaries', 'Workshops'];
     } else if (role === 'candidate') {
-        filteredItem = ['Dashboard', 'Profile form', 'Interviews', 'Tests', 'Workshops'];
+        filteredItem = ['Dashboard', 'Profile form', 'My meetings', 'Tests', 'Workshops'];
     }
     return filteredItem;
 };
@@ -174,7 +173,34 @@ const Sidebar = ({ role }) => {
                                 setSelected={setSelected}
                             />
                         )}
-                        {filteredItem.includes('Meetings') && (
+
+                        {filteredItem.includes('Global Meetings') && (
+                            <>
+                                <Typography
+                                    variant='h5'
+                                    color={colors.title[100]}
+                                    sx={{ m: '15px 0 5px 20px' }}
+                                >
+                                    {!isCollapsed ? 'Meeting' : <Divider sx={{ width: '80%' }} />}
+                                </Typography>
+
+                                <Item
+                                    title='New meeting'
+                                    to='/meeting/new'
+                                    icon={<VideoCallIcon />}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                />
+                                <Item
+                                    title='Global Meetings'
+                                    to='/meeting'
+                                    icon={<GroupsIcon />}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                />
+                            </>
+                        )}
+                        {filteredItem.includes('My meetings') && (
                             <>
                                 <Typography
                                     variant='h5'
@@ -188,48 +214,6 @@ const Sidebar = ({ role }) => {
                                     title='My meetings'
                                     to='/meeting'
                                     icon={<GroupsIcon />}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                />
-                                <Item
-                                    title='New meeting'
-                                    to='/meeting/new'
-                                    icon={<VideoCallIcon />}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                />
-                            </>
-                        )}
-                        {filteredItem.includes('Interviews') && (
-                            <>
-                                <Typography
-                                    variant='h5'
-                                    color={colors.secondary[300]}
-                                    sx={{ m: '15px 0 5px 20px' }}
-                                >
-                                    {!isCollapsed ? 'Intervies' : <Divider sx={{ width: '80%' }} />}
-                                </Typography>
-
-                                <Item
-                                    title='Informative Interview'
-                                    to='/informative'
-                                    icon={<PeopleOutlinedIcon />}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                />
-
-                                <Item
-                                    title='Psicologic Interview'
-                                    to='/psicologic'
-                                    icon={<PeopleOutlinedIcon />}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                />
-
-                                <Item
-                                    title='English Interview'
-                                    to='/english'
-                                    icon={<PeopleOutlinedIcon />}
                                     selected={selected}
                                     setSelected={setSelected}
                                 />
