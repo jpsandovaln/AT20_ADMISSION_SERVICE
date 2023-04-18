@@ -47,7 +47,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 
 // This function verifies the rol and filter the items to show on the sidebar menu
 const filterItemsbyRole = () => {
-    const role = 'candidate';
+    const role = 'admin';
     let filteredItem = [];
     if (role === 'admin') {
         filteredItem = ['Dashboard', 'Add User', 'Global Meetings', 'Tests', 'Create Questionaries', 'Workshops'];

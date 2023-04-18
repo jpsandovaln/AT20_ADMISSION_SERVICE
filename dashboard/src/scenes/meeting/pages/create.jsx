@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/react-in-jsx-scope */
 /*
 @index.js Copyright (c) 2023 Jalasoft
@@ -8,7 +9,6 @@ Jalasoft, Confidential Information '). You shall not
 disclose such Confidential Information and shall use it only in
 accordance with the terms of the license agreement you entered into with Jalasoft
 */
-
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -26,6 +26,8 @@ import Header from '../../../components/header';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../../alternative_theme';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { saveMeetingData } from '../../../apis/meetingService';
+import { useState } from 'react';
 
 // HELPERS
 import guests from '../helpers/guests';
@@ -40,9 +42,36 @@ export default function NewMeeting () {
     const isNonMobile = useMediaQuery('(min-width:600px)');
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const [selectedInterview, setSelectedMeeting] = useState('');
+    const [description, setDescription] = useState('');
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedStartTime, setSelectedStartTime] = useState(null);
+    const [selectedEndTime, setSelectedEndTime] = useState(null);
+    const [selectedTimeZone, setSelectedTimeZone] = useState('');
+    // const [selectedHost, setSelectedHost] = useState(null);
+    // const [selectedGuests, setSelectedGuests] = useState([]);
 
-    const onSubmitForm = (event) => {
-        alert('Meeting Submitted');
+    const onSubmitForm = async (event) => {
+        event.preventDefault();
+        try {
+            const formData = {
+
+                host_global_id: '',
+                // guest_global_id: '',
+                meeting_name: selectedInterview,
+                description,
+                date: selectedDate,
+                start_time: selectedStartTime,
+                end_time: selectedEndTime,
+                time_zone: selectedTimeZone
+            };
+            // eslint-disable-next-line no-unused-vars
+            const response = await saveMeetingData(formData);
+            alert('Meeting submitted');
+        } catch (error) {
+            console.error(error);
+            alert('Failed to submit meeting');
+        }
     };
 
     return (
@@ -68,14 +97,21 @@ export default function NewMeeting () {
                     <Autocomplete
                         disablePortal
                         id='combo-box-demo'
+                        label='Interview'
                         options={interview}
+                        onChange={(event, value) => {
+                            setSelectedMeeting(value.label);
+                        }}
                         sx={{ gridColumn: 'span 2' }}
                         renderInput={(params) => <TextField {...params} id='filled-basic' variant='filled' label='Meeting' />}
                     />
+
                     <TextField fullWidth
                         id='filled-basic'
                         variant='filled'
-                        label='Description'
+                        label='description'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                         sx={{ gridColumn: 'span 2' }}
                     />
                 </Box>
@@ -99,7 +135,9 @@ export default function NewMeeting () {
                         sx={{ gridColumn: 'span 1' }}
                     >
                         <DemoContainer components={['DatePicker']} >
-                            <DatePicker label='Select a Date' slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }}/>
+                            <DatePicker label='Select a Date' value={selectedDate} onChange={(newValue) => {
+                                setSelectedDate(newValue);
+                            }} slotProps={ { textField: { variant: 'filled' } }} sx={{ width: '100% !important' }}/>
                         </DemoContainer>
                     </LocalizationProvider>
 
@@ -108,7 +146,9 @@ export default function NewMeeting () {
                         sx={{ gridColumn: 'span 1', textAlign: 'row' }}
                     >
                         <DemoContainer components={['TimePicker']} >
-                            <TimePicker label='Start time' slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }}/>
+                            <TimePicker label='Start time' value={selectedStartTime} onChange={(newValue) => {
+                                setSelectedStartTime(newValue);
+                            }} slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }} />
                         </DemoContainer>
                     </LocalizationProvider>
 
@@ -117,7 +157,9 @@ export default function NewMeeting () {
                         sx={{ gridColumn: 'span 1' }}
                     >
                         <DemoContainer components={['TimePicker']}>
-                            <TimePicker label='End time' slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }}/>
+                            <TimePicker label='End time' value={selectedEndTime} onChange={(newValue) => {
+                                setSelectedEndTime(newValue);
+                            }} slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }} />
                         </DemoContainer>
                     </LocalizationProvider>
 
@@ -126,9 +168,17 @@ export default function NewMeeting () {
                         id='combo-box-demo'
                         label='Time Zone'
                         options={timeZone}
+                        onChange={(event, value) => {
+                            const newTimeZone = {
+                                value: value.value,
+                                label: value.label
+                            };
+                            setSelectedTimeZone([newTimeZone]);
+                        }}
                         sx={{ mt: 1, gridColumn: 'span 1', with: '100%' }}
                         renderInput={(params) => <TextField {...params} id='filled-basic' variant='filled' label='Time Zone' />}
                     />
+
                 </Box>
             </div>
             <div style={{ width: '100%' }}>
