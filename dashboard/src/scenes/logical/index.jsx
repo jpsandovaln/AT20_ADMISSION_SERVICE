@@ -23,13 +23,13 @@ import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/system';
 import Header from '../../components/header.jsx';
 
-// builds the aptitude test page
+// builds the logical test page
 const Logical = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
     const [selectedOptions, setSelectedOptions] = React.useState({});
     const [formSubmitted, setFormSubmitted] = React.useState(false);
     const [showThankYouMessage, setShowThankYouMessage] = React.useState(false);
-    const [examTaken, setExamTaken] = React.useState(localStorage.getItem('examTaken'));
+    const [examTaken, setExamTaken] = React.useState(localStorage.getItem('examTakenLogical'));
 
     const getTestName = () => {
         return 'Logical Test';
@@ -46,7 +46,7 @@ const Logical = () => {
     const handleSubmit = async () => {
         setFormSubmitted(true);
         setShowThankYouMessage(true);
-        localStorage.setItem('examTaken', true);
+        localStorage.setItem('examTakenLogical', true);
         setExamTaken(true);
 
 
@@ -150,7 +150,7 @@ const Logical = () => {
             <>
                 {/* The rest of the components */}
                 <Box sx={{ m: '50px' }}>
-                    <Header title='TEST' subtitle='Aptitude test' />
+                    <Header title='TEST' subtitle='Logical test' />
                     <Typography variant='h3' gutterBottom>Please answer the following question:</Typography>
                     <Typography variant='h4' gutterBottom>
                         {currentQuestion.question}
