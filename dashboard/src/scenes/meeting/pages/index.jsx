@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Table,
     TableBody,
@@ -15,8 +15,9 @@ import {
 } from '@mui/material';
 import { AccessTime, Person } from '@mui/icons-material';
 import Header from '../../../components/header';
+import { getMeetingData } from '../../../apis/meetingService';
 
-import meetings from '../helpers/meetings';
+// import meetings from '../helpers/meetings';
 const tableStyles = {
     padding: '16px'
 };
@@ -28,6 +29,16 @@ const titleStyles = {
 };
 
 const MeetingsTable = () => {
+    const [meetings, setMeetings] = useState([]);
+
+    useEffect(() => {
+        const fetchMeetings = async () => {
+            const meetingData = await getMeetingData();
+            setMeetings(meetingData);
+        };
+        fetchMeetings();
+    }, []);
+
     const tryJoinMeeting = (meeting) => {
         window.location.href = `/meeting/room/${meeting.id}`;
     };
@@ -62,14 +73,14 @@ const MeetingsTable = () => {
                                         </span>
                                     </Tooltip>
                                 </TableCell>
-                                <TableCell>{meeting.date}</TableCell>
+                                <TableCell>{meeting.date.substring(0, 10)}</TableCell>
                                 <TableCell>
                                     <AccessTime />
-                                    {meeting.start_time}
+                                    {meeting.start_time.substring(11, 16)}
                                 </TableCell>
                                 <TableCell>
                                     <AccessTime />
-                                    {meeting.end_time}
+                                    {meeting.end_time.substring(11, 16)}
                                 </TableCell>
                                 <TableCell>
                                     <Person />
