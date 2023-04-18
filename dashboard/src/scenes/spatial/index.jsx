@@ -17,15 +17,24 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Questions from './Questions.json';
+import Answers from './Answers.json';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/system';
-import Header from '../../components/header';
+import Header from '../../components/header.jsx';
 
-// builds the spatial test page
+// builds the aptitude test page
 const Aptitude = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
     const [selectedOptions, setSelectedOptions] = React.useState({});
+    const [formSubmitted, setFormSubmitted] = React.useState(false);
+    const [showThankYouMessage, setShowThankYouMessage] = React.useState(false);
+    const [examTaken, setExamTaken] = React.useState(localStorage.getItem('examTaken1'));
+
+    const getTestName = () => {
+        return 'Spatial Test';
+        };      
+
     const handleNextQuestion = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     };
@@ -34,9 +43,28 @@ const Aptitude = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
     };
 
+    const handleSubmit = async () => {
+        setFormSubmitted(true);
+        setShowThankYouMessage(true);
+        localStorage.setItem('examTaken1', true);
+        setExamTaken(true);
+
+
+        // Save selected answers and score to Notes.json
+        const selectedAnswers = Object.values(selectedOptions);
+        const notes = {
+            selectedAnswers: selectedAnswers,
+            score: calculateScore(),
+            testName: getTestName()
+        };
+
+        const json = JSON.stringify(notes);
+
+    };
+
     const handleSelectAnswer = (event) => {
         const { name, value, type, checked } = event.target;
-        // saves an array when is a checkbox in the selectedOptions object
+
         if (type === 'checkbox') {
             setSelectedOptions((prevSelectedOptions) => {
                 const prevSelectedValues = prevSelectedOptions[name] || [];
@@ -63,74 +91,141 @@ const Aptitude = () => {
             }));
         }
     };
+
     const currentQuestion = Questions[currentQuestionIndex];
+
+    const calculateScore = () => {
+        const totalQuestions = Questions.length;
+        let correctAnswers = 0;
+
+        for (let i = 0; i < totalQuestions; i++) {
+            const correctAnswer = Answers[i].answer;
+            const userAnswer = selectedOptions[i];
+
+            if (correctAnswer === userAnswer) {
+                correctAnswers++;
+            } else if (Array.isArray(userAnswer)) {
+                const isAnswerCorrect = userAnswer.every((answer) =>
+                    correctAnswer.includes(answer)
+                );
+                if (isAnswerCorrect) {
+                    correctAnswers++;
+                }
+            }
+        }
+
+        const score = (correctAnswers / totalQuestions) * 100;
+        return score;
+    };
+
+    const renderThankYouMessage = (score) => {
+        const passOrFail = score >= 50 ? 'pass' : 'fail';
+        return (
+            <>
+                <Typography variant='h4' gutterBottom align='center'>
+                    It's complete, thank you!
+                </Typography>
+                <Typography variant='h5' gutterBottom align='center'>
+                    Your score is {score.toFixed(2)}% and you {passOrFail}.
+                </Typography>
+            </>
+        );
+    };
+
+    const renderContent = () => {
+        if (examTaken) {
+            return (
+                <>
+                    <Typography variant='h4' gutterBottom align='center'>
+                    Congratulations, you completed the exam!
+                    </Typography>
+                </>
+            );
+        } else if (showThankYouMessage) {
+            const score = calculateScore();
+            return renderThankYouMessage(score);
+        }
+
+        return (
+            <>
+                {/* The rest of the components */}
+                <Box sx={{ m: '50px' }}>
+                    <Header title='TEST' subtitle='Spatial test' />
+                    <Typography variant='h3' gutterBottom>Please answer the following question:</Typography>
+                    <Typography variant='h4' gutterBottom>
+                        {currentQuestion.question}
+                    </Typography>
+                    <FormControl component='fieldset'>
+                        {currentQuestion.type === 'radioButton' && (
+                            <RadioGroup
+                                aria-label='quiz'
+                                name={`${currentQuestionIndex}`}
+                                value={selectedOptions[`${currentQuestionIndex}`] || ''}
+                                onChange={handleSelectAnswer}
+                            >
+                                {currentQuestion.options.map((option, index) => (
+                                    <FormControlLabel
+                                        key={index}
+                                        value={option.value}
+                                        control={<Radio />}
+                                        label={option.label}
+                                    />
+                                ))}
+                            </RadioGroup>
+                        )}
+                        {currentQuestion.type === 'checkBox' && (
+                            <FormGroup>
+                                {currentQuestion.options.map((option, index) => (
+                                    <FormControlLabel
+                                        key={index}
+                                        control={
+                                            <Checkbox
+                                                checked={
+                                                    selectedOptions[`${currentQuestionIndex}`] &&
+                                                    selectedOptions[`${currentQuestionIndex}`].includes(
+                                                        option.value
+                                                    )
+                                                }
+                                                onChange={handleSelectAnswer}
+                                                name={`${currentQuestionIndex}`}
+                                                value={option.value}
+                                            />
+                                        }
+                                        label={option.label}
+                                    />
+                                ))}
+                            </FormGroup>
+                        )}
+                    </FormControl>
+                    <Stack spacing={2} direction='row'>
+                        {currentQuestionIndex > 0 && (
+                            <Button variant='contained' onClick={handlePreviousQuestion}>
+                                Previous
+                            </Button>
+                        )}
+                        {currentQuestionIndex < Questions.length - 1 && (
+                            <Button variant='contained' onClick={handleNextQuestion}>
+                                Next
+                            </Button>
+                        )}
+                        {currentQuestionIndex === Questions.length - 1 && (
+                            <Button
+                                variant='contained'
+                                onClick={handleSubmit}
+                                disabled={formSubmitted}
+                            >
+                                Submit
+                            </Button>
+                        )}
+                    </Stack>
+                </Box>
+            </>
+        );
+    };
 
     return (
         <>
-            <Box sx={{ m: '50px' }}>
-                <Header title='TEST' subtitle='Spatial test' />
-                <Typography variant='h3' gutterBottom>Please answer the following question:</Typography>
-                <Typography variant='h4' gutterBottom>
-                    {currentQuestion.question}
-                </Typography>
-                <FormControl component='fieldset'>
-                    {currentQuestion.type === 'radioButton' && (
-                        <RadioGroup
-                            aria-label='quiz'
-                            name={`${currentQuestionIndex}`}
-                            value={selectedOptions[`${currentQuestionIndex}`] || ''}
-                            onChange={handleSelectAnswer}
-                        >
-                            {currentQuestion.options.map((option, index) => (
-                                <FormControlLabel
-                                    key={index}
-                                    value={option.value}
-                                    control={<Radio />}
-                                    label={option.label}
-                                />
-                            ))}
-                        </RadioGroup>
-                    )}
-                    {currentQuestion.type === 'checkBox' && (
-                        <FormGroup>
-                            {currentQuestion.options.map((option, index) => (
-                                <FormControlLabel
-                                    key={index}
-                                    control={
-                                        <Checkbox
-                                            checked={
-                                                selectedOptions[`${currentQuestionIndex}`] &&
-                                                selectedOptions[`${currentQuestionIndex}`].includes(
-                                                    option.value
-                                                )
-                                            }
-                                            onChange={handleSelectAnswer}
-                                            name={`${currentQuestionIndex}`}
-                                            value={option.value}
-                                        />
-                                    }
-                                    label={option.label}
-                                />
-                            ))}
-                        </FormGroup>
-                    )}
-                </FormControl>
-                <Stack spacing={2} direction='row'>
-                    {currentQuestionIndex > 0 && (
-                        <Button variant='contained' onClick={handlePreviousQuestion}>
-                            Previous
-                        </Button>
-                    )}
-                    {currentQuestionIndex < Questions.length - 1 && (
-                        <Button variant='contained' onClick={handleNextQuestion}>
-                            Next
-                        </Button>
-                    )}
-                    {currentQuestionIndex === Questions.length - 1 && (
-                        <Button variant='contained'>Submit</Button>
-                    )}
-                </Stack>
-            </Box>
+            {renderContent()}
         </>
     );
 };
