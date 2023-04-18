@@ -29,10 +29,11 @@ const Aptitude = () => {
     const [selectedOptions, setSelectedOptions] = React.useState({});
     const [formSubmitted, setFormSubmitted] = React.useState(false);
     const [showThankYouMessage, setShowThankYouMessage] = React.useState(false);
+    const [examTaken, setExamTaken] = React.useState(localStorage.getItem('examTaken'));
 
     const getTestName = () => {
         return 'Aptitude Test';
-      };      
+        };      
 
     const handleNextQuestion = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
@@ -45,7 +46,9 @@ const Aptitude = () => {
     const handleSubmit = async () => {
         setFormSubmitted(true);
         setShowThankYouMessage(true);
-        localStorage.setItem('formSubmitted', true);
+        localStorage.setItem('examTaken', true);
+        setExamTaken(true);
+
 
         // Save selected answers and score to Notes.json
         const selectedAnswers = Object.values(selectedOptions);
@@ -56,13 +59,6 @@ const Aptitude = () => {
         };
 
         const json = JSON.stringify(notes);
-        const blob = new Blob([json], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-
-        link.href = url;
-        link.download = 'Notes.json';
-        link.click();
 
     };
 
@@ -137,7 +133,15 @@ const Aptitude = () => {
     };
 
     const renderContent = () => {
-        if (showThankYouMessage) {
+        if (examTaken) {
+            return (
+                <>
+                    <Typography variant='h4' gutterBottom align='center'>
+                    Congratulations, you completed the exam!
+                    </Typography>
+                </>
+            );
+        } else if (showThankYouMessage) {
             const score = calculateScore();
             return renderThankYouMessage(score);
         }
