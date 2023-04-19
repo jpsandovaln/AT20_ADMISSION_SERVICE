@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 //import axios from 'axios';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { GET_USERS, DELETE_USER, GET_PHOTO } from '../../graphql/user';
+import { GET_USERS, DELETE_USER, GET_PHOTO } from '../../../graphql/user';
 import { useQuery, useMutation } from '@apollo/client'
 
 export function Dashboard() {
@@ -14,7 +14,7 @@ export function Dashboard() {
       filename: "828d214c-1a64-4ee0-8338-4a7479202947-asd.jpg",
     },
   });*/
-  
+
   useEffect(() => {
     refetch();
   }, [data, refetch]);

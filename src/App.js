@@ -14,29 +14,33 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
-import {Dashboard} from './scenes/dashboard';
+//USER
+import {Dashboard} from './scenes/user/user_list';
+import { initialValues, Form } from './scenes/user/profileform';
+import {Login} from './scenes/user/login';
 // import Form from './scenes/profileform';
-import { initialValues, Form } from './scenes/profileform';
-import InterviewEnglish from './scenes/english';
-import InterviewInformative from './scenes/informative';
-import InterviewPsicologic from './scenes/psicologic';
+// INTERVIEWS
+import InterviewEnglish from './scenes/interviews/english';
+import InterviewInformative from './scenes/interviews/informative';
+import InterviewPsicologic from './scenes/interviews/psicologic';
 // MEETING
 import MyMeetings from './scenes/meeting/pages/create';
 import NewMeeting from './scenes/meeting/pages';
 import Waiting from './scenes/meeting/components/waiting.jsx';
 import Room from './scenes/meeting/pages/room.jsx';
+//QUESTIONNAIRE
+import QuestionnaireForm from './scenes/questionnaire/questionnaire_form';
+import Aptitude from './scenes/questionnaire/test_forms/aptitude';
+import Concentration from './scenes/questionnaire/test_forms/concentration';
+import Logical from './scenes/questionnaire/test_forms/logical';
+import Reasoning from './scenes/questionnaire/test_forms/reasoning';
+import Spatial from './scenes/questionnaire/test_forms/spatial';
 
 import Edit from './scenes/form'
-import QuestionnaireForm from './scenes/questionnaire_form';
-import Aptitude from './scenes/aptitude';
-import Concentration from './scenes/concentration';
-import Logical from './scenes/logical';
-import Reasoning from './scenes/reasoning';
-import Spatial from './scenes/spatial';
-import UserList from './scenes/newUser';
-import {Login} from './scenes/login';
+//APOLLO GRAPH
 import { ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
 import { createUploadLink } from 'apollo-upload-client'
+//COMPILER WOKSHOP
 import { Workshop } from "./scenes/workshop";
 
 const client = new ApolloClient({
@@ -84,11 +88,11 @@ function App() {
                   <Route path="/logical" element={<Logical />} />
                   <Route path="/reasoning" element={<Reasoning />} />
                   <Route path="/spatial" element={<Spatial />} />
-                  <Route path="/newUser" element={<UserList />} />
-                  <Route path="/meeting" element={<NewMeeting />} />
+                   <Route path="/meeting" element={<NewMeeting />} />
                   <Route path="/meeting/new" element={<MyMeetings />} />
                   <Route path="/meeting/waiting-room" element={<Waiting />} />
                   <Route path="/meeting/room/:id" element={<Room />} />
+                  <Route path="/workshop" element={<Workshop />} />
               </Routes>
             </main>
           </>
