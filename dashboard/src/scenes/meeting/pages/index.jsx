@@ -17,7 +17,8 @@ import { AccessTime, Person } from '@mui/icons-material';
 import Header from '../../../components/header';
 import { getMeetingData } from '../../../apis/meetingService';
 
-// import meetings from '../helpers/meetings';
+import meetings from '../helpers/meetings';
+
 const tableStyles = {
     padding: '16px'
 };
@@ -29,7 +30,9 @@ const titleStyles = {
 };
 
 const MeetingsTable = () => {
-    const [meetings, setMeetings] = useState([]);
+    const tryJoinMeeting = (meeting) => {
+        window.location.href = `/meeting/room/${meeting.id}`;
+    };
 
     useEffect(() => {
         const fetchMeetings = async () => {
@@ -38,10 +41,6 @@ const MeetingsTable = () => {
         };
         fetchMeetings();
     }, []);
-
-    const tryJoinMeeting = (meeting) => {
-        window.location.href = `/meeting/room/${meeting.id}`;
-    };
 
     return (
         <Box m="50px" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -73,14 +72,14 @@ const MeetingsTable = () => {
                                         </span>
                                     </Tooltip>
                                 </TableCell>
-                                <TableCell>{meeting.date.substring(0, 10)}</TableCell>
+                                <TableCell>{meeting.date}{/*meeting.date.substring(0, 10)*/}</TableCell>
                                 <TableCell>
                                     <AccessTime />
-                                    {meeting.start_time.substring(11, 16)}
+                                    {meeting.start_time}{/*meeting.start_time.substring(11, 16)*/}
                                 </TableCell>
                                 <TableCell>
                                     <AccessTime />
-                                    {meeting.end_time.substring(11, 16)}
+                                    {meeting.end_time}{/*meeting.end_time.substring(11, 16)*/}
                                 </TableCell>
                                 <TableCell>
                                     <Person />

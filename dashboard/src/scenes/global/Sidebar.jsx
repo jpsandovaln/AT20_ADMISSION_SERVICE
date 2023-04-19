@@ -1,14 +1,12 @@
-/* eslint-disable react/react-in-jsx-scope */
 /*
 @node_command.js Copyright (c) 2023 Jalasoft
 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
 Av. General Inofuentes esquina Calle 20, Edificio Union No 1376, La Paz, Bolivia All rights reserved
 This software is the confidential and proprietary information of
-Jalasoft, Confidential Information '). You shall not
+Jalasoft, Confidential Information "). You shall not
 disclose such Confidential Information and shall use it only in
 accordance with the terms of the license agreement you entered into with Jalasoft
 */
-
 import { useState } from 'react';
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import { Box, Divider, IconButton, Typography, useTheme } from '@mui/material';
@@ -16,6 +14,7 @@ import { Link } from 'react-router-dom';
 import 'react-pro-sidebar/dist/css/styles.css';
 import { tokens } from '../../alternative_theme';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
 import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
@@ -50,11 +49,11 @@ const filterItemsbyRole = () => {
     const role = 'admin';
     let filteredItem = [];
     if (role === 'admin') {
-        filteredItem = ['Dashboard', 'Add User', 'Global Meetings', 'Tests', 'Create Questionaries', 'Workshops'];
+        filteredItem = ['Dashboard', 'Add User', 'Meetings', 'Interviews', 'Tests', 'Create Questionaries', 'Workshops'];
     } else if (role === 'trainer') {
-        filteredItem = ['Dashboard', 'My meetings', 'Create Questionaries', 'Workshops'];
-    } else if (role === 'candidate') {
-        filteredItem = ['Dashboard', 'Profile form', 'My meetings', 'Tests', 'Workshops'];
+        filteredItem = ['Dashboard', 'Meetings', 'Interviews', 'Create Questionaries', 'Workshops'];
+    } else if (role === 'student') {
+        filteredItem = ['Dashboard', 'Profile form', 'Interviews', 'Tests', 'Workshops'];
     }
     return filteredItem;
 };
@@ -163,44 +162,24 @@ const Sidebar = ({ role }) => {
                                 setSelected={setSelected}
                             />
                         )}
+                        <Item
+                        title='Edit Profile'
+                        to='/edit'
+                        icon={<PersonOutlinedIcon />}
+                        selected={selected}
+                        setSelected={setSelected}
+                        />
 
                         {filteredItem.includes('Add User') && (
                             <Item
                                 title='Add User'
-                                to='/newUser'
+                                to='/form'
                                 icon={<PersonAddIcon />}
                                 selected={selected}
                                 setSelected={setSelected}
                             />
                         )}
-
-                        {filteredItem.includes('Global Meetings') && (
-                            <>
-                                <Typography
-                                    variant='h5'
-                                    color={colors.title[100]}
-                                    sx={{ m: '15px 0 5px 20px' }}
-                                >
-                                    {!isCollapsed ? 'Meeting' : <Divider sx={{ width: '80%' }} />}
-                                </Typography>
-
-                                <Item
-                                    title='New meeting'
-                                    to='/meeting/new'
-                                    icon={<VideoCallIcon />}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                />
-                                <Item
-                                    title='Global Meetings'
-                                    to='/meeting'
-                                    icon={<GroupsIcon />}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                />
-                            </>
-                        )}
-                        {filteredItem.includes('My meetings') && (
+                        {filteredItem.includes('Meetings') && (
                             <>
                                 <Typography
                                     variant='h5'
@@ -217,10 +196,52 @@ const Sidebar = ({ role }) => {
                                     selected={selected}
                                     setSelected={setSelected}
                                 />
+                                <Item
+                                    title='New meeting'
+                                    to='/meeting/new'
+                                    icon={<VideoCallIcon />}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                />
+                            </>
+                        )}
+                        {filteredItem.includes('Interviews') && (
+                            <>
+                                <Typography
+                                    variant='h5'
+                                    color={colors.secondary[300]}
+                                    sx={{ m: '15px 0 5px 20px' }}
+                                >
+                                    {!isCollapsed ? 'Intervies' : <Divider sx={{ width: '80%' }} />}
+                                </Typography>
+
+                                <Item
+                                    title='Informative Interview'
+                                    to='/informative'
+                                    icon={<PeopleOutlinedIcon />}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                />
+
+                                <Item
+                                    title='Psicologic Interview'
+                                    to='/psicologic'
+                                    icon={<PeopleOutlinedIcon />}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                />
+
+                                <Item
+                                    title='English Interview'
+                                    to='/english'
+                                    icon={<PeopleOutlinedIcon />}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                />
                             </>
                         )}
 
-                        {filteredItem.includes('Create Questionnaires') && (
+                        {filteredItem.includes('Create Questionaries') && (
                             <>
                                 <Typography
                                     variant='h5'
@@ -324,3 +345,12 @@ const Sidebar = ({ role }) => {
     );
 };
 export default Sidebar;
+
+
+
+
+
+
+
+
+
