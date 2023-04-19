@@ -40,6 +40,42 @@ const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
 const checkedIcon = <CheckBoxIcon fontSize='small' />;
 
 export default function NewMeeting () {
+
+    // const isNonMobile = useMediaQuery('(min-width:600px)');
+    // const theme = useTheme();
+    // const colors = tokens(theme.palette.mode);
+    // const [selectedInterview, setSelectedMeeting] = useState('');
+    // const [description, setDescription] = useState('');
+    // const [selectedDate, setSelectedDate] = useState(null);
+    // const [selectedStartTime, setSelectedStartTime] = useState(null);
+    // const [selectedEndTime, setSelectedEndTime] = useState(null);
+    // const [selectedTimeZone, setSelectedTimeZone] = useState('');
+    // const [selectedHost, setSelectedHost] = useState(null);
+    // const [selectedGuests, setSelectedGuests] = useState([]);
+
+    // const onSubmitForm = async (event) => {
+    //     event.preventDefault();
+    //     try {
+    //         const formData = {
+
+    //             host_global_id: '',
+    //             // guest_global_id: '',
+    //             meeting_name: selectedInterview,
+    //             description,
+    //             date: selectedDate,
+    //             start_time: selectedStartTime,
+    //             end_time: selectedEndTime,
+    //             time_zone: selectedTimeZone
+    //         };
+    //         // eslint-disable-next-line no-unused-vars
+    //         const response = await saveMeetingData(formData);
+    //         alert('Meeting submitted');
+    //     } catch (error) {
+    //         console.error(error);
+    //         alert('Failed to submit meeting');
+    //     }
+    // };
+
     const isNonMobile = useMediaQuery('(min-width:600px)');
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -112,6 +148,28 @@ export default function NewMeeting () {
                         label='Meeting'
                         sx={{ gridColumn: 'span 2' }}
                     />
+
+                    {/* <Autocomplete
+                        disablePortal
+                        id='combo-box-demo'
+                        label='Interview'
+                        options={interview}
+                        onChange={(event, value) => {
+                            setSelectedMeeting(value.label);
+                        }}
+                        sx={{ gridColumn: 'span 2' }}
+                        renderInput={(params) => <TextField {...params} id='filled-basic' variant='filled' label='Meeting' />}
+                    />
+
+                    <TextField fullWidth
+                        id='filled-basic'
+                        variant='filled'
+                        label='description'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        sx={{ gridColumn: 'span 2' }}
+                    /> */}
+
                     <TextField fullWidth
                         id='filled-basic'
                         variant='filled'
@@ -142,6 +200,12 @@ export default function NewMeeting () {
                             <DatePicker label='Select a Date' slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }}/>
                         </DemoContainer>
                     </LocalizationProvider>
+                    {/* <DemoContainer components={['DatePicker']} >
+                            <DatePicker label='Select a Date' value={selectedDate} onChange={(newValue) => {
+                                setSelectedDate(newValue);
+                            }} slotProps={ { textField: { variant: 'filled' } }} sx={{ width: '100% !important' }}/>
+                        </DemoContainer>
+                    </LocalizationProvider> */}
 
                     <LocalizationProvider
                         dateAdapter={AdapterDayjs}
@@ -151,6 +215,12 @@ export default function NewMeeting () {
                             <TimePicker label='Start time' slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }}/>
                         </DemoContainer>
                     </LocalizationProvider>
+                    {/* <DemoContainer components={['TimePicker']} >
+                            <TimePicker label='Start time' value={selectedStartTime} onChange={(newValue) => {
+                                setSelectedStartTime(newValue);
+                            }} slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }} />
+                        </DemoContainer>
+                    </LocalizationProvider> */}
 
                     <LocalizationProvider
                         dateAdapter={AdapterDayjs}
@@ -160,12 +230,25 @@ export default function NewMeeting () {
                             <TimePicker label='End time' slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }}/>
                         </DemoContainer>
                     </LocalizationProvider>
+                    {/* <DemoContainer components={['TimePicker']}>
+                            <TimePicker label='End time' value={selectedEndTime} onChange={(newValue) => {
+                                setSelectedEndTime(newValue);
+                            }} slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }} />
+                        </DemoContainer>
+                    </LocalizationProvider> */}
 
                     <Autocomplete
                         disablePortal
                         id='combo-box-demo'
                         label='Time Zone'
                         options={timeZone}
+                        // onChange={(event, value) => {
+                        //     const newTimeZone = {
+                        //         value: value.value,
+                        //         label: value.label
+                        //     };
+                        //     setSelectedTimeZone([newTimeZone]);
+                        // }}
                         sx={{ mt: 1, gridColumn: 'span 1', with: '100%' }}
                         renderInput={(params) => <TextField {...params} id='filled-basic' variant='filled' label='Time Zone' />}
                     />

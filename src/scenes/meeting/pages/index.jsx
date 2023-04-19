@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { AccessTime, Person } from '@mui/icons-material';
 import Header from '../../../components/header';
+import { getMeetingData } from '../../../apis/meetingService';
 
 import meetings from '../helpers/meetings';
 const tableStyles = {
@@ -28,6 +29,16 @@ const titleStyles = {
 };
 
 const MeetingsTable = () => {
+    const [meetings, setMeetings] = useState([]);
+
+    useEffect(() => {
+        const fetchMeetings = async () => {
+            const meetingData = await getMeetingData();
+            setMeetings(meetingData);
+        };
+        fetchMeetings();
+    }, []);
+
     const tryJoinMeeting = (meeting) => {
         window.location.href = `/meeting/room/${meeting.id}`;
     };
