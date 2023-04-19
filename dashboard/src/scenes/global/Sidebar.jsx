@@ -220,7 +220,7 @@ const Sidebar = ({ role }) => {
                             </>
                         )}
 
-                        {filteredItem.includes('Create Questionaries') && (
+                        {filteredItem.includes('Create Questionnaires') && (
                             <>
                                 <Typography
                                     variant='h5'

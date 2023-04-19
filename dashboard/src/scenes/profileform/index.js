@@ -36,7 +36,6 @@ const checkoutSchema = yup.object().shape({
 export default function Form () {
     const isNonMobile = useMediaQuery('(min-width:600px)');
     const [previewImage, setPreviewImage] = useState(null);
-
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => {
@@ -81,7 +80,6 @@ export default function Form () {
         <>
             <Box m="20px">
                 <Header title="EDIT USER" subtitle="Edit User Profile" />
-
                 <Formik
                     onSubmit={handleFormSubmit}
                     initialValues={initialValues}
@@ -105,7 +103,6 @@ export default function Form () {
                                     '& > div': { gridColumn: isNonMobile ? undefined : 'span 4' }
                                 }}
                             >
-
                                 <TextField
                                     fullWidth
                                     variant="filled"
