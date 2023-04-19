@@ -18,6 +18,7 @@ import Sidebar from './scenes/global/Sidebar';
 import {Dashboard} from './scenes/user/user_list';
 import { initialValues, Form } from './scenes/user/profileform';
 import {Login} from './scenes/user/login';
+import Edit from './scenes/user/form';
 // import Form from './scenes/profileform';
 // INTERVIEWS
 import InterviewEnglish from './scenes/interviews/english';
@@ -36,12 +37,12 @@ import Logical from './scenes/questionnaire/test_forms/logical';
 import Reasoning from './scenes/questionnaire/test_forms/reasoning';
 import Spatial from './scenes/questionnaire/test_forms/spatial';
 
-import Edit from './scenes/form'
+
 //APOLLO GRAPH
 import { ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
 import { createUploadLink } from 'apollo-upload-client'
 //COMPILER WOKSHOP
-import { Workshop } from "./scenes/workshop";
+import  Workshop  from "./scenes/workshop";
 
 const client = new ApolloClient({
       cache: new InMemoryCache(),

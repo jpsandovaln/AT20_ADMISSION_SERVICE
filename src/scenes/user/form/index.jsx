@@ -4,8 +4,8 @@ import { Formik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react"
 import {useMutation, useQuery} from '@apollo/client'
-import {GET_USER, UPDATE_USER } from "../../graphql/user";
-import Header from '../../components/header';
+import {GET_USER, UPDATE_USER } from "../../../graphql/user";
+import Header from '../../../components/header';
 
 
 export default function Edit (props) {
@@ -87,7 +87,7 @@ const [updateUser] = useMutation(UPDATE_USER);
                 helperText={touched.name && errors.name}
                 sx={{ gridColumn: "span 2" }}
                 value={userData.firstName}
-                
+
               />
               <TextField
                 fullWidth
@@ -109,7 +109,7 @@ const [updateUser] = useMutation(UPDATE_USER);
                 onChange={handleInputChange}
                 name="email"
                 error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}  
+                helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 4" }}
                 value= {userData.email}
               />
@@ -121,7 +121,7 @@ const [updateUser] = useMutation(UPDATE_USER);
                 onChange={handleInputChange}
                 name="userName"
                 error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}  
+                helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 2" }}
                 value= {userData.userName}
               />
@@ -136,7 +136,7 @@ const [updateUser] = useMutation(UPDATE_USER);
                 }}
                 name="age"
                 error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}  
+                helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 2" }}
                 value= {userData.age}
               />
@@ -148,7 +148,7 @@ const [updateUser] = useMutation(UPDATE_USER);
                 onChange={handleInputChange}
                 name="firstPassword"
                 error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}  
+                helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 4" }}
                 value= {userData.firstPassword}
               />
@@ -160,7 +160,7 @@ const [updateUser] = useMutation(UPDATE_USER);
                 onChange={handleInputChange}
                 name="country"
                 error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}  
+                helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 2" }}
                 value= {userData.country}
               />
@@ -172,7 +172,7 @@ const [updateUser] = useMutation(UPDATE_USER);
                 onChange={handleInputChange}
                 name="city"
                 error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}  
+                helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 2" }}
                 value= {data.user.city}
               />

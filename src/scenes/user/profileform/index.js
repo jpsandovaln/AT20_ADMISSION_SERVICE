@@ -5,9 +5,9 @@ import { Formik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react"
 import {useMutation, useQuery} from '@apollo/client'
-import { CREATE_USER, UPLOAD_IMAGE } from "../../graphql/user";
-import Header from '../../components/header';
-import { GET_ROLES } from "../../graphql/role";
+import { CREATE_USER, UPLOAD_IMAGE } from "../../../graphql/user";
+import Header from '../../../components/header';
+import { GET_ROLES } from "../../../graphql/role";
 
 const initialValues = {
     firstName: '',
@@ -26,7 +26,7 @@ export default function Form () {
 
   const [user, setUser] = useState({
     globalID: "",
-    firstName: "", 
+    firstName: "",
     lastName: "",
     userName: "",
     firstPassword: "",
@@ -90,11 +90,11 @@ const handlePhotoUpload = async () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser((prevUser) => ({ ...prevUser, [name]: value }));
-    
+
   };
 
   return (
-    
+
     <Box m="20px">
     <Header title="CREATE USER" subtitle="NEW USER" />
       <Formik
@@ -144,7 +144,7 @@ const handlePhotoUpload = async () => {
                 onChange={handleChange}
                 name="email"
                 error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}  
+                helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField

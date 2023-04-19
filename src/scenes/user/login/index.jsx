@@ -15,9 +15,9 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LOGIN } from '../../graphql/user';
+import { LOGIN } from '../../../graphql/user';
 import { useMutation } from '@apollo/client';
-import Edit from '../../scenes/form'
+
 
 const theme = createTheme();
 
@@ -51,7 +51,7 @@ export function Login (props) {
           })
             .catch(error => console.log(error));
         }
-        
+
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -83,7 +83,7 @@ export function Login (props) {
                             autoFocus
                             onChange={handleChange}
                             value={user.email}
-                            
+
                         />
                         <TextField
                             typeof='password'
@@ -97,7 +97,7 @@ export function Login (props) {
                             autoComplete="current-password"
                             onChange={handleChange}
                             value={user.password}
-                            
+
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
@@ -107,7 +107,7 @@ export function Login (props) {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            
+
                             sx={{ mt: 3, mb: 2 }}
                         >
                             Sign In

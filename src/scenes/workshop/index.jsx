@@ -11,6 +11,7 @@ export default function Workshop () {
     const [codingText, setCodingText] = useState('');
     const [codeLanguage, setCodeLanguage] = useState('');
     const [compileCode, setCompileCode] = useState('');
+    const [compiler] = useMutation(COMPILER);
 
     const handleChangeLanguage = (event) => {
         setCodeLanguage(event.target.value);
@@ -28,8 +29,6 @@ export default function Workshop () {
             '.py': 'python'
         };
         const language = languages[codeLanguage];
-
-        const [compiler] = useMutation(COMPILER);
         const blob = new Blob([codingText], { type: 'text/plain;charset=utf-8' });
         const file = new File([blob], `code${codeLanguage}`, { type: 'text/plain;charset=utf-8' });
         const comp = await compiler({ variables: { file, language } });
