@@ -23,9 +23,17 @@ import { Box } from '@mui/system';
 import Header from "../../../../components/header";
 
 // builds the aptitude test page
-const Aptitude = () => {
+const aptitude = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
     const [selectedOptions, setSelectedOptions] = React.useState({});
+    const [formSubmitted, setFormSubmitted] = React.useState(false);
+    const [showThankYouMessage, setShowThankYouMessage] = React.useState(false);
+    const [examTaken, setExamTaken] = React.useState(localStorage.getItem('examTakenConcentration'));
+
+    const getTestName = () => {
+        return 'Concentration Test';
+        };
+
     const handleNextQuestion = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     };
@@ -34,39 +42,111 @@ const Aptitude = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
     };
 
+    const handleSubmit = async () => {
+        setFormSubmitted(true);
+        setShowThankYouMessage(true);
+        localStorage.setItem('examTakenConcentration', true);
+        setExamTaken(true);
+
+
+        // Save selected answers and score to Notes.json
+        const selectedAnswers = Object.values(selectedOptions);
+        const notes = {
+            selectedAnswers: selectedAnswers,
+            score: calculateScore(),
+            testName: getTestName()
+        };
+
+        const json = JSON.stringify(notes);
+
+    };
+
     const handleSelectAnswer = (event) => {
-    const { name, value, type, checked } = event.target;
-    // saves an array when is a checkbox in the selectedOptions object
-    if (type === "checkbox") {
-        setSelectedOptions((prevSelectedOptions) => {
-            const prevSelectedValues = prevSelectedOptions[name] || [];
-            let updatedSelectedValues;
-    
-            if (checked) {
-                updatedSelectedValues = [...prevSelectedValues, value];
+        const { name, value, type, checked } = event.target;
+
+        if (type === 'checkbox') {
+            setSelectedOptions((prevSelectedOptions) => {
+                const prevSelectedValues = prevSelectedOptions[name] || [];
+                let updatedSelectedValues;
+
+                if (checked) {
+                    updatedSelectedValues = [...prevSelectedValues, value];
                 } else {
-                updatedSelectedValues = prevSelectedValues.filter(
-                    (selectedValue) => selectedValue !== value
-                );
-            }
-    
-            return {
-                ...prevSelectedOptions,
-                [name]: updatedSelectedValues,
-            };
-        });
-        // saves a data when is a radio in the selectedOptions object
-        } else if (type === "radio") {
+                    updatedSelectedValues = prevSelectedValues.filter(
+                        (selectedValue) => selectedValue !== value
+                    );
+                }
+
+                return {
+                    ...prevSelectedOptions,
+                    [name]: updatedSelectedValues
+                };
+            });
+            // saves a data when is a radio in the selectedOptions object
+        } else if (type === 'radio') {
             setSelectedOptions((prevSelectedOptions) => ({
                 ...prevSelectedOptions,
-                [name]: value,
+                [name]: value
             }));
         }
     };
+
     const currentQuestion = Questions[currentQuestionIndex];
 
+    const calculateScore = () => {
+        const totalQuestions = Questions.length;
+        let correctAnswers = 0;
+
+        for (let i = 0; i < totalQuestions; i++) {
+            const correctAnswer = Answers[i].answer;
+            const userAnswer = selectedOptions[i];
+
+            if (correctAnswer === userAnswer) {
+                correctAnswers++;
+            } else if (Array.isArray(userAnswer)) {
+                const isAnswerCorrect = userAnswer.every((answer) =>
+                    correctAnswer.includes(answer)
+                );
+                if (isAnswerCorrect) {
+                    correctAnswers++;
+                }
+            }
+        }
+
+        const score = (correctAnswers / totalQuestions) * 100;
+        return score;
+    };
+
+    const renderThankYouMessage = (score) => {
+        const passOrFail = score >= 50 ? 'pass' : 'fail';
+        return (
+            <>
+                <Typography variant='h4' gutterBottom align='center'>
+                    It's complete, thank you!
+                </Typography>
+                <Typography variant='h5' gutterBottom align='center'>
+                    Your score is {score.toFixed(2)}% and you {passOrFail}.
+                </Typography>
+            </>
+        );
+    };
+
+
+    const renderContent = () => {
+        if (examTaken) {
+            return (
+                <>
+                    <Typography variant='h4' gutterBottom align='center'>
+                    Congratulations, you completed the exam!
+                    </Typography>
+                </>
+            );
+        } else if (showThankYouMessage) {
+            const score = calculateScore();
+            return renderThankYouMessage(score);
+    }
     return (
-    <>        
+    <>
         <Box m="50px">
             <Header title="APTITUDE TEST" subtitle="Please answer the following question:" />
             <Typography variant="h4" gutterBottom>
@@ -126,12 +206,22 @@ const Aptitude = () => {
                     </Button>
                 )}
                 {currentQuestionIndex === Questions.length - 1 && (
-                    <Button variant="contained">Submit</Button>
+                    <Button
+                        variant='contained'
+                        onClick={handleSubmit}
+                        disabled={formSubmitted}
+                    >Submit</Button>
                 )}
             </Stack>
         </Box>
     </>
     );
-};
+    };
 
-export default Aptitude;
+    return (
+        <>
+            {renderContent()}
+        </>
+    );
+};
+export default aptitude;
