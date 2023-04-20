@@ -15,9 +15,9 @@ import { Routes, Route } from 'react-router-dom';
 import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
 //USER
-import {Dashboard} from './scenes/user/user_list';
+import { Dashboard } from './scenes/user/user_list';
 import { initialValues, Form } from './scenes/user/profileform';
-import {Login} from './scenes/user/login';
+import { Login } from './scenes/user/login';
 import Edit from './scenes/user/form';
 // import Form from './scenes/profileform';
 // INTERVIEWS
@@ -39,75 +39,73 @@ import Spatial from './scenes/questionnaire/test_forms/spatial';
 
 
 //APOLLO GRAPH
-import { ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { createUploadLink } from 'apollo-upload-client'
 //COMPILER WOKSHOP
-import  Workshop  from "./scenes/workshop";
+import Workshop from "./scenes/workshop";
 
 const client = new ApolloClient({
-      cache: new InMemoryCache(),
-      link: createUploadLink({
-      uri: 'http://localhost:5000/graphql',
-    }),
-  });
+  cache: new InMemoryCache(),
+  link: createUploadLink({
+    uri: 'http://localhost:5000/graphql',
+  }),
+});
 
 function App() {
   const [theme, colorMode] = useMode();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginData, setLoginData] = useState(null);
 
-    function handleLogin() {
-      setIsLoggedIn(true);
-    }
+  function handleLogin() {
+    setIsLoggedIn(true);
+  }
 
-    function handleLoginData(data) {
-      setLoginData(data);
-    }
+  function handleLoginData(data) {
+    setLoginData(data);
+  }
 
   return (
-  <ApolloProvider client={client}>
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline/>
-        <div className="app">
-          {/* {isLoggedIn ? ( */}
-          {true ? (
-          <>
-            <Sidebar initialValues={initialValues} />
-            <main className="content">
-              <Topbar />
-              <Routes>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/edit" element={<Edit loginData={loginData}/>} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/form" element={<Form />} />
-                  <Route path="/informative" element={<InterviewInformative />} />
-                  <Route path="/psicologic" element={<InterviewPsicologic />} />
-                  <Route path="/english" element={<InterviewEnglish />} />
-                  <Route path="/questionnaire_form" element={<QuestionnaireForm />} />
-                  <Route path="/aptitude" element={<Aptitude />} />
-                  <Route path="/concentration" element={<Concentration />} />
-                  <Route path="/logical" element={<Logical />} />
-                  <Route path="/reasoning" element={<Reasoning />} />
-                  <Route path="/spatial" element={<Spatial />} />
-                   <Route path="/meeting" element={<NewMeeting />} />
-                  <Route path="/meeting/new" element={<MyMeetings />} />
-                  <Route path="/meeting/waiting-room" element={<Waiting />} />
-                  <Route path="/meeting/room/:id" element={<Room />} />
-                  <Route path="/workshop" element={<Workshop />} />
-              </Routes>
-            </main>
-          </>
+    <ApolloProvider client={client}>
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <div className="app">
+            {isLoggedIn ? (
+              <>
+                <Sidebar initialValues={initialValues} />
+                <main className="content">
+                  <Topbar />
+                  <Routes>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/edit" element={<Edit loginData={loginData} />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/form" element={<Form />} />
+                    <Route path="/informative" element={<InterviewInformative />} />
+                    <Route path="/psicologic" element={<InterviewPsicologic />} />
+                    <Route path="/english" element={<InterviewEnglish />} />
+                    <Route path="/questionnaire_form" element={<QuestionnaireForm />} />
+                    <Route path="/aptitude" element={<Aptitude />} />
+                    <Route path="/concentration" element={<Concentration />} />
+                    <Route path="/logical" element={<Logical />} />
+                    <Route path="/reasoning" element={<Reasoning />} />
+                    <Route path="/spatial" element={<Spatial />} />
+                    <Route path="/meeting" element={<NewMeeting />} />
+                    <Route path="/meeting/new" element={<MyMeetings />} />
+                    <Route path="/meeting/waiting-room" element={<Waiting />} />
+                    <Route path="/meeting/room/:id" element={<Room />} />
+                    <Route path="/workshop" element={<Workshop />} />
+                  </Routes>
+                </main>
+              </>
             ) : (
-          // <main className="content">
-          //   <Login onLogin={handleLogin} loginData={handleLoginData} />
-          // </main>
-          true
-        )}
-        </div>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
-  </ApolloProvider>
+              <main className="content">
+                <Login onLogin={handleLogin} loginData={handleLoginData} />
+              </main>
+            )}
+          </div>
+        </ThemeProvider>
+      </ColorModeContext.Provider>
+    </ApolloProvider>
 
   );
 }

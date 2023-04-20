@@ -14,7 +14,6 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useState } from 'react';
 import Header from '../../../components/header';
-// import { tokens } from '../../../alternative_theme';
 import axios from 'axios';
 import { gql, useMutation } from '@apollo/client'
 import { CREATE_QUESTION_MUTATION } from "../../../graphql/questionnaire";
@@ -92,10 +91,6 @@ const initialValues = {
       setQuestions([]);
 
     };
-
-
-    // const theme = useTheme();
-    // const colors = tokens(theme.palette.mode);
 
     return (
         <>
@@ -212,8 +207,7 @@ const initialValues = {
                                 />
                             </Box>
                             <Box display="flex" justifyContent="end" mt="20px">
-                                <Box mr={2}>
-                                    {/* <Button type="submit" style={{ background: colors.success[100] }} variant="contained" onClick={handleButtonClick}> */}
+                                <Box mr={2}>                                    
                                     <Button type="submit" color='success' variant="contained" onClick={handleButtonClick}>
                                         Save Question ({count})
                                     </Button>
