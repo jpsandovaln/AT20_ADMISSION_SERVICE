@@ -9,12 +9,12 @@ Jalasoft, Confidential Information "). You shall not
 disclose such Confidential Information and shall use it only in
 accordance with the terms of the license agreement you entered into with Jalasoft
 */
-import { Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField, useTheme } from '@mui/material';
+import { Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useState } from 'react';
 import Header from '../../../components/header';
-import { tokens } from '../../../alternative_theme';
+// import { tokens } from '../../../alternative_theme';
 import axios from 'axios';
 import { gql, useMutation } from '@apollo/client'
 import { CREATE_QUESTION_MUTATION } from "../../../graphql/questionnaire";
@@ -94,8 +94,8 @@ const initialValues = {
     };
 
 
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
+    // const theme = useTheme();
+    // const colors = tokens(theme.palette.mode);
 
     return (
         <>
@@ -213,12 +213,13 @@ const initialValues = {
                             </Box>
                             <Box display="flex" justifyContent="end" mt="20px">
                                 <Box mr={2}>
-                                    <Button type="submit" style={{ background: colors.success[100] }} variant="contained" onClick={handleButtonClick}>
+                                    {/* <Button type="submit" style={{ background: colors.success[100] }} variant="contained" onClick={handleButtonClick}> */}
+                                    <Button type="submit" color='success' variant="contained" onClick={handleButtonClick}>
                                         Save Question ({count})
                                     </Button>
                                 </Box>
                                 <Box mr={2}>
-                                    <Button type="submit" style={{ background: colors.primary[100] }} variant="contained" onClick={handleButtonClickSend}>
+                                    <Button type="submit" color='primary' variant="contained" onClick={handleButtonClickSend}>
                                         Send All
                                     </Button>
                                 </Box>

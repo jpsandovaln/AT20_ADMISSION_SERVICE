@@ -20,6 +20,7 @@ import Questions from "./Questions.json";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import { Box } from '@mui/system';
+import Header from "../../../../components/header";
 
 // builds the aptitude test page
 const Aptitude = () => {
@@ -65,10 +66,9 @@ const Aptitude = () => {
     const currentQuestion = Questions[currentQuestionIndex];
 
     return (
-    <>
-        <Typography variant="h2" gutterBottom align="center">Aptitude test</Typography>
-        <Box style={{marginLeft: '20px'}}>
-            <Typography variant="h3" gutterBottom>Please answer the following question:</Typography>
+    <>        
+        <Box m="50px">
+            <Header title="APTITUDE TEST" subtitle="Please answer the following question:" />
             <Typography variant="h4" gutterBottom>
                 {currentQuestion.question}
             </Typography>

@@ -70,7 +70,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline/>
         <div className="app">
-          {isLoggedIn ? (
+          {/* {isLoggedIn ? ( */}
+          {true ? (
           <>
             <Sidebar initialValues={initialValues} />
             <main className="content">
@@ -98,9 +99,10 @@ function App() {
             </main>
           </>
             ) : (
-          <main className="content">
-            <Login onLogin={handleLogin} loginData={handleLoginData} />
-          </main>
+          // <main className="content">
+          //   <Login onLogin={handleLogin} loginData={handleLoginData} />
+          // </main>
+          true
         )}
         </div>
       </ThemeProvider>
