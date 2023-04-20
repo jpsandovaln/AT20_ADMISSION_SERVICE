@@ -3,35 +3,36 @@
 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
 Av. General Inofuentes esquina Calle 20, Edificio Union No 1376, La Paz, Bolivia All rights reserved
 This software is the confidential and proprietary information of
-Jalasoft, Confidential Information "). You shall not
+Jalasoft, Confidential Information '). You shall not
 disclose such Confidential Information and shall use it only in
 accordance with the terms of the license agreement you entered into with Jalasoft
 */
 
-import * as React from "react";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Questions from "./Questions.json";
-import FormGroup from "@mui/material/FormGroup";
-import Checkbox from "@mui/material/Checkbox";
+import * as React from 'react';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Questions from './Questions.json';
+import Answers from './Answers.json';
+import FormGroup from '@mui/material/FormGroup';
+import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/system';
-import Header from "../../../../components/header";
+import Header from '../../../../components/header.jsx';
 
 // builds the aptitude test page
-const aptitude = () => {
+const Aptitude = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
     const [selectedOptions, setSelectedOptions] = React.useState({});
     const [formSubmitted, setFormSubmitted] = React.useState(false);
     const [showThankYouMessage, setShowThankYouMessage] = React.useState(false);
-    const [examTaken, setExamTaken] = React.useState(localStorage.getItem('examTakenConcentration'));
+    const [examTaken, setExamTaken] = React.useState(localStorage.getItem('examTaken'));
 
     const getTestName = () => {
-        return 'Concentration Test';
+        return 'Aptitude Test';
         };
 
     const handleNextQuestion = () => {
@@ -45,7 +46,7 @@ const aptitude = () => {
     const handleSubmit = async () => {
         setFormSubmitted(true);
         setShowThankYouMessage(true);
-        localStorage.setItem('examTakenConcentration', true);
+        localStorage.setItem('examTaken', true);
         setExamTaken(true);
 
 
@@ -131,7 +132,6 @@ const aptitude = () => {
         );
     };
 
-
     const renderContent = () => {
         if (examTaken) {
             return (
@@ -144,78 +144,81 @@ const aptitude = () => {
         } else if (showThankYouMessage) {
             const score = calculateScore();
             return renderThankYouMessage(score);
-    }
-    return (
-    <>
-        <Box m="50px">
-            <Header title="APTITUDE TEST" subtitle="Please answer the following question:" />
-            <Typography variant="h4" gutterBottom>
-                {currentQuestion.question}
-            </Typography>
-            <FormControl component="fieldset">
-            {currentQuestion.type === "radioButton" && (
-            <RadioGroup
-            aria-label="quiz"
-            name={`${currentQuestionIndex}`}
-            value={selectedOptions[`${currentQuestionIndex}`] || ""}
-            onChange={handleSelectAnswer}
-            >
-                {currentQuestion.options.map((option, index) => (
-                    <FormControlLabel
-                    key={index}
-                    value={option.value}
-                    control={<Radio />}
-                    label={option.label}
-                    />
-                ))}
-            </RadioGroup>
-            )}
-            {currentQuestion.type === "checkBox" && (
-            <FormGroup>
-                {currentQuestion.options.map((option, index) => (
-                <FormControlLabel
-                    key={index}
-                    control={
-                    <Checkbox
-                        checked={
-                            selectedOptions[`${currentQuestionIndex}`] &&
-                            selectedOptions[`${currentQuestionIndex}`].includes(
-                                option.value
-                            )
-                        }
-                        onChange={handleSelectAnswer}
-                        name={`${currentQuestionIndex}`}
-                        value={option.value}
-                    />
-                    }
-                    label={option.label}
-                />
-                ))}
-            </FormGroup>
-            )}
-            </FormControl>
-            <Stack spacing={2} direction="row">
-                {currentQuestionIndex > 0 && (
-                    <Button variant="contained" onClick={handlePreviousQuestion}>
-                        Previous
-                    </Button>
-                )}
-                {currentQuestionIndex < Questions.length - 1 && (
-                    <Button variant="contained" onClick={handleNextQuestion}>
-                        Next
-                    </Button>
-                )}
-                {currentQuestionIndex === Questions.length - 1 && (
-                    <Button
-                        variant='contained'
-                        onClick={handleSubmit}
-                        disabled={formSubmitted}
-                    >Submit</Button>
-                )}
-            </Stack>
-        </Box>
-    </>
-    );
+        }
+
+        return (
+            <>
+                {/* The rest of the components */}
+                <Box sx={{ m: '50px' }}>
+                    <Header title='TEST' subtitle='Aptitude test' />
+                    <Typography variant='h3' gutterBottom>Please answer the following question:</Typography>
+                    <Typography variant='h4' gutterBottom>
+                        {currentQuestion.question}
+                    </Typography>
+                    <FormControl component='fieldset'>
+                        {currentQuestion.type === 'radioButton' && (
+                            <RadioGroup
+                                aria-label='quiz'
+                                name={`${currentQuestionIndex}`}
+                                value={selectedOptions[`${currentQuestionIndex}`] || ''}
+                                onChange={handleSelectAnswer}
+                            >
+                                {currentQuestion.options.map((option, index) => (
+                                    <FormControlLabel
+                                        key={index}
+                                        value={option.value}
+                                        control={<Radio />}
+                                        label={option.label}
+                                    />
+                                ))}
+                            </RadioGroup>
+                        )}
+                        {currentQuestion.type === 'checkBox' && (
+                            <FormGroup>
+                                {currentQuestion.options.map((option, index) => (
+                                    <FormControlLabel
+                                        key={index}
+                                        control={
+                                            <Checkbox
+                                                checked={
+                                                    selectedOptions[`${currentQuestionIndex}`] &&
+                                                    selectedOptions[`${currentQuestionIndex}`].includes(
+                                                        option.value
+                                                    )
+                                                }
+                                                onChange={handleSelectAnswer}
+                                                name={`${currentQuestionIndex}`}
+                                                value={option.value}
+                                            />
+                                        }
+                                        label={option.label}
+                                    />
+                                ))}
+                            </FormGroup>
+                        )}
+                    </FormControl>
+                    <Stack spacing={2} direction='row'>
+                        {currentQuestionIndex > 0 && (
+                            <Button variant='contained' onClick={handlePreviousQuestion}>
+                                Previous
+                            </Button>
+                        )}
+                        {currentQuestionIndex < Questions.length - 1 && (
+                            <Button variant='contained' onClick={handleNextQuestion}>
+                                Next
+                            </Button>
+                        )}
+                        {currentQuestionIndex === Questions.length - 1 && (
+                            <Button
+                                variant='contained'
+                                onClick={handleSubmit}
+                                disabled={formSubmitted}
+                            >Submit</Button>
+                        )}
+                    </Stack>
+                </Box>
+            </>
+        );
     };
 
     return (
@@ -224,4 +227,5 @@ const aptitude = () => {
         </>
     );
 };
-export default aptitude;
+
+export default Aptitude;
