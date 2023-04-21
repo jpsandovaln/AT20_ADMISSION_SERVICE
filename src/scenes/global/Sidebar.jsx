@@ -205,7 +205,8 @@ const Sidebar = ({ role }) => {
                                 />
                             </>
                         )}
-                        {filteredItem.includes('Interviews') && (
+                       {/*
+                       {filteredItem.includes('Interviews') && (
                             <>
                                 <Typography
                                     variant='h5'
@@ -240,6 +241,7 @@ const Sidebar = ({ role }) => {
                                 />
                             </>
                         )}
+                        */}
 
                         {filteredItem.includes('Create Questionaries') && (
                             <>
