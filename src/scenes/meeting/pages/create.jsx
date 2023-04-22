@@ -143,7 +143,7 @@ export default function NewMeeting () {
                         display: 'grid',
                         columnGap: 2,
                         rowGap: 1,
-                        gridTemplateColumns: 'repeat(4, 1fr)',
+                        gridTemplateColumns: 'repeat(3, 1fr)',
                         '& > div': { gridColumn: isNonMobile ? undefined : 'span 4' }
                     }}
                 >
