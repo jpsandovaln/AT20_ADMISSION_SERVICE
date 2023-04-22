@@ -16,7 +16,7 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined'
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
-
+import './styles.css'; 
 
 const Topbar = () => {
     const theme = useTheme();
@@ -25,24 +25,24 @@ const Topbar = () => {
     return (
         <Box display="flex" justifyContent="right" p={3}>
             <Box display="flex" textAlign="right">
-            <IconButton onClick={colorMode.toggleColorMode}>
-            {theme.palette.mode === 'dark' ?(
-                <DarkModeOutlinedIcon />
-            ) : (
-                <LightModeOutlinedIcon />
-            )}
-            </IconButton>
-            <IconButton>
-                <NotificationsOutlinedIcon />
-            </IconButton>
-            <IconButton>
-                <SettingsOutlinedIcon />
-            </IconButton>
-            <IconButton>
-                <PersonOutlinedIcon />
-            </IconButton>
+                <IconButton className="topbar-icon-button" onClick={colorMode.toggleColorMode}>
+                    {theme.palette.mode === 'dark' ?(
+                        <DarkModeOutlinedIcon />
+                    ) : (
+                        <LightModeOutlinedIcon />
+                    )}
+                </IconButton>
+                <IconButton className="topbar-icon-button">
+                    <NotificationsOutlinedIcon />
+                </IconButton>
+                <IconButton className="topbar-icon-button">
+                    <SettingsOutlinedIcon />
+                </IconButton>
+                <IconButton className="topbar-icon-button">
+                    <PersonOutlinedIcon />
+                </IconButton>
             </Box>
-    </Box>
+        </Box>
     )
 };
 

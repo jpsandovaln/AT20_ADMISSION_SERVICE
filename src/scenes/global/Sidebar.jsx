@@ -79,11 +79,9 @@ const Sidebar = ({ role }) => {
                     padding: '5px 35px 5px 20px !important'
                 },
                 '& .pro-inner-item:hover': {
-                    // color: '#868dfb !important',
                     color: `${colors.primary[100]} !important`
                 },
                 '& .pro-menu-item.active': {
-                    // color: '#6870fa !important',
                     color: `${colors.primary[100]} !important`
                 }
             }}
@@ -100,12 +98,7 @@ const Sidebar = ({ role }) => {
                         }}
                     >
                         {!isCollapsed && (
-                            <Box
-                                display='flex'
-                                justifyContent='space-between'
-                                alignItems='center'
-                                ml='15px'
-                            >
+                            <Box className="menu-item" >
                                 <Typography variant='h3' color={colors.primary[100]}>
                                     JALASOFT
                                 </Typography>
@@ -121,10 +114,8 @@ const Sidebar = ({ role }) => {
                             <Box display='flex' justifyContent='center' alignItems='center'>
                                 <img
                                     alt='profile-user'
-                                    width='100px'
-                                    height='100px'
                                     src={ '../../assets/user.jpg' }
-                                    style={{ cursor: 'pointer', borderRadius: '50%' }}
+                                    className="profile-user"
                                 />
                             </Box>
                             <Box textAlign='center'>
@@ -184,7 +175,7 @@ const Sidebar = ({ role }) => {
                                 <Typography
                                     variant='h5'
                                     color={colors.title[100]}
-                                    sx={{ m: '15px 0 5px 20px' }}
+                                    className='menu-tittle'
                                 >
                                     {!isCollapsed ? 'Meeting' : <Divider sx={{ width: '80%' }} />}
                                 </Typography>
@@ -247,8 +238,8 @@ const Sidebar = ({ role }) => {
                             <>
                                 <Typography
                                     variant='h5'
-                                    color={colors.secondary[300]}
-                                    sx={{ m: '15px 0 5px 20px' }}
+                                    color={colors.title[100]}
+                                    className='menu-tittle'
                                 >
                                     {!isCollapsed ? 'Create Questionnaire' : <Divider sx={{ width: '80%' }} />}
                                 </Typography>
@@ -266,9 +257,9 @@ const Sidebar = ({ role }) => {
                                 <Typography
                                     variant='h5'
                                     color={colors.title[100]}
-                                    sx={{ m: '15px 0 5px 20px' }}
+                                    className='menu-tittle'
                                 >
-                                    {!isCollapsed ? 'Test' : <Divider sx={{ width: '80%' }} />}
+                                    {!isCollapsed ? 'Test' : <Divider className='divider' />}
                                 </Typography>
                                 <Item
                                     title='Aptitude Tests'
@@ -313,7 +304,7 @@ const Sidebar = ({ role }) => {
                                 <Typography
                                     variant='h6'
                                     color={colors.title[100]}
-                                    sx={{ m: '15px 0 5px 20px' }}
+                                    className='menu-tittle'
                                 >
                                     {!isCollapsed ? 'Workshops' : <Divider sx={{ width: '80%' }} />}
                                 </Typography>
@@ -347,12 +338,3 @@ const Sidebar = ({ role }) => {
     );
 };
 export default Sidebar;
-
-
-
-
-
-
-
-
-
