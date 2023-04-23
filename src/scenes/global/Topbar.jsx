@@ -16,7 +16,7 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined'
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
-import './styles.css'; 
+import './styles.css';
 
 const Topbar = () => {
     const theme = useTheme();
@@ -26,7 +26,7 @@ const Topbar = () => {
         <Box display="flex" justifyContent="right" p={3}>
             <Box display="flex" textAlign="right">
                 <IconButton className="topbar-icon-button" onClick={colorMode.toggleColorMode}>
-                    {theme.palette.mode === 'dark' ?(
+                    {theme.palette.mode === 'dark' ? (
                         <DarkModeOutlinedIcon />
                     ) : (
                         <LightModeOutlinedIcon />

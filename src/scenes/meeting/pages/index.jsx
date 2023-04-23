@@ -16,18 +16,8 @@ import {
 import { AccessTime, Person } from '@mui/icons-material';
 import Header from '../../../components/header';
 import { getMeetingData } from '../../../apis/meetingService';
-
 import meetings from '../helpers/meetings';
-
-const tableStyles = {
-    padding: '16px'
-};
-
-const titleStyles = {
-    fontSize: '2rem',
-    margin: '16px 0'
-    // center
-};
+import './styleMeeting.css';
 
 const MeetingsTable = () => {
     const tryJoinMeeting = (meeting) => {
@@ -43,10 +33,10 @@ const MeetingsTable = () => {
     }, []);
 
     return (
-        <Box m="50px" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Box className='general-view'>
             <Header title='MY MEETINGS' subtitle='' />
-            <TableContainer component={Paper} sx={{ maxWidth: '100%', overflowX: 'auto' }}>
-                <Table aria-label="meetings table">
+            <TableContainer component={Paper} className='table-container'>
+                <Table aria-label="meetings table" className='table-view'>
                     <TableHead>
                         <TableRow>
                             <TableCell>Title</TableCell>

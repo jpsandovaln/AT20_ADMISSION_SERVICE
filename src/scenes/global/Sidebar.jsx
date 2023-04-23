@@ -24,6 +24,7 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import GroupsIcon from '@mui/icons-material/Groups';
+import './styles.css';
 // eslint-disable-next-line react/prop-types
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
@@ -31,15 +32,15 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
     return (
         // eslint-disable-next-line react/react-in-jsx-scope
         <MenuItem
-            active={ selected === title }
+            active={selected === title}
             style={{
                 color: colors.secondary[100]
             }}
-            onClick={ () => setSelected(title) }
+            onClick={() => setSelected(title)}
             icon={icon}
         >
-            <Typography>{ title }</Typography>
-            <Link to={ to } />
+            <Typography>{title}</Typography>
+            <Link to={to} />
         </MenuItem>
     );
 };
@@ -111,10 +112,10 @@ const Sidebar = ({ role }) => {
 
                     {!isCollapsed && (
                         <Box mb='25px'>
-                            <Box display='flex' justifyContent='center' alignItems='center'>
+                            <Box className="profile-user-sector">
                                 <img
                                     alt='profile-user'
-                                    src={ '../../assets/user.jpg' }
+                                    src={'../../assets/user.jpg'}
                                     className="profile-user"
                                 />
                             </Box>
@@ -122,7 +123,6 @@ const Sidebar = ({ role }) => {
                                 <Typography
                                     variant='h2'
                                     color={colors.title[100]}
-                                    // fontWeight='bold'
                                     sx={{ m: '10px 0 0 0' }}
                                 >
                                     Pepito
@@ -154,11 +154,11 @@ const Sidebar = ({ role }) => {
                             />
                         )}
                         <Item
-                        title='Edit Profile'
-                        to='/edit'
-                        icon={<PersonOutlinedIcon />}
-                        selected={selected}
-                        setSelected={setSelected}
+                            title='Edit Profile'
+                            to='/edit'
+                            icon={<PersonOutlinedIcon />}
+                            selected={selected}
+                            setSelected={setSelected}
                         />
 
                         {filteredItem.includes('Add User') && (
@@ -177,7 +177,7 @@ const Sidebar = ({ role }) => {
                                     color={colors.title[100]}
                                     className='menu-tittle'
                                 >
-                                    {!isCollapsed ? 'Meeting' : <Divider sx={{ width: '80%' }} />}
+                                    {!isCollapsed ? 'Meeting' : <Divider className='divider' />}
                                 </Typography>
 
                                 <Item
@@ -196,7 +196,7 @@ const Sidebar = ({ role }) => {
                                 />
                             </>
                         )}
-                       {/*
+                        {/*
                        {filteredItem.includes('Interviews') && (
                             <>
                                 <Typography
@@ -241,7 +241,7 @@ const Sidebar = ({ role }) => {
                                     color={colors.title[100]}
                                     className='menu-tittle'
                                 >
-                                    {!isCollapsed ? 'Create Questionnaire' : <Divider sx={{ width: '80%' }} />}
+                                    {!isCollapsed ? 'Create Questionnaire' : <Divider className='divider'/>}
                                 </Typography>
                                 <Item
                                     title='New Questionnaire'
@@ -306,7 +306,7 @@ const Sidebar = ({ role }) => {
                                     color={colors.title[100]}
                                     className='menu-tittle'
                                 >
-                                    {!isCollapsed ? 'Workshops' : <Divider sx={{ width: '80%' }} />}
+                                    {!isCollapsed ? 'Workshops' : <Divider className='divider' />}
                                 </Typography>
                                 <Item
                                     title='Workshop 1'
