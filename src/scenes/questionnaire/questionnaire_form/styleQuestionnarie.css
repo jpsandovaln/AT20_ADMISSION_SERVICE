@@ -1,0 +1,22 @@
+/* styles.css */
+
+.logo-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-user {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-name {
+    margin-bottom: 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 5px 35px 5px 20px;
+    cursor: pointer;
+}

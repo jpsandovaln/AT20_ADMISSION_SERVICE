@@ -18,6 +18,7 @@ import { tokens } from '../../../alternative_theme';
 import axios from 'axios';
 import { gql, useMutation } from '@apollo/client'
 import { CREATE_QUESTION_MUTATION } from "../../../graphql/questionnaire";
+import '../../questionnaire/questionnaire_form/styleQuestionnarie.css'
 
 
 const initialValues = {
