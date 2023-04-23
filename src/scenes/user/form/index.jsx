@@ -3,12 +3,13 @@ import { Formik } from "formik";
 //import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react"
-import {useMutation, useQuery} from '@apollo/client'
-import {GET_USER, UPDATE_USER } from "../../../graphql/user";
+import { useMutation, useQuery } from '@apollo/client'
+import { GET_USER, UPDATE_USER } from "../../../graphql/user";
 import Header from '../../../components/header';
+import "./editFormStyle.css";
 
 
-export default function Edit (props) {
+export default function Edit(props) {
   const { loginData } = props;
   console.log(loginData);
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -30,7 +31,7 @@ export default function Edit (props) {
     },
   });
 
-const [updateUser] = useMutation(UPDATE_USER);
+  const [updateUser] = useMutation(UPDATE_USER);
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(userData);
@@ -57,25 +58,12 @@ const [updateUser] = useMutation(UPDATE_USER);
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <Box m="20px">
-       <Header title="EDIT PROFILE" subtitle="COMPLETE YOUR INFORMATION" />
-      <Formik
-        onSubmit={handleSubmit}
-      >
-        {({
-          errors,
-          touched,
-          isSubmitting,
-        }) => (
+    <Box m="50px">
+      <Header title="EDIT PROFILE" subtitle="COMPLETE YOUR INFORMATION" />
+      <Formik onSubmit={handleSubmit}>
+        {({ errors, touched, isSubmitting }) => (
           <form onSubmit={handleSubmit}>
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
-            >
+            <Box className="edit-form">
               <TextField
                 fullWidth
                 variant="filled"
@@ -85,7 +73,7 @@ const [updateUser] = useMutation(UPDATE_USER);
                 name="firstName"
                 error={!!touched.name && !!errors.name}
                 helperText={touched.name && errors.name}
-                sx={{ gridColumn: "span 2" }}
+                className="span-2"
                 value={userData.firstName}
 
               />
@@ -98,8 +86,8 @@ const [updateUser] = useMutation(UPDATE_USER);
                 name="lastName"
                 error={!!touched.lastName && !!errors.lastName}
                 helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: 'span 2' }}
-                value= {userData.lastName}
+                className="span-2"
+                value={userData.lastName}
               />
               <TextField
                 fullWidth
@@ -110,8 +98,8 @@ const [updateUser] = useMutation(UPDATE_USER);
                 name="email"
                 error={!!touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 4" }}
-                value= {userData.email}
+                className="span-4"
+                value={userData.email}
               />
               <TextField
                 fullWidth
@@ -122,8 +110,8 @@ const [updateUser] = useMutation(UPDATE_USER);
                 name="userName"
                 error={!!touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 2" }}
-                value= {userData.userName}
+                className="span-2"
+                value={userData.userName}
               />
               <TextField
                 fullWidth
@@ -132,13 +120,16 @@ const [updateUser] = useMutation(UPDATE_USER);
                 label="Age"
                 onChange={(event) => {
                   const { name, value } = event.target;
-                  setUserData((prevData) => ({ ...prevData, [name]: parseInt(value) }));
+                  setUserData((prevData) => ({
+                    ...prevData,
+                    [name]: parseInt(value),
+                  }));
                 }}
                 name="age"
                 error={!!touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 2" }}
-                value= {userData.age}
+                className="span-2"
+                value={userData.age}
               />
               <TextField
                 fullWidth
@@ -149,8 +140,8 @@ const [updateUser] = useMutation(UPDATE_USER);
                 name="firstPassword"
                 error={!!touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 4" }}
-                value= {userData.firstPassword}
+                className="span-4"
+                value={userData.firstPassword}
               />
               <TextField
                 fullWidth
@@ -161,8 +152,8 @@ const [updateUser] = useMutation(UPDATE_USER);
                 name="country"
                 error={!!touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 2" }}
-                value= {userData.country}
+                className="span-2"
+                value={userData.country}
               />
               <TextField
                 fullWidth
@@ -172,12 +163,12 @@ const [updateUser] = useMutation(UPDATE_USER);
                 onChange={handleInputChange}
                 name="city"
                 error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 2" }}
-                value= {data.user.city}
+                helperTexthelperText={touched.email && errors.email}
+                className="span-2"
+                value={data.user.city}
               />
-              </Box>
-              <Box display="flex" justifyContent="end" mt="20px">
+            </Box>
+            <Box className="button-box">
               <Button
                 type="submit"
                 color="secondary"
@@ -192,5 +183,4 @@ const [updateUser] = useMutation(UPDATE_USER);
       </Formik>
     </Box>
   );
-};
-
+}
