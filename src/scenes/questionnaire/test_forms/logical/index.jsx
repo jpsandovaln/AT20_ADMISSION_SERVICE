@@ -20,9 +20,10 @@ import Questions from "./Questions.json";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import { Box } from '@mui/system';
+import '../../test_forms/test.css';
 
 // builds the logical test page
-const Aptitude = () => {
+const Logical = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
     const [selectedOptions, setSelectedOptions] = React.useState({});
     const handleNextQuestion = () => {
@@ -34,27 +35,27 @@ const Aptitude = () => {
     };
 
     const handleSelectAnswer = (event) => {
-    const { name, value, type, checked } = event.target;
-    // saves an array when is a checkbox in the selectedOptions object
-    if (type === "checkbox") {
-        setSelectedOptions((prevSelectedOptions) => {
-            const prevSelectedValues = prevSelectedOptions[name] || [];
-            let updatedSelectedValues;
-    
-            if (checked) {
-                updatedSelectedValues = [...prevSelectedValues, value];
+        const { name, value, type, checked } = event.target;
+        // saves an array when is a checkbox in the selectedOptions object
+        if (type === "checkbox") {
+            setSelectedOptions((prevSelectedOptions) => {
+                const prevSelectedValues = prevSelectedOptions[name] || [];
+                let updatedSelectedValues;
+
+                if (checked) {
+                    updatedSelectedValues = [...prevSelectedValues, value];
                 } else {
-                updatedSelectedValues = prevSelectedValues.filter(
-                    (selectedValue) => selectedValue !== value
-                );
-            }
-    
-            return {
-                ...prevSelectedOptions,
-                [name]: updatedSelectedValues,
-            };
-        });
-        // saves a data when is a radio in the selectedOptions object
+                    updatedSelectedValues = prevSelectedValues.filter(
+                        (selectedValue) => selectedValue !== value
+                    );
+                }
+
+                return {
+                    ...prevSelectedOptions,
+                    [name]: updatedSelectedValues,
+                };
+            });
+            // saves a data when is a radio in the selectedOptions object
         } else if (type === "radio") {
             setSelectedOptions((prevSelectedOptions) => ({
                 ...prevSelectedOptions,
@@ -65,73 +66,81 @@ const Aptitude = () => {
     const currentQuestion = Questions[currentQuestionIndex];
 
     return (
-    <>
-        <Typography variant="h2" gutterBottom align="center">Logical test</Typography>
-        <Box style={{marginLeft: '20px'}}>
-            <Typography variant="h3" gutterBottom>Please answer the following question:</Typography>
-            <Typography variant="h4" gutterBottom>
-                {currentQuestion.question}
+        <>
+            <Typography variant="h1" gutterBottom align="center"padding={'10px 0% 30px'}>
+                Logical test
             </Typography>
-            <FormControl component="fieldset">
-            {currentQuestion.type === "radioButton" && (
-            <RadioGroup
-            aria-label="quiz"
-            name={`${currentQuestionIndex}`}
-            value={selectedOptions[`${currentQuestionIndex}`] || ""}
-            onChange={handleSelectAnswer}
-            >
-                {currentQuestion.options.map((option, index) => (
-                    <FormControlLabel
-                    key={index}
-                    value={option.value}
-                    control={<Radio />}
-                    label={option.label}
-                    />
-                ))}
-            </RadioGroup>
-            )}
-            {currentQuestion.type === "checkBox" && (
-            <FormGroup>
-                {currentQuestion.options.map((option, index) => (
-                <FormControlLabel
-                    key={index}
-                    control={
-                    <Checkbox
-                        checked={
-                            selectedOptions[`${currentQuestionIndex}`] &&
-                            selectedOptions[`${currentQuestionIndex}`].includes(
-                                option.value
-                            )
-                        }
-                        onChange={handleSelectAnswer}
-                        name={`${currentQuestionIndex}`}
-                        value={option.value}
-                    />
-                    }
-                    label={option.label}
-                />
-                ))}
-            </FormGroup>
-            )}
-            </FormControl>
-            <Stack spacing={2} direction="row">
-                {currentQuestionIndex > 0 && (
-                    <Button variant="contained" onClick={handlePreviousQuestion}>
-                        Previous
-                    </Button>
-                )}
-                {currentQuestionIndex < Questions.length - 1 && (
-                    <Button variant="contained" onClick={handleNextQuestion}>
-                        Next
-                    </Button>
-                )}
-                {currentQuestionIndex === Questions.length - 1 && (
-                    <Button variant="contained">Submit</Button>
-                )}
-            </Stack>
-        </Box>
-    </>
-    );
+            <Box className="container">
+                <Typography variant="h3" gutterBottom padding={'10px 0% 20px'}>
+                    Please answer the following question:
+                </Typography>
+                <Typography variant="h4" gutterBottom className="question-title" padding={'10px 0% 20px'}>
+                    {currentQuestion.question}
+                </Typography>
+                <FormControl component="fieldset" >
+                    {currentQuestion.type === "radioButton" && (
+                        <RadioGroup
+                            aria-label="quiz"
+                            name={`${currentQuestionIndex}`}
+                            value={selectedOptions[`${currentQuestionIndex}`] || ""}
+                            onChange={handleSelectAnswer}
+                        >{currentQuestion.options.map((option, index) => (
+                            <FormControlLabel
+                                key={index}
+                                value={option.value}
+                                control={<Radio />}
+                                label={option.label}
+                            />
+                        ))}
+                        </RadioGroup>
+                    )}
+                    {currentQuestion.type === "checkBox" && (
+                        <FormGroup>
+                            {currentQuestion.options.map((option, index) => (
+                                <FormControlLabel
+                                    key={index}
+                                    control={
+                                        <Checkbox
+                                            checked={
+                                                selectedOptions[`${currentQuestionIndex}`] &&
+                                                selectedOptions[`${currentQuestionIndex}`].includes(
+                                                    option.value
+                                                )
+                                            }
+                                            onChange={handleSelectAnswer}
+                                            name={`${currentQuestionIndex}`}
+                                            value={option.value}
+                                        />
+                                    }
+                                    label={option.label}
+                                />
+                            ))}
+                        </FormGroup>
+                    )}
+                </FormControl>
+                <Stack spacing={2} direction="row" className="button-container">
+                    {currentQuestionIndex > 0 && (
+                        <Button
+                            variant="contained"
+                            onClick={handlePreviousQuestion}
+                            className="color-button"
+                        >
+                            Previous
+                        </Button>
+                    )}
+                    {currentQuestionIndex < Questions.length - 1 && (
+                        <Button variant="contained" onClick={handleNextQuestion} className="color-button">
+                            Next
+                        </Button>
+                    )}
+                    {currentQuestionIndex === Questions.length - 1 && (
+                        <Button variant="contained" className="submit-button">
+                            Submit
+                        </Button>
+                    )}
+                </Stack>
+            </Box>
+        </>);
 };
 
-export default Aptitude;
+export default Logical;
