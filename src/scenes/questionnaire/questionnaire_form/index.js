@@ -9,11 +9,12 @@ Jalasoft, Confidential Information "). You shall not
 disclose such Confidential Information and shall use it only in
 accordance with the terms of the license agreement you entered into with Jalasoft
 */
-import { Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField, useTheme } from '@mui/material';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useState } from 'react';
 import Header from '../../../components/header';
+import { tokens } from '../../../alternative_theme';
 import axios from 'axios';
 import { gql, useMutation } from '@apollo/client'
 import { CREATE_QUESTION_MUTATION } from "../../../graphql/questionnaire";
@@ -26,6 +27,7 @@ const initialValues = {
     answer1: '',
     answer2: '',
     answer3: '',
+    answer4: '',
   };
 
   const checkoutSchema = yup.object().shape({
@@ -35,6 +37,7 @@ const initialValues = {
     answer1: yup.string().required('Option 1 is required'),
     answer2: yup.string().required('Option 2  required'),
     answer3: yup.string().required('Option 3  required'),
+    answer4: yup.string().required('Answer'),
   });
 
   export default function NewQuestionnaireForm() {
@@ -60,7 +63,7 @@ const initialValues = {
           test: objQuestion.testType.toLowerCase(),
           imgSrc: '', //If we have a image
           type: objQuestion.type.toLowerCase(),
-          answer: '', //If we have a image a correct answer
+          Answer: objQuestion.answer4, //If we have a image a correct answer
           options: [
             { value: 'op1', label: objQuestion.answer1 },
             { value: 'op2', label: objQuestion.answer2 },
@@ -91,6 +94,10 @@ const initialValues = {
       setQuestions([]);
 
     };
+
+
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
 
     return (
         <>
@@ -147,6 +154,19 @@ const initialValues = {
                                     onBlur={handleBlur}
                                     error={!!touched.question && !!errors.question}
                                     helperText={touched.question && errors.question}
+                                    sx={{ gridColumn: 'span 4' }}
+                                />
+                                <TextField
+                                    fullWidth
+                                    variant="filled"
+                                    type="text"
+                                    label="Answer*"
+                                    name="answer4"
+                                    value={values.answer4}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    error={!!touched.answer4 && !!errors.answer4}
+                                    helperText={touched.answer4 && errors.answer4}
                                     sx={{ gridColumn: 'span 4' }}
                                 />
                                 <FormControl variant="filled" required={true}>
@@ -206,14 +226,16 @@ const initialValues = {
                                     sx={{ gridColumn: 'span 4' }}
                                 />
                             </Box>
+
+
                             <Box display="flex" justifyContent="end" mt="20px">
-                                <Box mr={2}>                                    
-                                    <Button type="submit" color='success' variant="contained" onClick={handleButtonClick}>
+                                <Box mr={2}>
+                                    <Button type="submit" style={{ background: colors.success[100] }} variant="contained" onClick={handleButtonClick}>
                                         Save Question ({count})
                                     </Button>
                                 </Box>
                                 <Box mr={2}>
-                                    <Button type="submit" color='primary' variant="contained" onClick={handleButtonClickSend}>
+                                    <Button type="submit" style={{ background: colors.primary[100] }} variant="contained" onClick={handleButtonClickSend}>
                                         Send All
                                     </Button>
                                 </Box>

@@ -22,17 +22,38 @@ import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/system';
 import Header from '../../../../components/header.jsx';
-
-// builds the logical test page
+import { useState, useEffect } from "react"
+import { GET_QUESTIONS_BY_TEST } from '../../../../graphql/questionnaire';
+import {useMutation, useQuery} from '@apollo/client'
+// builds the aptitude test page
 const Logical = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
     const [selectedOptions, setSelectedOptions] = React.useState({});
     const [formSubmitted, setFormSubmitted] = React.useState(false);
     const [showThankYouMessage, setShowThankYouMessage] = React.useState(false);
-    const [examTaken, setExamTaken] = React.useState(localStorage.getItem('examTakenLogical'));
+    const [examTaken, setExamTaken] = React.useState(localStorage.getItem('examTaken'));
+    const [questions, setQuestions] = useState([]);
+    const { loading, error, data } = useQuery(GET_QUESTIONS_BY_TEST, {
+        variables: { test: 'logical' },
+      });
 
+    useEffect(() => {
+        if (data && data.getQuestionnaire) {
+          setQuestions(data.getQuestionnaire);
+        }
+      }, [data]);
+      if (loading) {
+        return <p>Loading...</p>;
+      }
+
+      if (error) {
+        return <p>Error: {error.message}</p>;
+      }
+      const Questions = data.getQuestionnaire;
+      const answer = data.getQuestionnaire.map(question => question.Answer);
+     // console.log(answer[1])
     const getTestName = () => {
-        return 'Logical Test';
+        return 'Aptitude Test';
         };
 
     const handleNextQuestion = () => {
@@ -42,11 +63,11 @@ const Logical = () => {
     const handlePreviousQuestion = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
     };
-
+    localStorage.clear();
     const handleSubmit = async () => {
         setFormSubmitted(true);
         setShowThankYouMessage(true);
-        localStorage.setItem('examTakenLogical', true);
+        localStorage.setItem('examTaken', true);
         setExamTaken(true);
 
 
@@ -93,13 +114,13 @@ const Logical = () => {
     };
 
     const currentQuestion = Questions[currentQuestionIndex];
-
+    console.log(selectedOptions)
     const calculateScore = () => {
         const totalQuestions = Questions.length;
         let correctAnswers = 0;
 
         for (let i = 0; i < totalQuestions; i++) {
-            const correctAnswer = Answers[i].answer;
+            const correctAnswer = answer[i];
             const userAnswer = selectedOptions[i];
 
             if (correctAnswer === userAnswer) {
@@ -115,6 +136,7 @@ const Logical = () => {
         }
 
         const score = (correctAnswers / totalQuestions) * 100;
+        console.log(score)
         return score;
     };
 
@@ -150,10 +172,10 @@ const Logical = () => {
             <>
                 {/* The rest of the components */}
                 <Box sx={{ m: '50px' }}>
-                    <Header title='TEST' subtitle='Logical test' />
+                    <Header title='TEST' subtitle='Aptitude test' />
                     <Typography variant='h3' gutterBottom>Please answer the following question:</Typography>
                     <Typography variant='h4' gutterBottom>
-                        {currentQuestion.question}
+                        {currentQuestion.Question}
                     </Typography>
                     <FormControl component='fieldset'>
                         {currentQuestion.type === 'radioButton' && (
@@ -166,9 +188,9 @@ const Logical = () => {
                                 {currentQuestion.options.map((option, index) => (
                                     <FormControlLabel
                                         key={index}
-                                        value={option.value}
+                                        value={option.Value}
                                         control={<Radio />}
-                                        label={option.label}
+                                        label={option.Label}
                                     />
                                 ))}
                             </RadioGroup>
@@ -183,15 +205,15 @@ const Logical = () => {
                                                 checked={
                                                     selectedOptions[`${currentQuestionIndex}`] &&
                                                     selectedOptions[`${currentQuestionIndex}`].includes(
-                                                        option.value
+                                                        option.Value
                                                     )
                                                 }
                                                 onChange={handleSelectAnswer}
                                                 name={`${currentQuestionIndex}`}
-                                                value={option.value}
+                                                value={option.Value}
                                             />
                                         }
-                                        label={option.label}
+                                        label={option.Label}
                                     />
                                 ))}
                             </FormGroup>
@@ -213,9 +235,7 @@ const Logical = () => {
                                 variant='contained'
                                 onClick={handleSubmit}
                                 disabled={formSubmitted}
-                            >
-                                Submit
-                            </Button>
+                            >Submit</Button>
                         )}
                     </Stack>
                 </Box>

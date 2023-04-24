@@ -56,6 +56,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginData, setLoginData] = useState(null);
 
+
   function handleLogin() {
     setIsLoggedIn(true);
   }
@@ -63,6 +64,7 @@ function App() {
   function handleLoginData(data) {
     setLoginData(data);
   }
+
 
   return (
     <ApolloProvider client={client}>
