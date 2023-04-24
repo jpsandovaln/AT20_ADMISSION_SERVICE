@@ -6,7 +6,7 @@ import Header from '../../components/header';
 import { compilerCode } from '../../apis/compilerService';
 import {useMutation} from '@apollo/client'
 import { COMPILER } from "../../graphql/user";
-import imageTest from '../../apis/workshop.png';
+import imageTest from '../../scenes/workshop/workshop.png';
 
 export default function Workshop () {
     const [codingText, setCodingText] = useState('');
@@ -42,10 +42,7 @@ export default function Workshop () {
         <Box m="50px" >
             <Header title='Technical test' subtitle='Resolve the problem' />
             <Box>
-                <img 
-                    src={imageTest}
-                    alt="" 
-                />
+                <img src={imageTest}/>
             </Box>
             <Stack spacing={2} direction="row">
                 <FormControl sx={{ width: '20ch' }} variant="filled">
