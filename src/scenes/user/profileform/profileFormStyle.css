@@ -22,19 +22,17 @@
     justify-content: space-between;
 }
 
-/* Style the custom button */
 .custom-file-input {
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
 }
 
-/* Wrap the custom button around the file input */
 .custom-file-container {
     position: relative;
     display: inline-flex;
     justify-content: flex-start;
-    align-items: center; /* Aligns text and button vertically */
+    align-items: center;
 }
 
 .custom-file-container input[type="file"] {
