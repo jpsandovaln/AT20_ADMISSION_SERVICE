@@ -28,8 +28,6 @@ import { tokens } from '../../../alternative_theme';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // HELPERS
-//import guests from '../helpers/guests';
-import host from '../helpers/hosts';
 import timeZone from '../helpers/timezone';
 import interview from '../helpers/interviews';
 
@@ -50,7 +48,7 @@ export default function NewMeeting () {
     const [selectedStartTime, setSelectedStartTime] = useState(null);
     const [selectedEndTime, setSelectedEndTime] = useState(null);
     const [selectedTimeZone, setSelectedTimeZone] = useState('');
-    const [selectedHost, setSelectedHost] = useState(null);
+    const [selectedHost, setSelectedHost] = useState([]);
     const [selectedGuests, setSelectedGuests] = useState([]);
 
     const {loading, error, data} = useQuery(GET_USERS);
@@ -143,7 +141,7 @@ export default function NewMeeting () {
                         display: 'grid',
                         columnGap: 2,
                         rowGap: 1,
-                        gridTemplateColumns: 'repeat(4, 1fr)',
+                        gridTemplateColumns: 'repeat(3, 1fr)',
                         '& > div': { gridColumn: isNonMobile ? undefined : 'span 4' }
                     }}
                 >
@@ -180,24 +178,6 @@ export default function NewMeeting () {
                             }} slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }} />
                         </DemoContainer>
                     </LocalizationProvider>
-
-                     {/*
-                    <Autocomplete
-                        disablePortal
-                        id='combo-box-demo'
-                        label='Time Zone'
-                        options={timeZone}
-                        onChange={(event, value) => {
-                            const newTimeZone = {
-                                value: value.value,
-                                label: value.label
-                            };
-                            setSelectedTimeZone([newTimeZone]);
-                        }}
-                        sx={{ mt: 1, gridColumn: 'span 1', with: '100%' }}
-                        renderInput={(params) => <TextField {...params} id='filled-basic' variant='filled' label='Time Zone' />}
-                    />
-                    */}
                 </Box>
             </div>
             <div style={{ width: '100%' }}>
@@ -213,17 +193,43 @@ export default function NewMeeting () {
                         '& > div': { gridColumn: isNonMobile ? undefined : 'span 4' }
                     }}
                 >
+                    
                     <Autocomplete
-                        disablePortal
-                        id='combo-box-demo'
-                        options={host}
+                        //disablePortal
+                        multiple
+                        id='checkboxes-tags-demo'
+                        //options={data.users.filter(option => option.role.name === "Admin" || option.role.name === "Trainer")}
+                        options={data.users.filter(option => option.role.name === "Trainer")}
+                        disableCloseOnSelect
+                        getOptionLabel={(option) => 
+                            option.firstName +' '+ option.lastName
+                        }
+                        renderOption={(props, option, { selected }) => (
+                            <li {...props}>
+                                <Checkbox
+                                    icon={icon}
+                                    checkedIcon={checkedIcon}
+                                    style={{ marginRight: 8 }}
+                                    checked={selected}
+                                />
+                                {option.firstName +' '+ option.lastName}
+                            </li>
+                        )}
                         sx={{ gridColumn: 'span 1' }}
-                        renderInput={(params) => <TextField {...params} id='filled-basic' variant='filled' label='Select Host' />}
+                        value={selectedHost}
+                        onChange={(event, newValue) => {
+                            setSelectedHost(newValue);
+                        }}
+                        renderInput={(params) => (
+                            <TextField {...params} label='Select Host' id='filled-basic' variant='filled' placeholder='Host' />
+                        )}
                     />
+
                     <Autocomplete
                         multiple
                         id='checkboxes-tags-demo'
                         options={data.users}
+                        //options={data.users.filter(option => option.role.name === "Candidate")}
                         disableCloseOnSelect
                         getOptionLabel={(option) => option.firstName +' '+ option.lastName}
                         renderOption={(props, option, { selected }) => (
@@ -243,7 +249,7 @@ export default function NewMeeting () {
                             setSelectedGuests(newValue);
                         }}
                         renderInput={(params) => (
-                            <TextField {...params} label='Select Guests' id='filled-basic' variant='filled' placeholder=' ' />
+                            <TextField {...params} label='Select Guests' id='filled-basic' variant='filled' placeholder='Guests' />
                         )}
                     />
                 </Box>
@@ -272,10 +278,6 @@ export default function NewMeeting () {
                         {response && <p>{response}</p>}
                     <Button variant='contained' style={{ background: colors.secondary[100] }} size='medium' href='#outlined-buttons'>Cancel</Button>
                 </Stack>
-                <p style={{
-                    color: colors.secondary[100],
-                    marginTop: 50
-                }}>Organized by: Pepito Perez</p>
             </Box>
         </Box>
     );
