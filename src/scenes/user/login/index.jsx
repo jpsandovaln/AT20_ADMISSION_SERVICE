@@ -64,9 +64,14 @@ export function Login (props) {
                         alignItems: 'center'
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
+                    <Box
+                        sx={{
+                            m: 1,
+                            alignItems: 'center'
+                        }}
+                    >
+                        <img src="/images/download.png" alt="Profile" />
+                        </Box>
                     <Typography component="h1" variant="h5">
                                 Sign in
                     </Typography>

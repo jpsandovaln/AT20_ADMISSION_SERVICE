@@ -72,9 +72,8 @@ export function Dashboard() {
                   maxHeight: { xs: 233, md: 167 },
                   maxWidth: { xs: 350, md: 250 },
                 }}
-                //src={photo.data.photo}
+                src={user.photo}
                 />
-                {user.photo}
                 </TableCell>
               <TableCell>
                 <IconButton aria-label="delete" onClick={() => handleDelete(user._id)}>

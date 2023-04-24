@@ -26,6 +26,7 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 import GroupsIcon from '@mui/icons-material/Groups';
 // eslint-disable-next-line react/prop-types
 const Item = ({ title, to, icon, selected, setSelected }) => {
+    
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     return (
@@ -45,21 +46,26 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 // This function verifies the rol and filter the items to show on the sidebar menu
-const filterItemsbyRole = () => {
-    const role = 'admin';
+const filterItemsbyRole = (role) => {
     let filteredItem = [];
-    if (role === 'admin') {
+    if (role === 'Admin') {
         filteredItem = ['Dashboard', 'Add User', 'Meetings', 'Interviews', 'Tests', 'Create Questionaries', 'Workshops'];
-    } else if (role === 'trainer') {
+    } else if (role === 'Trainer') {
         filteredItem = ['Dashboard', 'Meetings', 'Interviews', 'Create Questionaries', 'Workshops'];
-    } else if (role === 'student') {
-        filteredItem = ['Dashboard', 'Profile form', 'Interviews', 'Tests', 'Workshops'];
+    } else if (role === 'Candidate') {
+        filteredItem = ['Profile form', 'Interviews', 'Tests', 'Workshops'];
     }
     return filteredItem;
 };
 
 // eslint-disable-next-line react/prop-types
-const Sidebar = ({ role }) => {
+const Sidebar = (props) => {
+
+    const { loginData } = props;
+    console.log(loginData);
+
+    const role = loginData.info.role.name
+    
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -70,10 +76,12 @@ const Sidebar = ({ role }) => {
         <Box
             sx={{
                 '& .pro-sidebar-inner': {
-                    background: `${colors.body[200]} !important`
+                    background: `${colors.body[200]} !important`,
+                    
                 },
                 '& .pro-icon-wrapper': {
-                    backgroundColor: 'transparent !important'
+                    backgroundColor: 'transparent !important',
+
                 },
                 '& .pro-inner-item': {
                     padding: '5px 35px 5px 20px !important'
@@ -83,12 +91,16 @@ const Sidebar = ({ role }) => {
                     color: `${colors.primary[100]} !important`
                 },
                 '& .pro-menu-item.active': {
+                    
                     // color: '#6870fa !important',
                     color: `${colors.primary[100]} !important`
                 }
             }}
         >
-            <ProSidebar collapsed={isCollapsed}>
+            <ProSidebar 
+                sx={{ position: 'fixed' }}
+                collapsed={isCollapsed} 
+                >
                 <Menu iconShape='square'>
                     {/* LOGO AND MENU ICON */}
                     <MenuItem
@@ -123,7 +135,7 @@ const Sidebar = ({ role }) => {
                                     alt='profile-user'
                                     width='100px'
                                     height='100px'
-                                    src={ '../../assets/user.jpg' }
+                                    src={ loginData.info.photo }
                                     style={{ cursor: 'pointer', borderRadius: '50%' }}
                                 />
                             </Box>
@@ -134,10 +146,10 @@ const Sidebar = ({ role }) => {
                                     // fontWeight='bold'
                                     sx={{ m: '10px 0 0 0' }}
                                 >
-                                    Pepito
+                                    {loginData.info.firstName}
                                 </Typography>
                                 <Typography variant='h5' color={colors.lightText[100]}>
-                                    Perez
+                                    {loginData.info.lastName}
                                 </Typography>
                             </Box>
                         </Box>
@@ -205,7 +217,8 @@ const Sidebar = ({ role }) => {
                                 />
                             </>
                         )}
-                        {filteredItem.includes('Interviews') && (
+                       {/*
+                       {filteredItem.includes('Interviews') && (
                             <>
                                 <Typography
                                     variant='h5'
@@ -240,6 +253,7 @@ const Sidebar = ({ role }) => {
                                 />
                             </>
                         )}
+                        */}
 
                         {filteredItem.includes('Create Questionaries') && (
                             <>
@@ -345,12 +359,3 @@ const Sidebar = ({ role }) => {
     );
 };
 export default Sidebar;
-
-
-
-
-
-
-
-
-

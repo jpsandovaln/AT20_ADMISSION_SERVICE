@@ -8,16 +8,16 @@ disclose such Confidential Information and shall use it only in
 accordance with the terms of the license agreement you entered into with Jalasoft
 */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ColorModeContext, useMode } from './alternative_theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
 //USER
-import { Dashboard } from './scenes/user/user_list';
-import { initialValues, Form } from './scenes/user/profileform';
-import { Login } from './scenes/user/login';
+import {Dashboard} from './scenes/user/user_list';
+import Form  from './scenes/user/profileform';
+import {Login} from './scenes/user/login';
 import Edit from './scenes/user/form';
 // import Form from './scenes/profileform';
 // INTERVIEWS
@@ -50,53 +50,68 @@ const client = new ApolloClient({
     uri: 'http://localhost:5000/graphql',
   }),
 });
-
-function App() {
-  const [theme, colorMode] = useMode();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loginData, setLoginData] = useState(null);
-
-  function handleLogin() {
-    setIsLoggedIn(true);
-  }
-
-  function handleLoginData(data) {
-    setLoginData(data);
-  }
+  function App() {
+    const navigate = useNavigate();
+    const [theme, colorMode] = useMode();
+    const [isLoggedIn, setIsLoggedIn] = useState(
+      localStorage.getItem('isLoggedIn') === 'true' // Load from local storage
+    );
+    const [loginData, setLoginData] = useState(
+      JSON.parse(localStorage.getItem('loginData')) || null // Load from local storage
+    );
+  
+    function handleLogin() {
+      setIsLoggedIn(true);
+    }
+  
+    function handleLoginData(data) {
+      setLoginData(data);
+    }
+  
+    useEffect(() => {
+      localStorage.setItem('isLoggedIn', isLoggedIn);
+      localStorage.setItem('loginData', JSON.stringify(loginData));
+    }, [isLoggedIn, loginData]);
+  
+      function handleLogout() {
+        setIsLoggedIn(false);
+        localStorage.removeItem('isLoggedIn');
+        navigate("/");
+      }
 
   return (
-    <ApolloProvider client={client}>
-      <ColorModeContext.Provider value={colorMode}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <div className="app">
-            {isLoggedIn ? (
-              <>
-                <Sidebar initialValues={initialValues} />
-                <main className="content">
-                  <Topbar />
-                  <Routes>
-                    <Route path="/" element={<Dashboard />} />
-                    <Route path="/edit" element={<Edit loginData={loginData} />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/form" element={<Form />} />
-                    <Route path="/informative" element={<InterviewInformative />} />
-                    <Route path="/psicologic" element={<InterviewPsicologic />} />
-                    <Route path="/english" element={<InterviewEnglish />} />
-                    <Route path="/questionnaire_form" element={<QuestionnaireForm />} />
-                    <Route path="/aptitude" element={<Aptitude />} />
-                    <Route path="/concentration" element={<Concentration />} />
-                    <Route path="/logical" element={<Logical />} />
-                    <Route path="/reasoning" element={<Reasoning />} />
-                    <Route path="/spatial" element={<Spatial />} />
-                    <Route path="/meeting" element={<NewMeeting />} />
-                    <Route path="/meeting/new" element={<MyMeetings />} />
-                    <Route path="/meeting/waiting-room" element={<Waiting />} />
-                    <Route path="/meeting/room/:id" element={<Room />} />
-                    <Route path="/workshop" element={<Workshop />} />
-                  </Routes>
-                </main>
-              </>
+  <ApolloProvider client={client}>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline/>
+        <div className="app">
+          {isLoggedIn ? (
+          <>
+            <Sidebar loginData={loginData} />
+            <main className="content">
+              <Topbar handleLogout={handleLogout}/>
+              <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/edit" element={<Edit loginData={loginData}/>} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/form" element={<Form />} />
+                  <Route path="/informative" element={<InterviewInformative />} />
+                  <Route path="/psicologic" element={<InterviewPsicologic />} />
+                  <Route path="/english" element={<InterviewEnglish />} />
+                  <Route path="/questionnaire_form" element={<QuestionnaireForm />} />
+                  <Route path="/aptitude" element={<Aptitude />} />
+                  <Route path="/concentration" element={<Concentration />} />
+                  <Route path="/logical" element={<Logical />} />
+                  <Route path="/reasoning" element={<Reasoning />} />
+                  <Route path="/spatial" element={<Spatial />} />
+                  <Route path="/meeting" element={<NewMeeting />} />
+                  <Route path="/meeting/new" element={<MyMeetings />} />
+                  <Route path="/meeting/waiting-room" element={<Waiting />} />
+                  <Route path="/meeting/room/:id" element={<Room />} />
+                  <Route path="/workshop" element={<Workshop />} />
+              </Routes>
+            </main>
+          </>
             ) : (
               <main className="content">
                 <Login onLogin={handleLogin} loginData={handleLoginData} />
