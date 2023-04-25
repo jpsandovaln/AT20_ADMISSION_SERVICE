@@ -49,11 +49,11 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 const filterItemsbyRole = (role) => {
     let filteredItem = [];
     if (role === 'Admin') {
-        filteredItem = ['Dashboard', 'Add User', 'Meetings', 'Interviews', 'Tests', 'Create Questionaries', 'Workshops'];
+        filteredItem = ['Dashboard', 'Add User', 'NewMeetings', 'Interviews', 'Tests', 'Create Questionaries', 'Workshops'];
     } else if (role === 'Trainer') {
-        filteredItem = ['Dashboard', 'Meetings', 'Interviews', 'Create Questionaries', 'Workshops'];
+        filteredItem = ['Dashboard', 'NewMeetings', 'Interviews', 'Create Questionaries', 'Workshops'];
     } else if (role === 'Candidate') {
-        filteredItem = ['Profile form', 'Interviews', 'Tests', 'Workshops'];
+        filteredItem = ['Meetings', 'Interviews', 'Tests', 'Workshops'];
     }
     return filteredItem;
 };
@@ -62,8 +62,6 @@ const filterItemsbyRole = (role) => {
 const Sidebar = (props) => {
 
     const { loginData } = props;
-    console.log(loginData);
-
     const role = loginData.info.role.name
 
     const theme = useTheme();
@@ -77,7 +75,7 @@ const Sidebar = (props) => {
             sx={{
                 '& .pro-sidebar-inner': {
                     background: `${colors.body[200]} !important`,
-
+                    
                 },
                 '& .pro-icon-wrapper': {
                     backgroundColor: 'transparent !important',
@@ -91,15 +89,15 @@ const Sidebar = (props) => {
                     color: `${colors.primary[100]} !important`
                 },
                 '& .pro-menu-item.active': {
-
+                    
                     // color: '#6870fa !important',
                     color: `${colors.primary[100]} !important`
                 }
             }}
         >
-            <ProSidebar
+            <ProSidebar 
                 sx={{ position: 'fixed' }}
-                collapsed={isCollapsed}
+                collapsed={isCollapsed} 
                 >
                 <Menu iconShape='square'>
                     {/* LOGO AND MENU ICON */}
@@ -165,6 +163,7 @@ const Sidebar = (props) => {
                                 setSelected={setSelected}
                             />
                         )}
+
                         {filteredItem.includes('Profile form') && (
                             <Item
                                 title='Profile Form'
@@ -174,6 +173,7 @@ const Sidebar = (props) => {
                                 setSelected={setSelected}
                             />
                         )}
+
                         <Item
                         title='Edit Profile'
                         to='/edit'
@@ -208,6 +208,26 @@ const Sidebar = (props) => {
                                     selected={selected}
                                     setSelected={setSelected}
                                 />
+                                
+                            </>
+                        )}
+                        {filteredItem.includes('NewMeetings') && (
+                            <>
+                                <Typography
+                                    variant='h5'
+                                    color={colors.title[100]}
+                                    sx={{ m: '15px 0 5px 20px' }}
+                                >
+                                    {!isCollapsed ? 'Meeting' : <Divider sx={{ width: '80%' }} />}
+                                </Typography>
+
+                                <Item
+                                    title='My meetings'
+                                    to='/meeting'
+                                    icon={<GroupsIcon />}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                />
                                 <Item
                                     title='New meeting'
                                     to='/meeting/new'
@@ -217,7 +237,11 @@ const Sidebar = (props) => {
                                 />
                             </>
                         )}
-                        {filteredItem.includes('Interviews') && (
+
+
+
+                       {/*
+                       {filteredItem.includes('Interviews') && (
                             <>
                                 <Typography
                                     variant='h5'
@@ -252,6 +276,7 @@ const Sidebar = (props) => {
                                 />
                             </>
                         )}
+                        */}
 
                         {filteredItem.includes('Create Questionaries') && (
                             <>

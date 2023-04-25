@@ -18,32 +18,56 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
 
 
-const Topbar = () => {
+const Topbar = ({ handleLogout }) => {
     const theme = useTheme();
     const colorMode = useContext(ColorModeContext);
-
+    const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  
+    const handleMenuOpen = (event) => {
+      setMenuAnchorEl(event.currentTarget);
+    };
+  
+    const handleMenuClose = () => {
+      setMenuAnchorEl(null);
+    };
+  
+    const handleLogoutClick = () => {
+      handleLogout();
+      handleMenuClose();
+    };
+  
     return (
-        <Box display="flex" justifyContent="right" p={3}>
-            <Box display="flex" textAlign="right">
-            <IconButton onClick={colorMode.toggleColorMode}>
-            {theme.palette.mode === 'dark' ?(
-                <DarkModeOutlinedIcon />
+      <Box display="flex" justifyContent="right" p={3}>
+        <Box display="flex" textAlign="right">
+          <IconButton onClick={colorMode.toggleColorMode}>
+            {theme.palette.mode === "dark" ? (
+              <DarkModeOutlinedIcon />
             ) : (
-                <LightModeOutlinedIcon />
+              <LightModeOutlinedIcon />
             )}
-            </IconButton>
-            <IconButton>
-                <NotificationsOutlinedIcon />
-            </IconButton>
-            <IconButton>
-                <SettingsOutlinedIcon />
-            </IconButton>
-            <IconButton>
-                <PersonOutlinedIcon />
-            </IconButton>
-            </Box>
-    </Box>
-    )
-};
-
-export default Topbar;
+          </IconButton>
+          <IconButton>
+            <NotificationsOutlinedIcon />
+          </IconButton>
+          <IconButton>
+            <SettingsOutlinedIcon />
+          </IconButton>
+          <IconButton onClick={handleMenuOpen}>
+            <PersonOutlinedIcon />
+          </IconButton>
+          <Menu
+            anchorEl={menuAnchorEl}
+            open={Boolean(menuAnchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem onClick={handleLogoutClick}>
+              <ExitToAppOutlinedIcon />
+              Logout
+            </MenuItem>
+          </Menu>
+        </Box>
+      </Box>
+    );
+  };
+  
+  export default Topbar;
