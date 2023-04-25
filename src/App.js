@@ -8,15 +8,15 @@ disclose such Confidential Information and shall use it only in
 accordance with the terms of the license agreement you entered into with Jalasoft
 */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ColorModeContext, useMode } from './alternative_theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
 //USER
 import {Dashboard} from './scenes/user/user_list';
-import { initialValues, Form } from './scenes/user/profileform';
+import Form  from './scenes/user/profileform';
 import {Login} from './scenes/user/login';
 import Edit from './scenes/user/form';
 // import Form from './scenes/profileform';
@@ -51,18 +51,34 @@ const client = new ApolloClient({
     }),
   });
 
-function App() {
-  const [theme, colorMode] = useMode();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loginData, setLoginData] = useState(null);
-
+  function App() {
+    const navigate = useNavigate();
+    const [theme, colorMode] = useMode();
+    const [isLoggedIn, setIsLoggedIn] = useState(
+      localStorage.getItem('isLoggedIn') === 'true' // Load from local storage
+    );
+    const [loginData, setLoginData] = useState(
+      JSON.parse(localStorage.getItem('loginData')) || null // Load from local storage
+    );
+  
     function handleLogin() {
       setIsLoggedIn(true);
     }
-
+  
     function handleLoginData(data) {
       setLoginData(data);
     }
+  
+    useEffect(() => {
+      localStorage.setItem('isLoggedIn', isLoggedIn);
+      localStorage.setItem('loginData', JSON.stringify(loginData));
+    }, [isLoggedIn, loginData]);
+  
+      function handleLogout() {
+        setIsLoggedIn(false);
+        localStorage.removeItem('isLoggedIn');
+        navigate("/");
+      }
 
   return (
   <ApolloProvider client={client}>
@@ -72,9 +88,9 @@ function App() {
         <div className="app">
           {isLoggedIn ? (
           <>
-            <Sidebar initialValues={initialValues} />
+            <Sidebar loginData={loginData} />
             <main className="content">
-              <Topbar />
+              <Topbar handleLogout={handleLogout}/>
               <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/edit" element={<Edit loginData={loginData}/>} />
@@ -89,7 +105,7 @@ function App() {
                   <Route path="/logical" element={<Logical />} />
                   <Route path="/reasoning" element={<Reasoning />} />
                   <Route path="/spatial" element={<Spatial />} />
-                   <Route path="/meeting" element={<NewMeeting />} />
+                  <Route path="/meeting" element={<NewMeeting />} />
                   <Route path="/meeting/new" element={<MyMeetings />} />
                   <Route path="/meeting/waiting-room" element={<Waiting />} />
                   <Route path="/meeting/room/:id" element={<Room />} />

@@ -5,24 +5,31 @@ import { Formik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react"
 import {useMutation, useQuery} from '@apollo/client'
-import { CREATE_USER, UPLOAD_IMAGE } from "../../../graphql/user";
+import { CONVERT_IMAGE, CREATE_USER, UPLOAD_IMAGE } from "../../../graphql/user";
 import Header from '../../../components/header';
 import { GET_ROLES } from "../../../graphql/role";
-
-const initialValues = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    contact: '',
-    rol: ''
-};
-
 
 
 export default function Form () {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const { data: rolesData, loading: rolesLoading, error: rolesError } = useQuery(GET_ROLES );
+  const [convert] = useMutation(CONVERT_IMAGE );
+
+  const handleFileInputChange = async (event) => {
+    const file = event.target.files[0];
+    try {
+      const result = await convert({
+        variables: {
+          image: file,
+          width: 180,
+          height: 180,
+        },
+      });
+      console.log(result.data.convertImage.url);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const [user, setUser] = useState({
     globalID: "",
@@ -43,27 +50,29 @@ export default function Form () {
   const [createUser, { loading, error }] = useMutation(CREATE_USER, {
     onCompleted: () => {
       alert('User created successfully!');
-      setUser({ firstName: '', lastName:'', email: '', phone:'', role: '', photo:'' });
+      setUser({ firstName: '', lastName:'', email: '', password: '', phone:'', role: '', photo:'' });
     },
   });
 
   const [singleUpload] = useMutation(UPLOAD_IMAGE);
   const [newImage, setnewImage] = useState(null);
 
-const [userPhoto, setUserPhoto] = useState(null);
-
-const handlePhotoChange = (e) => {
-  setUserPhoto(e.target.files[0]);
-  setnewImage(e.target.files[0]);
-};
+  const [userPhoto, setUserPhoto] = useState(null);
+  const { data: rolesData, loading: rolesLoading, error: rolesError } = useQuery(GET_ROLES );
+  const handlePhotoChange = (e) => {
+    setUserPhoto(e.target.files[0]);
+    setnewImage(e.target.files[0]);
+  };
 
 const handlePhotoUpload = async () => {
- const { data } = await singleUpload({
-    variables: {
-      file: newImage,
-    },
+ const result = await convert({
+   variables: {
+     image: userPhoto,
+     width: 300,
+     height: 300,
+   },
   });
-  return data.singleUpload;
+  return result.data.convertImage.url;
 };
 
   if (loading) return <p>Loading...</p>
@@ -198,4 +207,3 @@ const handlePhotoUpload = async () => {
     </Box>
   );
 };
-export { initialValues, Form};

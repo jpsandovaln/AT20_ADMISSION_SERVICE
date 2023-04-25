@@ -121,9 +121,21 @@ export const themeSettings = (mode) => {
                     secondary: {
                         main: colors.secondary[100]
                     },
+                    success: {
+                        main: colors.success[100]
+                    },
+                    info: {
+                        main: colors.info[100]
+                    },
+                    warning: {
+                        main: colors.warning[100]
+                    },
+                    danger: {
+                        main: colors.danger[100]
+                    },
                     neutral: {
                         dark: colors.body[100],
-                        main: colors.body[100],
+                        main: colors.body[200],
                         light: colors.body[100]
                     },
                     background: {
@@ -138,9 +150,21 @@ export const themeSettings = (mode) => {
                     secondary: {
                         main: colors.secondary[100]
                     },
+                    success: {
+                        main: colors.success[100]
+                    },
+                    info: {
+                        main: colors.info[100]
+                    },
+                    warning: {
+                        main: colors.warning[100]
+                    },
+                    danger: {
+                        main: colors.danger[100]
+                    },
                     neutral: {
                         dark: colors.body[100],
-                        main: colors.body[100],
+                        main: colors.body[200],
                         light: colors.body[100]
                     },
                     background: {
