@@ -58,9 +58,13 @@ export default function NewMeeting () {
 
     const onSubmitForm = () => {
         const data = JSON.stringify({
-            host_global_id: '',
-            guest_global_id: selectedGuests.map (guest => ({
-                value: guest._id,
+            host_global_id: selectedHost.map(host => ({
+                id: host._id,
+                name: host.firstName,
+                phone: host.phone,
+              })),
+            guest_global_id: selectedGuests.map(guest => ({
+                id: guest._id,
                 name: guest.firstName,
                 phone: guest.phone,
               })),
@@ -70,24 +74,21 @@ export default function NewMeeting () {
             start_time: selectedStartTime,
             end_time: selectedEndTime,
             time_zone: {
-
-                      "value": "UTC-7",
-
-                      "label": "Pacific Daylight Time (PDT)"
-
-                    }
+                "value": "UTC-7",
+                "label": "Pacific Daylight Time (PDT)"
+            },
+            active: true
         });
-        console.log(data)
 
         newMeeting({ variables: { data } })
           .then(result => setResponse(result.data.saveInterview))
           .catch(error => console.log(error));
+
+          alert('¡Meeting creado exitosamente!');
       };
 
     if(loading) return <p>Loading</p>
     if(error) return <p>Error</p>
-
-    console.log(data.users);
 
     /*
     const onSubmitForm = (event) => {
@@ -141,7 +142,7 @@ export default function NewMeeting () {
                         display: 'grid',
                         columnGap: 2,
                         rowGap: 1,
-                        gridTemplateColumns: 'repeat(3, 1fr)',
+                        gridTemplateColumns: 'repeat(4, 1fr)',
                         '& > div': { gridColumn: isNonMobile ? undefined : 'span 4' }
                     }}
                 >
@@ -178,6 +179,24 @@ export default function NewMeeting () {
                             }} slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }} />
                         </DemoContainer>
                     </LocalizationProvider>
+
+                     {/*
+                    <Autocomplete
+                        disablePortal
+                        id='combo-box-demo'
+                        label='Time Zone'
+                        options={timeZone}
+                        onChange={(event, value) => {
+                            const newTimeZone = {
+                                value: value.value,
+                                label: value.label
+                            };
+                            setSelectedTimeZone([newTimeZone]);
+                        }}
+                        sx={{ mt: 1, gridColumn: 'span 1', with: '100%' }}
+                        renderInput={(params) => <TextField {...params} id='filled-basic' variant='filled' label='Time Zone' />}
+                    />
+                    */}
                 </Box>
             </div>
             <div style={{ width: '100%' }}>
@@ -193,63 +212,32 @@ export default function NewMeeting () {
                         '& > div': { gridColumn: isNonMobile ? undefined : 'span 4' }
                     }}
                 >
-                    
                     <Autocomplete
-                        //disablePortal
                         multiple
-                        id='checkboxes-tags-demo'
-                        //options={data.users.filter(option => option.role.name === "Admin" || option.role.name === "Trainer")}
-                        options={data.users.filter(option => option.role.name === "Trainer")}
+                        id='combo-box-demo'
+                        options={data.users.filter(option => option.role.name === "Admin" || option.role.name === "Trainer")}
                         disableCloseOnSelect
-                        getOptionLabel={(option) => 
-                            option.firstName +' '+ option.lastName
-                        }
-                        renderOption={(props, option, { selected }) => (
-                            <li {...props}>
-                                <Checkbox
-                                    icon={icon}
-                                    checkedIcon={checkedIcon}
-                                    style={{ marginRight: 8 }}
-                                    checked={selected}
-                                />
-                                {option.firstName +' '+ option.lastName}
-                            </li>
-                        )}
+                        getOptionLabel={(option) => option.firstName +' '+ option.lastName}
                         sx={{ gridColumn: 'span 1' }}
                         value={selectedHost}
                         onChange={(event, newValue) => {
                             setSelectedHost(newValue);
                         }}
-                        renderInput={(params) => (
-                            <TextField {...params} label='Select Host' id='filled-basic' variant='filled' placeholder='Host' />
-                        )}
+                        renderInput={(params) => <TextField {...params} label='Select Guests' id='filled-basic' variant='filled' placeholder=' ' />}
                     />
-
                     <Autocomplete
                         multiple
-                        id='checkboxes-tags-demo'
-                        options={data.users}
-                        //options={data.users.filter(option => option.role.name === "Candidate")}
+                        id='combo-box-demo'
+                        options={data.users.filter(option => option.role.name === "Candidate")}
                         disableCloseOnSelect
                         getOptionLabel={(option) => option.firstName +' '+ option.lastName}
-                        renderOption={(props, option, { selected }) => (
-                            <li {...props}>
-                                <Checkbox
-                                    icon={icon}
-                                    checkedIcon={checkedIcon}
-                                    style={{ marginRight: 8 }}
-                                    checked={selected}
-                                />
-                                {option.firstName +' '+ option.lastName}
-                            </li>
-                        )}
                         sx={{ gridColumn: 'span 1' }}
                         value={selectedGuests}
                         onChange={(event, newValue) => {
                             setSelectedGuests(newValue);
                         }}
                         renderInput={(params) => (
-                            <TextField {...params} label='Select Guests' id='filled-basic' variant='filled' placeholder='Guests' />
+                            <TextField {...params} label='Select Guests' id='filled-basic' variant='filled' placeholder=' ' />
                         )}
                     />
                 </Box>
@@ -278,6 +266,10 @@ export default function NewMeeting () {
                         {response && <p>{response}</p>}
                     <Button variant='contained' style={{ background: colors.secondary[100] }} size='medium' href='#outlined-buttons'>Cancel</Button>
                 </Stack>
+                <p style={{
+                    color: colors.secondary[100],
+                    marginTop: 50
+                }}>Organized by: Pepito Perez</p>
             </Box>
         </Box>
     );
