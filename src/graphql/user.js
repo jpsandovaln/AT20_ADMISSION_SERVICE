@@ -1,14 +1,14 @@
 import { gql } from '@apollo/client'
 
 export const CREATE_USER = gql`
-mutation($firstName: String!, $lastName: String!, $password: String!, $email: String!, $phone: String!, $roleId: ID!){
-  createUser(firstName: $firstName, lastName: $lastName, password: $password, email: $email, phone: $phone, roleId: $roleId) {
+mutation($firstName: String!, $lastName: String!, $email: String!, $phone: String!, $roleId: ID!, $photo: String){
+  createUser(firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, roleId: $roleId, photo: $photo) {
     _id
     globalID
     firstName
     firstPassword
-    password
     userName
+    photo
   }
 }
 `
@@ -74,6 +74,7 @@ mutation($email: String, $password: String, ){
         _id
         name
       }
+      photo
     }
   }
 }`
@@ -111,5 +112,14 @@ query ($id: ID) {
     role {
       name
     }
+    photo
   }
 }`
+
+export const CONVERT_IMAGE = gql`
+  mutation ConvertImage($image: Upload!, $width: Int!, $height: Int!) {
+    convertImage(image: $image, width: $width, height: $height) {
+      url
+    }
+  }
+`;

@@ -45,7 +45,7 @@ export function Dashboard() {
 
   return (
 
-    <Box className='general-view'>
+<Box className='general-view'>
       <Header title='USER LIST' subtitle='' />
       <TableContainer component={Paper} className='table-container'>
         <Table aria-label="simple table" className='table-view'>
@@ -59,26 +59,31 @@ export function Dashboard() {
               <TableCell>Photo</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {data.users.map(user => (
-              <TableRow key={user._id}>
-                <TableCell>{user.firstName} {user.lastName}</TableCell>
-                <TableCell>{user.userName}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.phone}</TableCell>
-                <TableCell>{user.role.name}</TableCell>
-                <TableCell>
-                  <Box
-                    component="img"
-                    className='image-container'
-                  />
-                  {user.photo}
+      <TableBody>
+      {data.users.map(user => (
+            <TableRow key={user._id}>
+              <TableCell>{user.firstName} {user.lastName}</TableCell>
+              <TableCell>{user.userName}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.phone}</TableCell>
+              <TableCell>{user.role.name}</TableCell>
+              <TableCell>
+              <Box
+                component="img"
+                  sx={{
+                  height: 233,
+                  width: 350,
+                  maxHeight: { xs: 233, md: 167 },
+                  maxWidth: { xs: 350, md: 250 },
+                }}
+                src={user.photo}
+                />
                 </TableCell>
-                <TableCell>
-                  <IconButton aria-label="delete" onClick={() => handleDelete(user._id)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
+              <TableCell>
+                <IconButton aria-label="delete" onClick={() => handleDelete(user._id)}>
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
               </TableRow>
             ))}
           </TableBody>

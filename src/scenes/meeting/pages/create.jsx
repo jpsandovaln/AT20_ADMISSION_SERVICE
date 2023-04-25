@@ -28,8 +28,6 @@ import { tokens } from '../../../alternative_theme';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // HELPERS
-//import guests from '../helpers/guests';
-import host from '../helpers/hosts';
 import timeZone from '../helpers/timezone';
 import interview from '../helpers/interviews';
 
@@ -50,7 +48,7 @@ export default function NewMeeting () {
     const [selectedStartTime, setSelectedStartTime] = useState(null);
     const [selectedEndTime, setSelectedEndTime] = useState(null);
     const [selectedTimeZone, setSelectedTimeZone] = useState('');
-    const [selectedHost, setSelectedHost] = useState(null);
+    const [selectedHost, setSelectedHost] = useState([]);
     const [selectedGuests, setSelectedGuests] = useState([]);
 
     const {loading, error, data} = useQuery(GET_USERS);
@@ -60,9 +58,13 @@ export default function NewMeeting () {
 
     const onSubmitForm = () => {
         const data = JSON.stringify({
-            host_global_id: '',
-            guest_global_id: selectedGuests.map (guest => ({
-                value: guest._id,
+            host_global_id: selectedHost.map(host => ({
+                id: host._id,
+                name: host.firstName,
+                phone: host.phone,
+              })),
+            guest_global_id: selectedGuests.map(guest => ({
+                id: guest._id,
                 name: guest.firstName,
                 phone: guest.phone,
               })),
@@ -72,24 +74,21 @@ export default function NewMeeting () {
             start_time: selectedStartTime,
             end_time: selectedEndTime,
             time_zone: {
-
-                      "value": "UTC-7",
-
-                      "label": "Pacific Daylight Time (PDT)"
-
-                    }
+                "value": "UTC-7",
+                "label": "Pacific Daylight Time (PDT)"
+            },
+            active: true
         });
-        console.log(data)
 
         newMeeting({ variables: { data } })
           .then(result => setResponse(result.data.saveInterview))
           .catch(error => console.log(error));
+
+          alert('¡Meeting creado exitosamente!');
       };
 
     if(loading) return <p>Loading</p>
     if(error) return <p>Error</p>
-
-    console.log(data.users);
 
     /*
     const onSubmitForm = (event) => {
@@ -214,29 +213,24 @@ export default function NewMeeting () {
                     }}
                 >
                     <Autocomplete
-                        disablePortal
+                        multiple
                         id='combo-box-demo'
-                        options={host}
+                        options={data.users.filter(option => option.role.name === "Admin" || option.role.name === "Trainer")}
+                        disableCloseOnSelect
+                        getOptionLabel={(option) => option.firstName +' '+ option.lastName}
                         sx={{ gridColumn: 'span 1' }}
-                        renderInput={(params) => <TextField {...params} id='filled-basic' variant='filled' label='Select Host' />}
+                        value={selectedHost}
+                        onChange={(event, newValue) => {
+                            setSelectedHost(newValue);
+                        }}
+                        renderInput={(params) => <TextField {...params} label='Select Guests' id='filled-basic' variant='filled' placeholder=' ' />}
                     />
                     <Autocomplete
                         multiple
-                        id='checkboxes-tags-demo'
-                        options={data.users}
+                        id='combo-box-demo'
+                        options={data.users.filter(option => option.role.name === "Candidate")}
                         disableCloseOnSelect
                         getOptionLabel={(option) => option.firstName +' '+ option.lastName}
-                        renderOption={(props, option, { selected }) => (
-                            <li {...props}>
-                                <Checkbox
-                                    icon={icon}
-                                    checkedIcon={checkedIcon}
-                                    style={{ marginRight: 8 }}
-                                    checked={selected}
-                                />
-                                {option.firstName +' '+ option.lastName}
-                            </li>
-                        )}
                         sx={{ gridColumn: 'span 1' }}
                         value={selectedGuests}
                         onChange={(event, newValue) => {

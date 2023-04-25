@@ -11,7 +11,7 @@ import "./editFormStyle.css";
 
 export default function Edit(props) {
   const { loginData } = props;
-  console.log(loginData);
+
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const [userData, setUserData] = useState({
@@ -24,6 +24,7 @@ export default function Edit(props) {
     country: loginData.info.country,
     city: loginData.info.city,
   });
+
   const { loading, error, data } = useQuery(GET_USER, {
     variables: { id: loginData.info._id },
     onCompleted: (data) => {
@@ -34,7 +35,6 @@ export default function Edit(props) {
   const [updateUser] = useMutation(UPDATE_USER);
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(userData);
     await updateUser({
       variables: {
         id: loginData.info._id,

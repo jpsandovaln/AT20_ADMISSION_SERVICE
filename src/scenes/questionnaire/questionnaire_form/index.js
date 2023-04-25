@@ -28,6 +28,7 @@ const initialValues = {
     answer1: '',
     answer2: '',
     answer3: '',
+    answer4: '',
   };
 
   const checkoutSchema = yup.object().shape({
@@ -37,6 +38,7 @@ const initialValues = {
     answer1: yup.string().required('Option 1 is required'),
     answer2: yup.string().required('Option 2  required'),
     answer3: yup.string().required('Option 3  required'),
+    answer4: yup.string().required('Answer'),
   });
 
   export default function NewQuestionnaireForm() {
@@ -62,7 +64,7 @@ const initialValues = {
           test: objQuestion.testType.toLowerCase(),
           imgSrc: '', //If we have a image
           type: objQuestion.type.toLowerCase(),
-          answer: '', //If we have a image a correct answer
+          Answer: objQuestion.answer4, //If we have a image a correct answer
           options: [
             { value: 'op1', label: objQuestion.answer1 },
             { value: 'op2', label: objQuestion.answer2 },
@@ -155,6 +157,19 @@ const initialValues = {
                                     helperText={touched.question && errors.question}
                                     sx={{ gridColumn: 'span 4' }}
                                 />
+                                <TextField
+                                    fullWidth
+                                    variant="filled"
+                                    type="text"
+                                    label="Answer*"
+                                    name="answer4"
+                                    value={values.answer4}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    error={!!touched.answer4 && !!errors.answer4}
+                                    helperText={touched.answer4 && errors.answer4}
+                                    sx={{ gridColumn: 'span 4' }}
+                                />
                                 <FormControl variant="filled" required={true}>
                                     <InputLabel htmlFor="question-type">Type of Question</InputLabel>
                                     <Select
@@ -212,6 +227,8 @@ const initialValues = {
                                     sx={{ gridColumn: 'span 4' }}
                                 />
                             </Box>
+
+
                             <Box display="flex" justifyContent="end" mt="20px">
                                 <Box mr={2}>
                                     <Button type="submit" style={{ background: colors.success[100] }} variant="contained" onClick={handleButtonClick}>

@@ -7,6 +7,7 @@ import { compilerCode } from '../../apis/compilerService';
 import { useMutation } from '@apollo/client'
 import { COMPILER } from "../../graphql/user";
 import './styleWorkshop.css';
+import imageTest from '../../scenes/workshop/workshop.png';
 
 export default function Workshop() {
     const [codingText, setCodingText] = useState('');
@@ -16,7 +17,7 @@ export default function Workshop() {
 
     const handleChangeLanguage = (event) => {
         setCodeLanguage(event.target.value);
-        setCompileCode('');
+        setCompileCode(' ');
     };
 
     const handleChangeCodingText = (event) => {
@@ -43,7 +44,9 @@ export default function Workshop() {
     return (
         <Box className="box">
             <Header title='Technical test' subtitle='Resolve the problem' />
-
+            <Box>
+                <img src={imageTest}/>
+            </Box>
             <Stack spacing={2} direction="row" className='selector'>
                 <FormControl variant="filled" sx={{ width: '100%' }}>
                     <InputLabel>Select a Language</InputLabel>
