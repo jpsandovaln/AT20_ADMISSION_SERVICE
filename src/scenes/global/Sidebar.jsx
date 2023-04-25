@@ -26,7 +26,7 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 import GroupsIcon from '@mui/icons-material/Groups';
 // eslint-disable-next-line react/prop-types
 const Item = ({ title, to, icon, selected, setSelected }) => {
-    
+
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     return (
@@ -65,7 +65,7 @@ const Sidebar = (props) => {
     console.log(loginData);
 
     const role = loginData.info.role.name
-    
+
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -77,7 +77,7 @@ const Sidebar = (props) => {
             sx={{
                 '& .pro-sidebar-inner': {
                     background: `${colors.body[200]} !important`,
-                    
+
                 },
                 '& .pro-icon-wrapper': {
                     backgroundColor: 'transparent !important',
@@ -91,15 +91,15 @@ const Sidebar = (props) => {
                     color: `${colors.primary[100]} !important`
                 },
                 '& .pro-menu-item.active': {
-                    
+
                     // color: '#6870fa !important',
                     color: `${colors.primary[100]} !important`
                 }
             }}
         >
-            <ProSidebar 
+            <ProSidebar
                 sx={{ position: 'fixed' }}
-                collapsed={isCollapsed} 
+                collapsed={isCollapsed}
                 >
                 <Menu iconShape='square'>
                     {/* LOGO AND MENU ICON */}
@@ -217,8 +217,7 @@ const Sidebar = (props) => {
                                 />
                             </>
                         )}
-                       {/*
-                       {filteredItem.includes('Interviews') && (
+                        {filteredItem.includes('Interviews') && (
                             <>
                                 <Typography
                                     variant='h5'
@@ -253,7 +252,6 @@ const Sidebar = (props) => {
                                 />
                             </>
                         )}
-                        */}
 
                         {filteredItem.includes('Create Questionaries') && (
                             <>
