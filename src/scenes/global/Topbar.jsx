@@ -8,14 +8,15 @@ disclose such Confidential Information and shall use it only in
 accordance with the terms of the license agreement you entered into with Jalasoft
 */
 
-import { Box, IconButton, useTheme } from '@mui/material';
-import { useContext } from 'react';
+import { Box, IconButton, useTheme, Menu, MenuItem   } from '@mui/material';
+import { useContext, useState } from 'react';
 import { ColorModeContext } from '../../alternative_theme';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined'
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
+import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
 
 
 const Topbar = ({ handleLogout }) => {
