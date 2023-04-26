@@ -2,24 +2,40 @@
 import { JaaSMeeting, JitsiMeeting } from '@jitsi/react-sdk';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
-import { searchMeeting } from '../helpers/searchMeeting';
+// import { searchMeeting } from '../helpers/searchMeeting';
 import WaitingRoom from '../components/waiting';
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_MEETING, GET_TOKEN } from '../../../graphql/metting';
 
 const Room = () => {
-    const user = {
-        info: {
-            name: 'Pepito Perez',
-            email: 'pepito@gmail.com'
-        },
-        jwt: 'eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtZTMwZDNmZWNjMzU2NDM4M2EwOTlkMTllNzI3NWI1NmQvNjU2YjA4LVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE2ODAyNDc2NzEsImV4cCI6MTY4MDI1NDg3MSwibmJmIjoxNjgwMjQ3NjY2LCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtZTMwZDNmZWNjMzU2NDM4M2EwOTlkMTllNzI3NWI1NmQiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOnRydWUsIm91dGJvdW5kLWNhbGwiOnRydWUsInNpcC1vdXRib3VuZC1jYWxsIjpmYWxzZSwidHJhbnNjcmlwdGlvbiI6dHJ1ZSwicmVjb3JkaW5nIjp0cnVlfSwidXNlciI6eyJoaWRkZW4tZnJvbS1yZWNvcmRlciI6ZmFsc2UsIm1vZGVyYXRvciI6dHJ1ZSwibmFtZSI6IlBlcGl0byBQZXJleiIsImlkIjoiZ29vZ2xlLW9hdXRoMnwxMDEzMjExMjI1MTYzMDQ3ODMzMzMiLCJhdmF0YXIiOiJodHRwczovL3d3dy5ncmF2YXRhci5jb20vYXZhdGFyLzIwNWU0NjBiNDc5ZTJlNWI0OGFlYzA3NzEwYzA4ZDUwIiwiZW1haWwiOiJwZXBpdG9AZ21haWwuY29tIn19LCJyb29tIjoiKiJ9.FJvZ_CvNciXXNnsJqiIerD2-OOqVEjxMMdpU0ksSxwQ9BbRBOVPs54NgcFxfG9gCwelku4KHbDk2B9gMCW9qnP9FvkbdLzhnvqNyaBdGqezisa8CWwx0QtnJD8PXmQnNDLsHgGpUgUVscF3XqaLZnS8NEWNd3q3k0dfyPj_SLQjjSjPUdEi5tuYzW4S1aGMDWL2dmgWQfzKW0UT1KvsaqcYMgNwLGaCG3QuYYpZW8V06iR62a_lJXZvU9ewn7zYVxipel0xUiTlkvqj_2TD2zFM4BwxpPlQlME2_DJHa3lPzWb3Z3uHkHRdR46-ECBhSNQCuMa-ZmRxoESp7UTLXLA'
-    };
+    const [user, setUser] = useState(null);
     const { id } = useParams();
-    const meeting = searchMeeting(id);
+    const { loading, error, data } = useQuery(GET_MEETING, {
+        variables: { id }
+        //call a mutation to get the token
+    })
+    let meeting;
+
+    const { id: id_user, firstName, lastName, email } = JSON.parse(localStorage.getItem('loginData')).info
+    const userToSend = {
+        id: id_user,
+        name: `${firstName} ${lastName}`,
+        email,
+        moderator: false
+    }
+
+    const [getToken] = useMutation(GET_TOKEN)
+
+
+
+
+
     const [canJoin, setCanJoin] = useState(false);
 
     const JoinRoom = () => {
         // if meeting is not started yet, redirect to waiting room
         // if meeting is started, redirect to meeting
+        console.log(meeting);
         const now = new Date();
         const meetingDate = new Date(meeting.date);
         const meetingStartTime = new Date(`${meeting.date} ${meeting.start_time}`);
@@ -46,9 +62,31 @@ const Room = () => {
         console.log('can join: ', canJoin);
     };
 
+
     useEffect(() => {
-        JoinRoom();
+        // wait 5 seconds
+        try {
+            JoinRoom()
+        } catch (e) {
+            console.log(e)
+        }
+        console.log('just one');
+        getToken({
+            variables: {
+                idGuest: userToSend.id,
+                nameGuest: userToSend.name,
+                emailGuest: userToSend.email,
+                hostGuest: userToSend.moderator,
+                idMeeting: id
+            }
+        }).then((res) => {
+            setUser({
+                info: userToSend,
+                jwt: res.data.getToken
+            })
+        })
     }, []);
+
 
     const apiRef = useRef();
 
@@ -90,6 +128,22 @@ const Room = () => {
         </div>
     );
 
+    if (loading) return 'Loading...';
+    if (error) return `Error! ${error.message}`;
+
+    meeting = data.meeting;
+
+    // setUser({
+    //     info: userToSend,
+    //     jwt: await getToken()
+    // })
+
+
+
+
+
+    console.log(meeting);
+
     return (
         <>
             {/* <JitsiMeeting
@@ -100,10 +154,10 @@ const Room = () => {
                     hideConferenceSubject: false
                 }}
                 getIFrameRef = { handleJitsiIFrameRef1 } /> */}
-            {(canJoin &&
+            {(canJoin && user &&
                 <JaaSMeeting
                     appId='vpaas-magic-cookie-e30d3fecc3564383a099d19e7275b56d'
-                    roomName="at20-reu-meeting"
+                    roomName={meeting._id}
                     configOverwrite={{
                         subject: meeting.meeting_name,
                         hideConferenceSubject: false,
@@ -123,7 +177,9 @@ const Room = () => {
                     jwt={user.jwt}
                     getIFrameRef={handleJaaSIFrameRef} />
             ) ||
-                <WaitingRoom meeting={meeting} />}
+                <WaitingRoom meeting={meeting} onFinishCount={() => {
+                    setCanJoin(true);
+                }} />}
 
         </>
     );

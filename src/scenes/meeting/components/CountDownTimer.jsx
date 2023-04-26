@@ -50,7 +50,7 @@ const ShowCounter = ({ days, hours, minutes, seconds }) => {
  * @returns A React component.
  */
 // eslint-disable-next-line react/prop-types
-const CountDownTimer = ({ targetDate }) => {
+const CountDownTimer = ({ targetDate, onFinishCount }) => {
     const [days, hours, minutes, seconds] = useCountDown(targetDate);
 
     // console.log('hola');
@@ -60,6 +60,7 @@ const CountDownTimer = ({ targetDate }) => {
      * ShowCounter component.
      */
     if (days + hours + minutes + seconds <= 0) {
+        onFinishCount();
         return <ExpiredNotice />;
     } else {
         return <ShowCounter days={days} hours={hours} minutes={minutes} seconds={seconds} />;

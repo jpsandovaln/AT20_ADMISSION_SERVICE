@@ -17,7 +17,9 @@ import { AccessTime, Person } from '@mui/icons-material';
 import Header from '../../../components/header';
 import { getMeetingData } from '../../../apis/meetingService';
 
-import meetings from '../helpers/meetings';
+// import meetings from '../helpers/meetings';
+import { useQuery } from '@apollo/client';
+import { GET_MY_MEETINGS } from '../../../graphql/metting';
 
 const tableStyles = {
     padding: '16px'
@@ -30,21 +32,29 @@ const titleStyles = {
 };
 
 const MeetingsTable = () => {
+
+    const user = JSON.parse(localStorage.getItem('loginData')).info;
+    const { loading, error, data } = useQuery(GET_MY_MEETINGS, {
+        variables: { id: user._id }
+    });
+
+
     const tryJoinMeeting = (meeting) => {
-        window.location.href = `/meeting/room/${meeting.id}`;
+        window.location.href = `/meeting/room/${meeting._id}`;
     };
 
     useEffect(() => {
-        const fetchMeetings = async () => {
-            const meetingData = await getMeetingData();
-            setMeetings(meetingData);
-        };
-        fetchMeetings();
+        // setMeetings(data);
     }, []);
+
+    if (loading) return 'Loading...';
+    if (error) return `Error! ${error.message}`;
+    const meetings = data.myMeetings;
 
     return (
         <Box m="50px" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Header title='MY MEETINGS' subtitle='' />
+            {/* <h1>{meetings}</h1> */}
             <TableContainer component={Paper} sx={{ maxWidth: '100%', overflowX: 'auto' }}>
                 <Table aria-label="meetings table">
                     <TableHead>
@@ -72,14 +82,14 @@ const MeetingsTable = () => {
                                         </span>
                                     </Tooltip>
                                 </TableCell>
-                                <TableCell>{meeting.date}{/*meeting.date.substring(0, 10)*/}</TableCell>
+                                <TableCell>{meeting.date.split('T')[0]}{/*meeting.date.substring(0, 10)*/}</TableCell>
                                 <TableCell>
                                     <AccessTime />
-                                    {meeting.start_time}{/*meeting.start_time.substring(11, 16)*/}
+                                    {meeting.start_time.split('T')[1].split('.')[0]}{/*meeting.start_time.substring(11, 16)*/}
                                 </TableCell>
                                 <TableCell>
                                     <AccessTime />
-                                    {meeting.end_time}{/*meeting.end_time.substring(11, 16)*/}
+                                    {meeting.end_time.split('T')[1].split('.')[0]}{/*meeting.end_time.substring(11, 16)*/}
                                 </TableCell>
                                 <TableCell>
                                     <Person />

@@ -16,7 +16,7 @@ import meetings from '../helpers/meetings.json';
 // Getting the first element of the meetings.json file
 
 // eslint-disable-next-line react/prop-types
-export default function WaitingRoom ({ meeting }) {
+export default function WaitingRoom ({ meeting, onFinishCount }) {
     const actualMeeting = meeting;
     // Split the start time of the meeting into an array of strings.
     const meetingStartData = actualMeeting.start_time.split(' ');
@@ -41,16 +41,16 @@ export default function WaitingRoom ({ meeting }) {
             <h4 style={{ textAlign: 'center' }}>WAITING ROOM</h4>
             <h1 style={{ textAlign: 'center' }}>Your meeting is schedulet to:</h1>
             <h1 style={{ textAlign: 'center' }}>{daysInWeek[dayOfWeek]}, {month[parseInt(dates[1]) - 1]} {dates[2]} from {actualMeeting.start_time} to {actualMeeting.end_time}, {dates[0]}</h1>
-            <CountdownTimer targetDate={meetingDateTime} />
+            <CountdownTimer targetDate={meetingDateTime} onFinishCount={onFinishCount}/>
             <h3 style={{ textAlign: 'center' }}>{actualMeeting.meeting_name}</h3>
             <h3 style={{ textAlign: 'center' }}>ID: {actualMeeting.id}</h3>
             <h3 style={{ textAlign: 'center' }}>Description: {actualMeeting.description}</h3>
             <h3 style={{ textAlign: 'center' }}>Time zone: {actualMeeting.time_zone}</h3>
             <h3 style={{ textAlign: 'center' }}>Host: {actualMeeting.host}</h3>
-            <h3 style={{ textAlign: 'center' }}>Guests: {actualMeeting.guests.map((data) => (
+            {/* <h3 style={{ textAlign: 'center' }}>Guests: {actualMeeting.guests.map((data) => (
                 // eslint-disable-next-line react/jsx-key
                 <li key={data.name}>{data.name}</li>
-            ))}</h3>
+            ))}</h3> */}
         </div>
     );
 }
