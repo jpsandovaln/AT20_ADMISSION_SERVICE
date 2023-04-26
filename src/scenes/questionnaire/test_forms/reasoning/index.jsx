@@ -24,8 +24,9 @@ import { Box } from '@mui/system';
 import Header from '../../../../components/header.jsx';
 import { useState, useEffect } from "react"
 import { GET_QUESTIONS_BY_TEST } from '../../../../graphql/questionnaire';
-import {useMutation, useQuery} from '@apollo/client'
-// builds the aptitude test page
+import { useMutation, useQuery } from '@apollo/client'
+import '../../test_forms/test.css';
+// builds the Reasoning test page
 const Reasoning = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
     const [selectedOptions, setSelectedOptions] = React.useState({});
@@ -35,26 +36,27 @@ const Reasoning = () => {
     const [questions, setQuestions] = useState([]);
     const { loading, error, data } = useQuery(GET_QUESTIONS_BY_TEST, {
         variables: { test: 'reasoning' },
-      });
-
+    });
+    localStorage.clear();
     useEffect(() => {
         if (data && data.getQuestionnaire) {
-          setQuestions(data.getQuestionnaire);
+            setQuestions(data.getQuestionnaire);
         }
-      }, [data]);
-      if (loading) {
+    }, [data]);
+    if (loading) {
         return <p>Loading...</p>;
-      }
+    }
 
-      if (error) {
+    if (error) {
         return <p>Error: {error.message}</p>;
-      }
+    }
+    //console.log(data.getQuestionnaire)
+    const Questions = data.getQuestionnaire;
+    const answer = data.getQuestionnaire.map(question => question.Answer);
 
-      const Questions = data.getQuestionnaire;
-      const answer = data.getQuestionnaire.map(question => question.Answer);
     const getTestName = () => {
-        return 'Aptitude Test';
-        };
+        return 'Reasoning Test';
+    };
 
     const handleNextQuestion = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
@@ -82,7 +84,7 @@ const Reasoning = () => {
         const json = JSON.stringify(notes);
 
     };
-    localStorage.clear();
+
     const handleSelectAnswer = (event) => {
         const { name, value, type, checked } = event.target;
 
@@ -157,27 +159,41 @@ const Reasoning = () => {
     const renderContent = () => {
         if (examTaken) {
             return (
-                <>
-                    <Typography variant='h4' gutterBottom align='center'>
-                    Congratulations, you completed the exam!
+                <div className="content">
+                    <Typography variant='h2' gutterBottom align='center' padding={"23%"}>
+                        Congratulations, you completed the exam!
                     </Typography>
-                </>
+                </div>
             );
         } else if (showThankYouMessage) {
             const score = calculateScore();
-            return renderThankYouMessage(score);
+            return (
+                <div className="content">
+                    <Typography variant='h4' gutterBottom align='center'>
+                        It's complete, thank you!
+                    </Typography>
+                    <Typography variant='h5' gutterBottom align='center'>
+                        Your score is {score.toFixed(2)}% and you {passOrFail}.
+                    </Typography>
+                </div>
+            );
         }
 
         return (
             <>
-                {/* The rest of the components */}
-                <Box sx={{ m: '50px' }}>
-                    <Header title='TEST' subtitle='Aptitude test' />
-                    <Typography variant='h3' gutterBottom>Please answer the following question:</Typography>
-                    <Typography variant='h4' gutterBottom>
-                        {currentQuestion.Question}
-                    </Typography>
-                    <FormControl component='fieldset'>
+                <Typography variant="h1" gutterBottom align="center" padding={'10px 0% 30px'}>
+                    Reasoning test
+                </Typography>
+                <div className="container">
+                    <div className="question">
+                        <Typography variant='h3' gutterBottom className="title">
+                            Please answer the following question:
+                        </Typography>
+                        <Typography variant='h4' gutterBottom className="question-title">
+                            {currentQuestion.Question}
+                        </Typography>
+                    </div>
+                    <div className="options">
                         {currentQuestion.type === 'radioButton' && (
                             <RadioGroup
                                 aria-label='quiz'
@@ -189,8 +205,8 @@ const Reasoning = () => {
                                     <FormControlLabel
                                         key={index}
                                         value={option.Value}
-                                        control={<Radio />}
-                                        label={option.Label}
+                                        control={<Radio className="radio-input" />}
+                                        label={<Typography variant='body1' className="radio-label">{option.Label}</Typography>}
                                     />
                                 ))}
                             </RadioGroup>
@@ -211,22 +227,33 @@ const Reasoning = () => {
                                                 onChange={handleSelectAnswer}
                                                 name={`${currentQuestionIndex}`}
                                                 value={option.Value}
+                                                className="checkbox-input"
                                             />
                                         }
-                                        label={option.Label}
+                                        label={<Typography variant='body1' className="checkbox-label">{option.Label}</Typography>}
                                     />
                                 ))}
                             </FormGroup>
                         )}
-                    </FormControl>
-                    <Stack spacing={2} direction='row'>
+                    </div>
+                    <div className="button-container">
                         {currentQuestionIndex > 0 && (
-                            <Button variant='contained' onClick={handlePreviousQuestion}>
+                            <Button
+                                variant='contained'
+                                onClick={handlePreviousQuestion}
+                                className="button"
+                                sx={{ mr: 0.5 }}
+                            >
                                 Previous
                             </Button>
                         )}
                         {currentQuestionIndex < Questions.length - 1 && (
-                            <Button variant='contained' onClick={handleNextQuestion}>
+                            <Button
+                                variant='contained'
+                                onClick={handleNextQuestion}
+                                className="button next-button"
+                                sx={{ ml: 0.5 }}
+                            >
                                 Next
                             </Button>
                         )}
@@ -235,18 +262,21 @@ const Reasoning = () => {
                                 variant='contained'
                                 onClick={handleSubmit}
                                 disabled={formSubmitted}
-                            >Submit</Button>
+                                className="button color-button"
+                                sx={{ ml: 0.5 }}
+                            >
+                                Submit
+                            </Button>
                         )}
-                    </Stack>
-                </Box>
-            </>
-        );
+                    </div>
+                </div>
+            </>);
     };
 
     return (
-        <>
+        <div className="reasoning-test">
             {renderContent()}
-        </>
+        </div>
     );
 };
 

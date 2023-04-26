@@ -66,6 +66,7 @@ export default function Form() {
   const handlePhotoChange = (e) => {
     setUserPhoto(e.target.files[0]);
     setnewImage(e.target.files[0]);
+    setFileUploaded(true); // Set fileUploaded to true when a file is uploaded
   };
 
   const handlePhotoUpload = async () => {
@@ -181,6 +182,24 @@ export default function Form() {
               </Box>
             </Box>
             <Box className="form-end">
+              <div className="custom-file-container">
+                <Button
+                  className="custom-file-input"
+                  component="label"
+                  color="secondary"
+                  variant="contained"
+                  disabled={isSubmitting}
+                >
+                  {selectedFile || "Choose File"}
+                  <input
+                    type="file"
+                    name="photo"
+                    value={user.photo}
+                    onChange={handlePhotoChange}
+                  />
+                </Button>
+                <span className="no-file-chosen">{!fileUploaded ? "No file chosen" : "Uploaded file"}</span> 
+              </div>
               <Button
                 type="submit"
                 color="secondary"
@@ -189,14 +208,6 @@ export default function Form() {
               >
                 {isSubmitting ? "Creating..." : "Create New User"}
               </Button>
-            </Box>
-            <Box>
-            <input
-              type="file"
-              name="photo"
-              value={user.photo}
-              onChange={handlePhotoChange}
-              />
             </Box>
           </form>
         )}
