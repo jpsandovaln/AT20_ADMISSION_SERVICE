@@ -231,7 +231,7 @@ const Sidebar = (props) => {
                             <>
                                 <Typography
                                     variant='h5'
-                                    color={colors.secondary[300]}
+                                    color={colors.title[100]}
                                     className='menu-tittle'
                                 >
                                     {!isCollapsed ? 'Create Questionnaire' : <Divider className='divider'  />}
@@ -250,7 +250,7 @@ const Sidebar = (props) => {
                                 <Typography
                                     variant='h5'
                                     color={colors.title[100]}
-                                    sx={{ m: '15px 0 5px 20px' }}
+                                    className='menu-tittle'
                                 >
                                     {!isCollapsed ? 'Test' : <Divider className='divider' />}
                                 </Typography>
@@ -297,9 +297,9 @@ const Sidebar = (props) => {
                                 <Typography
                                     variant='h6'
                                     color={colors.title[100]}
-                                    sx={{ m: '15px 0 5px 20px' }}
+                                    className='menu-tittle'
                                 >
-                                    {!isCollapsed ? 'Workshops' : <Divider sx={{ width: '80%' }} />}
+                                    {!isCollapsed ? 'Workshops' : <Divider className='divider' />}
                                 </Typography>
                                 <Item
                                     title='Workshop 1'
