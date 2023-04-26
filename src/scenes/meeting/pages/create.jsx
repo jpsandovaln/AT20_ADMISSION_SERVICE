@@ -38,7 +38,7 @@ import { CREATE_MEETING } from '../../../graphql/metting';
 const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
 const checkedIcon = <CheckBoxIcon fontSize='small' />;
 
-export default function NewMeeting () {
+export default function NewMeeting() {
     const isNonMobile = useMediaQuery('(min-width:600px)');
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -51,9 +51,9 @@ export default function NewMeeting () {
     const [selectedHost, setSelectedHost] = useState([]);
     const [selectedGuests, setSelectedGuests] = useState([]);
 
-    const {loading, error, data} = useQuery(GET_USERS);
+    const { loading, error, data } = useQuery(GET_USERS);
     const [response, setResponse] = useState('');
-    const [newMeeting] = useMutation(CREATE_MEETING );
+    const [newMeeting] = useMutation(CREATE_MEETING);
 
 
     const onSubmitForm = () => {
@@ -62,12 +62,12 @@ export default function NewMeeting () {
                 id: host._id,
                 name: host.firstName,
                 phone: host.phone,
-              })),
+            })),
             guest_global_id: selectedGuests.map(guest => ({
                 id: guest._id,
                 name: guest.firstName,
                 phone: guest.phone,
-              })),
+            })),
             meeting_name: selectedInterview.label,
             description,
             date: selectedDate,
@@ -81,21 +81,14 @@ export default function NewMeeting () {
         });
 
         newMeeting({ variables: { data } })
-          .then(result => setResponse(result.data.saveInterview))
-          .catch(error => console.log(error));
+            .then(result => setResponse(result.data.saveInterview))
+            .catch(error => console.log(error));
 
-          alert('¡Meeting creado exitosamente!');
-      };
-
-    if(loading) return <p>Loading</p>
-    if(error) return <p>Error</p>
-
-    /*
-    const onSubmitForm = (event) => {
-        alert('Meeting Submitted');
+        alert('¡Meeting creado exitosamente!');
     };
-    */
 
+    if (loading) return <p>Loading</p>
+    if (error) return <p>Error</p>
 
     return (
         <Box m='50px'>
@@ -142,7 +135,7 @@ export default function NewMeeting () {
                         display: 'grid',
                         columnGap: 2,
                         rowGap: 1,
-                        gridTemplateColumns: 'repeat(4, 1fr)',
+                        gridTemplateColumns: 'repeat(3, 1fr)',
                         '& > div': { gridColumn: isNonMobile ? undefined : 'span 4' }
                     }}
                 >
@@ -150,11 +143,11 @@ export default function NewMeeting () {
                         dateAdapter={AdapterDayjs}
                         sx={{ gridColumn: 'span 1' }}
                     >
-                     <DemoContainer components={['DatePicker']} >
+                        <DemoContainer components={['DatePicker']} >
                             <DatePicker label='Select a Date' value={selectedDate} onChange={(newValue) => {
                                 setSelectedDate(newValue);
-                            }} slotProps={ { textField: { variant: 'filled' } }} sx={{ width: '100% !important' }}/>
-                    </DemoContainer>
+                            }} slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }} />
+                        </DemoContainer>
                     </LocalizationProvider>
 
                     <LocalizationProvider
@@ -162,7 +155,7 @@ export default function NewMeeting () {
                         sx={{ gridColumn: 'span 1', textAlign: 'row' }}
                     >
 
-                         <DemoContainer components={['TimePicker']} >
+                        <DemoContainer components={['TimePicker']} >
                             <TimePicker label='Start time' value={selectedStartTime} onChange={(newValue) => {
                                 setSelectedStartTime(newValue);
                             }} slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }} />
@@ -173,30 +166,12 @@ export default function NewMeeting () {
                         dateAdapter={AdapterDayjs}
                         sx={{ gridColumn: 'span 1' }}
                     >
-                         <DemoContainer components={['TimePicker']}>
+                        <DemoContainer components={['TimePicker']}>
                             <TimePicker label='End time' value={selectedEndTime} onChange={(newValue) => {
                                 setSelectedEndTime(newValue);
                             }} slotProps={{ textField: { variant: 'filled' } }} sx={{ width: '100% !important' }} />
                         </DemoContainer>
                     </LocalizationProvider>
-
-                     {/*
-                    <Autocomplete
-                        disablePortal
-                        id='combo-box-demo'
-                        label='Time Zone'
-                        options={timeZone}
-                        onChange={(event, value) => {
-                            const newTimeZone = {
-                                value: value.value,
-                                label: value.label
-                            };
-                            setSelectedTimeZone([newTimeZone]);
-                        }}
-                        sx={{ mt: 1, gridColumn: 'span 1', with: '100%' }}
-                        renderInput={(params) => <TextField {...params} id='filled-basic' variant='filled' label='Time Zone' />}
-                    />
-                    */}
                 </Box>
             </div>
             <div style={{ width: '100%' }}>
@@ -217,7 +192,7 @@ export default function NewMeeting () {
                         id='combo-box-demo'
                         options={data.users.filter(option => option.role.name === "Admin" || option.role.name === "Trainer")}
                         disableCloseOnSelect
-                        getOptionLabel={(option) => option.firstName +' '+ option.lastName}
+                        getOptionLabel={(option) => option.firstName + ' ' + option.lastName}
                         sx={{ gridColumn: 'span 1' }}
                         value={selectedHost}
                         onChange={(event, newValue) => {
@@ -230,7 +205,7 @@ export default function NewMeeting () {
                         id='combo-box-demo'
                         options={data.users.filter(option => option.role.name === "Candidate")}
                         disableCloseOnSelect
-                        getOptionLabel={(option) => option.firstName +' '+ option.lastName}
+                        getOptionLabel={(option) => option.firstName + ' ' + option.lastName}
                         sx={{ gridColumn: 'span 1' }}
                         value={selectedGuests}
                         onChange={(event, newValue) => {
@@ -255,15 +230,15 @@ export default function NewMeeting () {
                         variant='contained'
                         style={{
                             background:
-                            colors.success[100]
+                                colors.success[100]
                         }}
                         size='medium'
                         href='#outlined-buttons'
-                        onClick={ onSubmitForm }
+                        onClick={onSubmitForm}
                     >
                         Save
                     </Button>
-                        {response && <p>{response}</p>}
+                    {response && <p>{response}</p>}
                     <Button variant='contained' style={{ background: colors.secondary[100] }} size='medium' href='#outlined-buttons'>Cancel</Button>
                 </Stack>
                 <p style={{

@@ -17,7 +17,7 @@ import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined'
-
+import './styles.css';
 
 const Topbar = ({ handleLogout }) => {
     const theme = useTheme();
@@ -40,7 +40,7 @@ const Topbar = ({ handleLogout }) => {
     return (
       <Box display="flex" justifyContent="right" p={3}>
         <Box display="flex" textAlign="right">
-          <IconButton onClick={colorMode.toggleColorMode}>
+          <IconButton className="topbar-icon-button" onClick={colorMode.toggleColorMode}>
             {theme.palette.mode === "dark" ? (
               <DarkModeOutlinedIcon />
             ) : (

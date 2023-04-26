@@ -114,7 +114,7 @@ const client = new ApolloClient({
             </main>
           </>
             ) : (
-          <main className="content">
+          <main className="content container">
             <Login onLogin={handleLogin} loginData={handleLoginData} />
           </main>
         )}
