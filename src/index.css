@@ -8,7 +8,8 @@ body,
   height: 100%;
   width: 100%;
   font-family: "Ubuntu", sans-serif;
-  overflow: hidden;
+  overflow: hidden;/* Ajusta la altura máxima del contenedor principal */
+  overflow-y: auto;
 }
 
 .app {
