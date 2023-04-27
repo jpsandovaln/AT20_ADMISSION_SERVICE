@@ -8,10 +8,10 @@ export const CREATE_QUESTION_MUTATION = gql`
         test
         imgSrc
         type
-        answer
+        Answer
         options {
-          label
-          value
+          Label
+          Value
         }
       }
     }
