@@ -27,7 +27,7 @@ export default function Workshop() {
         const languages = {
             '.java': 'java',
             '.js': 'javascript',
-            '.cs': 'csharp',
+            '.cs': 'c_sharp',
             '.py': 'python'
         };
         const language = languages[codeLanguage];
