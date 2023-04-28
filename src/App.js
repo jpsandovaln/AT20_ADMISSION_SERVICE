@@ -16,9 +16,9 @@ import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
 //USER
 import {Dashboard} from './scenes/user/user_list';
-import Form  from './scenes/user/profileform';
+import Form  from './scenes/user/new_User';
 import {Login} from './scenes/user/login';
-import Edit from './scenes/user/form';
+import Edit from './scenes/user/edit_User';
 // import Form from './scenes/profileform';
 // INTERVIEWS
 import InterviewEnglish from './scenes/interviews/english';
@@ -105,7 +105,7 @@ const client = new ApolloClient({
                   <Route path="/logical" element={<Logical />} />
                   <Route path="/reasoning" element={<Reasoning />} />
                   <Route path="/spatial" element={<Spatial />} />
-                  <Route path="/meeting" element={<NewMeeting />} />
+                  <Route path="/meeting" element={<NewMeeting loginData={loginData}/>} />
                   <Route path="/meeting/new" element={<MyMeetings />} />
                   <Route path="/meeting/waiting-room" element={<Waiting />} />
                   <Route path="/meeting/room/:id" element={<Room />} />
@@ -114,7 +114,7 @@ const client = new ApolloClient({
             </main>
           </>
             ) : (
-          <main className="content">
+          <main className="content container">
             <Login onLogin={handleLogin} loginData={handleLoginData} />
           </main>
         )}

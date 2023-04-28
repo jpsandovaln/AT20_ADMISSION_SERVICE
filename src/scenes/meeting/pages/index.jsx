@@ -2,16 +2,16 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Tooltip,
-    Box,
-    Button
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Tooltip,
+  Box,
+  Button
 } from '@mui/material';
 import { AccessTime, Person } from '@mui/icons-material';
 import Header from '../../../components/header';
@@ -21,9 +21,10 @@ import { getMeetingData } from '../../../apis/meetingService';
 import { useQuery } from '@apollo/client';
 import { GET_MY_MEETINGS } from '../../../graphql/metting';
 
-const tableStyles = {
-    padding: '16px'
-};
+const MeetingsTable = (props) => {
+  const { loginData } = props;
+  const roleLogin = loginData.info._id;
+  const roleData = loginData.info.role.name;
 
 const titleStyles = {
     fontSize: '2rem',

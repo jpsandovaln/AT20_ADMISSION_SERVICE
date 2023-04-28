@@ -8,11 +8,35 @@ export const CREATE_QUESTION_MUTATION = gql`
         test
         imgSrc
         type
-        answer
+        Answer
         options {
-          label
-          value
+          Label
+          Value
         }
       }
     }
   `;
+
+export const GET_QUESTIONS_BY_TEST = gql`
+  query GetQuestionnaire($test: String!) {
+  getQuestionnaire(test: $test) {
+    IDQuestions
+    ImgScr
+    Question
+    Answer
+    options {
+      Label
+      Value
+    }
+    test
+    type
+  }
+}
+`;
+export const GET_ANSWERS_BY_TEST = gql`
+query GetQuestionnaire($test: String!) {
+  getQuestionnaire(test: $test) {
+    Answer
+  }
+}
+`;

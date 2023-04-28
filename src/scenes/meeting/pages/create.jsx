@@ -51,7 +51,7 @@ export default function NewMeeting() {
     const [selectedHost, setSelectedHost] = useState([]);
     const [selectedGuests, setSelectedGuests] = useState([]);
 
-    const { loading, error, data } = useQuery(GET_USERS);
+    const {  loading, error, data  } = useQuery(GET_USERS);
     const [response, setResponse] = useState('');
     const [newMeeting] = useMutation(CREATE_MEETING);
 
@@ -74,12 +74,10 @@ export default function NewMeeting() {
             start_time: selectedStartTime,
             end_time: selectedEndTime,
             time_zone: {
-
                 "value": "UTC-7",
-
-                "label": "Pacific Daylight Time (PDT)"
-
-            }
+                "label": "Pacific Daylight Time (PDT)"
+            },
+            active: true
         });
 
         newMeeting({ variables: { data } })
@@ -95,9 +93,10 @@ export default function NewMeeting() {
     /*
     const onSubmitForm = (event) => {
         alert('Meeting Submitted');
-    };
-    */
+    };*/
 
+    if (loading) return <p>Loading</p>
+    if (error) return <p>Error</p>
 
     return (
         <Box m='50px'>
@@ -198,11 +197,9 @@ export default function NewMeeting() {
                 >
 
                     <Autocomplete
-                        //disablePortal
                         multiple
-                        id='checkboxes-tags-demo'
-                        //options={data.users.filter(option => option.role.name === "Admin" || option.role.name === "Trainer")}
-                        options={data.users.filter(option => option.role.name === "Trainer")}
+                        id='combo-box-demo'
+                        options={data.users.filter(option => option.role.name === "Admin" || option.role.name === "Trainer")}
                         disableCloseOnSelect
                         getOptionLabel={(option) =>
                             option.firstName + ' ' + option.lastName
@@ -223,16 +220,12 @@ export default function NewMeeting() {
                         onChange={(event, newValue) => {
                             setSelectedHost(newValue);
                         }}
-                        renderInput={(params) => (
-                            <TextField {...params} label='Select Host' id='filled-basic' variant='filled' placeholder='Host' />
-                        )}
+                        renderInput={(params) => <TextField {...params} label='Select Guests' id='filled-basic' variant='filled' placeholder=' ' />}
                     />
-
                     <Autocomplete
                         multiple
-                        id='checkboxes-tags-demo'
-                        options={data.users}
-                        //options={data.users.filter(option => option.role.name === "Candidate")}
+                        id='combo-box-demo'
+                        options={data.users.filter(option => option.role.name === "Candidate")}
                         disableCloseOnSelect
                         getOptionLabel={(option) => option.firstName + ' ' + option.lastName}
                         renderOption={(props, option, { selected }) => (
@@ -252,7 +245,7 @@ export default function NewMeeting() {
                             setSelectedGuests(newValue);
                         }}
                         renderInput={(params) => (
-                            <TextField {...params} label='Select Guests' id='filled-basic' variant='filled' placeholder='Guests' />
+                            <TextField {...params} label='Select Guests' id='filled-basic' variant='filled' placeholder=' ' />
                         )}
                     />
                 </Box>
@@ -281,6 +274,10 @@ export default function NewMeeting() {
                     {response && <p>{response}</p>}
                     <Button variant='contained' style={{ background: colors.secondary[100] }} size='medium' href='#outlined-buttons'>Cancel</Button>
                 </Stack>
+                <p style={{
+                    color: colors.secondary[100],
+                    marginTop: 50
+                }}>Organized by: Pepito Perez</p>
             </Box>
         </Box>
     );

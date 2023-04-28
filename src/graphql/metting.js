@@ -35,4 +35,34 @@ export const GET_TOKEN = gql`
 mutation GetToken($idGuest: String, $nameGuest: String, $emailGuest: String, $hostGuest: Boolean, $idMeeting: String) {
   getToken(id_guest: $idGuest, name_guest: $nameGuest, email_guest: $emailGuest, host_guest: $hostGuest, id_meeting: $idMeeting)
 }
+export const GET_MEETINGS = gql`
+{
+  getMeetings {
+    _id
+    id
+    host_global_id {
+      id
+      _id
+      name
+      phone
+    }
+    guest_global_id {
+      id
+      _id
+      name
+      phone
+    }
+    meeting_name
+    description
+    date
+    start_time
+    end_time
+    time_zone {
+      value
+      label
+      _id
+    }
+    active
+  }
+}
 `

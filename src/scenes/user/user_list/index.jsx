@@ -4,10 +4,12 @@ import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, 
 import DeleteIcon from '@mui/icons-material/Delete';
 import { GET_USERS, DELETE_USER, GET_PHOTO } from '../../../graphql/user';
 import { useQuery, useMutation } from '@apollo/client'
+import Header from '../../../components/header';
+import './styleUserList.css';
 
 export function Dashboard() {
 
-  const {loading, error, data, refetch} = useQuery(GET_USERS);
+  const { loading, error, data, refetch } = useQuery(GET_USERS);
 
   /*const photo = useQuery(GET_PHOTO, {
     variables: {
@@ -27,8 +29,8 @@ export function Dashboard() {
     ],
   });
 
-  if(loading) return <p>Loading</p>
-  if(error) return <p>Error</p>
+  if (loading) return <p>Loading</p>
+  if (error) return <p>Error</p>
 
 
   const handleDelete = (id) => {
@@ -42,48 +44,50 @@ export function Dashboard() {
   };
 
   return (
-
-    <TableContainer component={Paper}>
-      <Table aria-label="simple table">
-      <TableHead>
-        <TableRow>
-          <TableCell>Name</TableCell>
-          <TableCell>Username</TableCell>
-          <TableCell>Email</TableCell>
-          <TableCell>Phone</TableCell>
-          <TableCell>Role</TableCell>
-          <TableCell>Photo</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-      {data.users.map(user => (
-            <TableRow key={user._id}>
-              <TableCell>{user.firstName} {user.lastName}</TableCell>
-              <TableCell>{user.userName}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.phone}</TableCell>
-              <TableCell>{user.role.name}</TableCell>
-              <TableCell>
-              <Box
-                component="img"
-                  sx={{
-                  height: 233,
-                  width: 350,
-                  maxHeight: { xs: 233, md: 167 },
-                  maxWidth: { xs: 350, md: 250 },
-                }}
-                src={user.photo}
-                />
-                </TableCell>
-              <TableCell>
-                <IconButton aria-label="delete" onClick={() => handleDelete(user._id)}>
-                  <DeleteIcon />
-                </IconButton>
-              </TableCell>
+    <Box className='general-view'>
+      <Header title='USER LIST' subtitle='' />
+      <TableContainer component={Paper} className='table-container'>
+        <Table aria-label="simple table" className='table-view'>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Username</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Phone</TableCell>
+              <TableCell>Role</TableCell>
+              <TableCell>Photo</TableCell>
             </TableRow>
-          ))}
-      </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {data.users.map(user => (
+              <TableRow key={user._id}>
+                <TableCell>{user.firstName} {user.lastName}</TableCell>
+                <TableCell>{user.userName}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.phone}</TableCell>
+                <TableCell>{user.role.name}</TableCell>
+                <TableCell>
+                  <Box
+                    component="img"
+                    sx={{
+                      height: 233,
+                      width: 350,
+                      maxHeight: { xs: 233, md: 167 },
+                      maxWidth: { xs: 350, md: 250 },
+                    }}
+                    src={user.photo}
+                  />
+                </TableCell>
+                <TableCell>
+                  <IconButton aria-label="delete" onClick={() => handleDelete(user._id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }

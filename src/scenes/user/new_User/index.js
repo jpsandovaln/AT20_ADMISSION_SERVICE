@@ -4,16 +4,19 @@ import { Formik } from "formik";
 //import axios from "axios";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react"
-import {useMutation, useQuery} from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { CONVERT_IMAGE, CREATE_USER, UPLOAD_IMAGE } from "../../../graphql/user";
 import Header from '../../../components/header';
 import { GET_ROLES } from "../../../graphql/role";
+import "./profileFormStyle.css";
 
-
-export default function Form () {
+export default function Form() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const [convert] = useMutation(CONVERT_IMAGE );
+  const [convert] = useMutation(CONVERT_IMAGE);
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [fileUploaded, setFileUploaded] = useState(false);
 
   const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
@@ -26,6 +29,7 @@ export default function Form () {
         },
       });
       console.log(result.data.convertImage.url);
+      setFileUploaded(true);
     } catch (error) {
       console.error(error);
     }
@@ -50,7 +54,7 @@ export default function Form () {
   const [createUser, { loading, error }] = useMutation(CREATE_USER, {
     onCompleted: () => {
       alert('User created successfully!');
-      setUser({ firstName: '', lastName:'', email: '', password: '', phone:'', role: '', photo:'' });
+      setUser({ firstName: '', lastName: '', email: '', password: '', phone: '', role: '', photo: '' });
     },
   });
 
@@ -58,22 +62,23 @@ export default function Form () {
   const [newImage, setnewImage] = useState(null);
 
   const [userPhoto, setUserPhoto] = useState(null);
-  const { data: rolesData, loading: rolesLoading, error: rolesError } = useQuery(GET_ROLES );
+  const { data: rolesData, loading: rolesLoading, error: rolesError } = useQuery(GET_ROLES);
   const handlePhotoChange = (e) => {
     setUserPhoto(e.target.files[0]);
     setnewImage(e.target.files[0]);
+    setFileUploaded(true); // Set fileUploaded to true when a file is uploaded
   };
 
-const handlePhotoUpload = async () => {
- const result = await convert({
-   variables: {
-     image: userPhoto,
-     width: 300,
-     height: 300,
-   },
-  });
-  return result.data.convertImage.url;
-};
+  const handlePhotoUpload = async () => {
+    const result = await convert({
+      variables: {
+        image: userPhoto,
+        width: 300,
+        height: 300,
+      },
+    });
+    return result.data.convertImage.url;
+  };
 
   if (loading) return <p>Loading...</p>
   if (error) return `Submission error! ${error.message}`;
@@ -104,8 +109,8 @@ const handlePhotoUpload = async () => {
 
   return (
 
-    <Box m="20px">
-    <Header title="CREATE USER" subtitle="NEW USER" />
+    <Box className="form-container">
+      <Header title="CREATE USER" subtitle="NEW USER" />
       <Formik
         onSubmit={handleSubmit}
       >
@@ -115,14 +120,7 @@ const handlePhotoUpload = async () => {
           isSubmitting,
         }) => (
           <form onSubmit={handleSubmit}>
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
-            >
+          <Box className="form-grid">
               <TextField
                 fullWidth
                 variant="filled"
@@ -132,7 +130,7 @@ const handlePhotoUpload = async () => {
                 name="firstName"
                 error={!!touched.name && !!errors.name}
                 helperText={touched.name && errors.name}
-                sx={{ gridColumn: "span 2" }}
+                className="form-grid-span2"
               />
               <TextField
                 fullWidth
@@ -143,7 +141,7 @@ const handlePhotoUpload = async () => {
                 name="lastName"
                 error={!!touched.lastName && !!errors.lastName}
                 helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: 'span 2' }}
+                className="form-grid-span2"
               />
               <TextField
                 fullWidth
@@ -165,25 +163,43 @@ const handlePhotoUpload = async () => {
                 name="phone"
                 error={!!touched.name && !!errors.name}
                 helperText={touched.name && errors.name}
-                sx={{ gridColumn: "span 2" }}
+                className="form-grid-span2"
               />
-              <Box sx={{ gridColumn: "span 2" }}>
-              <Select
-                    fullWidth
-                    variant="filled"
-                    label="Role"
-                    name="role"
-                    onChange={handleChange}
-                    value={user.role}
-                    error={!!touched.role && !!errors.role}
-                    >
+              <Box  className="form-grid-span2">
+                <Select
+                  fullWidth
+                  variant="filled"
+                  label="Role"
+                  name="role"
+                  onChange={handleChange}
+                  value={user.role}
+                  error={!!touched.role && !!errors.role}
+                >
                   {rolesData && rolesData.roles.map((role) => (
-                  <MenuItem key={role._id} value={role._id}>{role.name}</MenuItem>
-                    ))}
-                  </Select>
+                    <MenuItem key={role._id} value={role._id}>{role.name}</MenuItem>
+                  ))}
+                </Select>
               </Box>
             </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
+            <Box className="form-end">
+              <div className="custom-file-container">
+                <Button
+                  className="custom-file-input"
+                  component="label"
+                  color="secondary"
+                  variant="contained"
+                  disabled={isSubmitting}
+                >
+                  {selectedFile || "Choose File"}
+                  <input
+                    type="file"
+                    name="photo"
+                    value={user.photo}
+                    onChange={handlePhotoChange}
+                  />
+                </Button>
+                <span className="no-file-chosen">{!fileUploaded ? "No file chosen" : "Uploaded file"}</span> 
+              </div>
               <Button
                 type="submit"
                 color="secondary"
@@ -192,14 +208,6 @@ const handlePhotoUpload = async () => {
               >
                 {isSubmitting ? "Creating..." : "Create New User"}
               </Button>
-            </Box>
-            <Box>
-            <input
-              type="file"
-              name="photo"
-              value={user.photo}
-              onChange={handlePhotoChange}
-              />
             </Box>
           </form>
         )}

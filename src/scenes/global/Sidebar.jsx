@@ -24,23 +24,24 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import GroupsIcon from '@mui/icons-material/Groups';
+import './styles.css';
 // eslint-disable-next-line react/prop-types
 const Item = ({ title, to, icon, selected, setSelected }) => {
-    
+
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     return (
         // eslint-disable-next-line react/react-in-jsx-scope
         <MenuItem
-            active={ selected === title }
+            active={selected === title}
             style={{
                 color: colors.secondary[100]
             }}
-            onClick={ () => setSelected(title) }
+            onClick={() => setSelected(title)}
             icon={icon}
         >
-            <Typography>{ title }</Typography>
-            <Link to={ to } />
+            <Typography>{title}</Typography>
+            <Link to={to} />
         </MenuItem>
     );
 };
@@ -49,11 +50,11 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 const filterItemsbyRole = (role) => {
     let filteredItem = [];
     if (role === 'Admin') {
-        filteredItem = ['Dashboard', 'Add User', 'Meetings', 'Interviews', 'Tests', 'Create Questionaries', 'Workshops'];
+        filteredItem = ['Dashboard', 'Add User', 'NewMeetings', 'Interviews', 'Tests', 'Create Questionaries', 'Workshops'];
     } else if (role === 'Trainer') {
-        filteredItem = ['Dashboard', 'Meetings', 'Interviews', 'Create Questionaries', 'Workshops'];
+        filteredItem = ['Dashboard', 'NewMeetings', 'Interviews', 'Create Questionaries', 'Workshops'];
     } else if (role === 'Candidate') {
-        filteredItem = ['Profile form', 'Interviews', 'Tests', 'Workshops'];
+        filteredItem = ['Meetings', 'Interviews', 'Tests', 'Workshops'];
     }
     return filteredItem;
 };
@@ -62,10 +63,8 @@ const filterItemsbyRole = (role) => {
 const Sidebar = (props) => {
 
     const { loginData } = props;
-    console.log(loginData);
-
     const role = loginData.info.role.name
-    
+
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -77,7 +76,7 @@ const Sidebar = (props) => {
             sx={{
                 '& .pro-sidebar-inner': {
                     background: `${colors.body[200]} !important`,
-                    
+
                 },
                 '& .pro-icon-wrapper': {
                     backgroundColor: 'transparent !important',
@@ -87,20 +86,17 @@ const Sidebar = (props) => {
                     padding: '5px 35px 5px 20px !important'
                 },
                 '& .pro-inner-item:hover': {
-                    // color: '#868dfb !important',
                     color: `${colors.primary[100]} !important`
                 },
                 '& .pro-menu-item.active': {
-                    
-                    // color: '#6870fa !important',
                     color: `${colors.primary[100]} !important`
                 }
             }}
         >
-            <ProSidebar 
+            <ProSidebar
                 sx={{ position: 'fixed' }}
-                collapsed={isCollapsed} 
-                >
+                collapsed={isCollapsed}
+            >
                 <Menu iconShape='square'>
                     {/* LOGO AND MENU ICON */}
                     <MenuItem
@@ -112,12 +108,7 @@ const Sidebar = (props) => {
                         }}
                     >
                         {!isCollapsed && (
-                            <Box
-                                display='flex'
-                                justifyContent='space-between'
-                                alignItems='center'
-                                ml='15px'
-                            >
+                            <Box className="menu-item" >
                                 <Typography variant='h3' color={colors.primary[100]}>
                                     JALASOFT
                                 </Typography>
@@ -130,20 +121,17 @@ const Sidebar = (props) => {
 
                     {!isCollapsed && (
                         <Box mb='25px'>
-                            <Box display='flex' justifyContent='center' alignItems='center'>
+                            <Box className="profile-user-sector" >
                                 <img
                                     alt='profile-user'
-                                    width='100px'
-                                    height='100px'
-                                    src={ loginData.info.photo }
-                                    style={{ cursor: 'pointer', borderRadius: '50%' }}
+                                    src={loginData.info.photo}
+                                    className="profile-user"
                                 />
                             </Box>
                             <Box textAlign='center'>
                                 <Typography
                                     variant='h2'
                                     color={colors.title[100]}
-                                    // fontWeight='bold'
                                     sx={{ m: '10px 0 0 0' }}
                                 >
                                     {loginData.info.firstName}
@@ -165,6 +153,7 @@ const Sidebar = (props) => {
                                 setSelected={setSelected}
                             />
                         )}
+
                         {filteredItem.includes('Profile form') && (
                             <Item
                                 title='Profile Form'
@@ -174,12 +163,13 @@ const Sidebar = (props) => {
                                 setSelected={setSelected}
                             />
                         )}
+
                         <Item
-                        title='Edit Profile'
-                        to='/edit'
-                        icon={<PersonOutlinedIcon />}
-                        selected={selected}
-                        setSelected={setSelected}
+                            title='Edit Profile'
+                            to='/edit'
+                            icon={<PersonOutlinedIcon />}
+                            selected={selected}
+                            setSelected={setSelected}
                         />
 
                         {filteredItem.includes('Add User') && (
@@ -196,9 +186,29 @@ const Sidebar = (props) => {
                                 <Typography
                                     variant='h5'
                                     color={colors.title[100]}
-                                    sx={{ m: '15px 0 5px 20px' }}
+                                    className='menu-tittle'
                                 >
-                                    {!isCollapsed ? 'Meeting' : <Divider sx={{ width: '80%' }} />}
+                                    {!isCollapsed ? 'Meeting' : <Divider className='divider' />}
+                                </Typography>
+
+                                <Item
+                                    title='My meetings'
+                                    to='/meeting'
+                                    icon={<GroupsIcon />}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                />
+
+                            </>
+                        )}
+                        {filteredItem.includes('NewMeetings') && (
+                            <>
+                                <Typography
+                                    variant='h5'
+                                    color={colors.title[100]}
+                                    className='menu-tittle'
+                                >
+                                    {!isCollapsed ? 'Meeting' : <Divider className='divider' />}
                                 </Typography>
 
                                 <Item
@@ -217,52 +227,14 @@ const Sidebar = (props) => {
                                 />
                             </>
                         )}
-                       {/*
-                       {filteredItem.includes('Interviews') && (
-                            <>
-                                <Typography
-                                    variant='h5'
-                                    color={colors.secondary[300]}
-                                    sx={{ m: '15px 0 5px 20px' }}
-                                >
-                                    {!isCollapsed ? 'Intervies' : <Divider sx={{ width: '80%' }} />}
-                                </Typography>
-
-                                <Item
-                                    title='Informative Interview'
-                                    to='/informative'
-                                    icon={<PeopleOutlinedIcon />}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                />
-
-                                <Item
-                                    title='Psicologic Interview'
-                                    to='/psicologic'
-                                    icon={<PeopleOutlinedIcon />}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                />
-
-                                <Item
-                                    title='English Interview'
-                                    to='/english'
-                                    icon={<PeopleOutlinedIcon />}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                />
-                            </>
-                        )}
-                        */}
-
                         {filteredItem.includes('Create Questionaries') && (
                             <>
                                 <Typography
                                     variant='h5'
-                                    color={colors.secondary[300]}
-                                    sx={{ m: '15px 0 5px 20px' }}
+                                    color={colors.title[100]}
+                                    className='menu-tittle'
                                 >
-                                    {!isCollapsed ? 'Create Questionnaire' : <Divider sx={{ width: '80%' }} />}
+                                    {!isCollapsed ? 'Create Questionnaire' : <Divider className='divider'  />}
                                 </Typography>
                                 <Item
                                     title='New Questionnaire'
@@ -278,9 +250,9 @@ const Sidebar = (props) => {
                                 <Typography
                                     variant='h5'
                                     color={colors.title[100]}
-                                    sx={{ m: '15px 0 5px 20px' }}
+                                    className='menu-tittle'
                                 >
-                                    {!isCollapsed ? 'Test' : <Divider sx={{ width: '80%' }} />}
+                                    {!isCollapsed ? 'Test' : <Divider className='divider' />}
                                 </Typography>
                                 <Item
                                     title='Aptitude Tests'
@@ -325,9 +297,9 @@ const Sidebar = (props) => {
                                 <Typography
                                     variant='h6'
                                     color={colors.title[100]}
-                                    sx={{ m: '15px 0 5px 20px' }}
+                                    className='menu-tittle'
                                 >
-                                    {!isCollapsed ? 'Workshops' : <Divider sx={{ width: '80%' }} />}
+                                    {!isCollapsed ? 'Workshops' : <Divider className='divider' />}
                                 </Typography>
                                 <Item
                                     title='Workshop 1'
