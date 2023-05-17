@@ -1,11 +1,13 @@
 FROM node:18-alpine3.16
 
-WORKDIR /app/ui
+LABEL description="This service is the user interface of the application, where the user is shown the different services that can be offered."
 
-COPY package*.json ./
+WORKDIR /app
+
+COPY . .
 
 RUN npm install
 
-COPY . .
+EXPOSE 3000
 
 CMD ["npm", "start"]
