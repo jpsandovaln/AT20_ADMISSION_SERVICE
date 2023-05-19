@@ -1,10 +1,10 @@
-pineline{
+pipeline{
     agent any
     stages{
-        stages('Hello'){
+        stage('Hello') {
             steps{
-                sh 'echo Hello Word'
-                sh 'echo Hello class'
+                sh 'echo Hello World'
+                sh 'echo Hello Class'
             }
         }
     }
