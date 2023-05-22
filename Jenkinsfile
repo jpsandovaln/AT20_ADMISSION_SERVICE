@@ -1,16 +1,12 @@
 pipeline{
     agent any
-    stages{
-        stage('Hello') {
-            steps{
-                sh 'echo Hello World'
-                sh 'echo Hello Class'
-                //sh 'mkdir'
-            }
-        }
+    stages {
         stage("Test"){
-            steps{
-                sh 'echo Here Testing command'
+            agent { docker 'node:18-alpine3.16'}
+            steps {
+                sh 'npm version'
+                sh 'npm install'
+                sh 'npx jest'
             }
         }
     }
