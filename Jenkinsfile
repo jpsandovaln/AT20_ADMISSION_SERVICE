@@ -13,5 +13,13 @@ pipeline {
                 }
             }
         }
+        stage('Package') {
+            steps {
+                sh 'docker build -t at20_meeting_service .'
+            }
+        }
+        stage('Publish') {
+           
+        }
     }
 }
