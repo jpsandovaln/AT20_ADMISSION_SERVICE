@@ -24,8 +24,8 @@ pipeline {
         stage('Publish') {
            steps {
                 sh 'docker login -u esther12345 -p ${DOCKER_PASS}'
-                sh 'echo docker tag at20_admission_service esther12345/admission_service'
-                sh 'echo docker push esther12345/admission_service'
+                sh 'docker tag at20_admission_service esther12345/admission_service'
+                sh 'docker push esther12345/admission_service'
            }
         }
     }
