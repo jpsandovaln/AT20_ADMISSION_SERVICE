@@ -15,12 +15,12 @@ pipeline {
         }
         stage('Package') {
             steps {
-                sh 'docker build -t at20_meeting_service .'
+                sh 'docker build -t at20_admission_service .'
             }
         }
         stage('Publish') {
            steps {
-                sh 'docker tag at20_meeting_service esther12345/admission_service'
+                sh 'docker tag at20_admission_service esther12345/admission_service'
                 sh 'docker push esther12345/admission_service'
            }
         }
