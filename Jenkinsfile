@@ -19,7 +19,10 @@ pipeline {
             }
         }
         stage('Publish') {
-           
+           steps {
+                sh 'docker tag at20_meeting_service esther12345/admission_service'
+                sh 'docker push esther12345/admission_service'
+           }
         }
     }
 }
