@@ -23,8 +23,7 @@ pipeline {
                         -Dsonar.organization=at20-evv \
                         -Dsonar.projectKey=at20_evv \
                         -Dsonar.sources=. \
-                        -Dsonar.host.url=https://sonarcloud.io'
-                   }
+                        -Dsonar.host.url=https://sonarcloud.io'  
             }
         }
         stage('Package') {
