@@ -16,7 +16,7 @@ pipeline {
                     archiveArtifacts artifacts: 'test/report/report.html', followSymlinks: false
                 }
             }
-        },
+        }
         stage('Code Inspection'){
             steps {
                 withSonarQubeEnv('SonarQube') {
