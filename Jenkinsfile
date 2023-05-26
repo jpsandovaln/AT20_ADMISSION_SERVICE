@@ -5,7 +5,7 @@ pipeline {
         SONAR_TOKEN = credentials('sonar_token')
     }
     stages {
-        stage('Test'){
+        stage('Test') {
             agent { docker 'node:18-alpine3.16' }
             steps {
                 sh 'npm install'
@@ -25,6 +25,19 @@ pipeline {
                         -Dsonar.sources=. \
                         -Dsonar.host.url=https://sonarcloud.io'  
             }
+        }
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                    }
+                }
+            }
+            //Get the computed result from sonar cloud
+            //if passed -> continue with the pipeline
+            //if failed -> fail the pipeline
         }
         stage('Package') {
             steps {
