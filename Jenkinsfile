@@ -2,9 +2,10 @@ pipeline {
     agent any
     environment {
         DOCKER_PASS = credentials('docker_pass')
+        SONAR_TOKEN = credentials('sonar_token')
     }
     stages {
-        stage('Test'){
+        stage('Test') {
             agent { docker 'node:18-alpine3.16' }
             steps {
                 sh 'npm install'
@@ -13,6 +14,29 @@ pipeline {
             post {
                 always {
                     archiveArtifacts artifacts: 'test/report/report.html', followSymlinks: false
+                }
+            }
+        }
+        stage('Code Inspection') {
+            steps {
+                withSonarQubeEnv('sonar_scanner') {
+                    sh '/var/jenkins_home/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
+                        -Dsonar.organization=at20-evv \
+                        -Dsonar.projectKey=at20_evv \
+                        -Dsonar.sources=. \
+                        -Dsonar.host.url=https://sonarcloud.io'  
+                }
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+                script {
+                    timeout(time: 1, unit: 'HOURS') {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
+                    }
                 }
             }
         }
