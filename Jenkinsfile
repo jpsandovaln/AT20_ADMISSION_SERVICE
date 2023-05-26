@@ -1,6 +1,5 @@
 pipeline {
     agent any
-    tools {nodejs "node_v10"}
     environment {
         DOCKER_PASS = credentials('docker_pass')
         SONAR_TOKEN = credentials('sonar_token')
@@ -38,9 +37,6 @@ pipeline {
                     }
                 }
             }
-            //Get the computed result from sonar cloud
-            //if passed -> continue with the pipeline
-            //if failed -> fail the pipeline
         }
         stage('Package') {
             steps {
