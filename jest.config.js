@@ -1,10 +1,17 @@
 module.exports = {
-  verbose: true,
-  reporters: [
+   verbose: true,
+   collectCoverage: true,
+   collectCoverageFrom: [
+   "src/**/*.{js,jsx}",
+   ],
+   "coverageReporters": [
+      "lcov",
+   ],
+   reporters: [
       "default",
       ["./node_modules/jest-html-reporter", {
-      "pageTitle": "Report",
-      "outputPath": "./test/report/report.html"
+         "pageTitle": "Report",
+         "outputPath": "./test/report/report.html"
       }]
    ]
 };
