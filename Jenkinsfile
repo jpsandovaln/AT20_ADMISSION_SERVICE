@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    tools {nodejs "node_v10"}
     environment {
         DOCKER_PASS = credentials('docker_pass')
         SONAR_TOKEN = credentials('sonar_token')
