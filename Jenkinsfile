@@ -19,11 +19,13 @@ pipeline {
         }
         stage('Code Inspection') {
             steps {
-                sh '/var/jenkins_home/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
+                withSonarQubeEnv('sonar_scanner') {
+                    sh '/var/jenkins_home/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
                         -Dsonar.organization=at20-evv \
                         -Dsonar.projectKey=at20_evv \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=https://sonarcloud.io'  
+                }
             }
         }
         stage('Quality Gate') {
