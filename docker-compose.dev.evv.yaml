@@ -36,4 +36,6 @@ services:
       - express-mongo
     expose:
       - 27017
-
+networks:
+  express-mongo:
+  react-express:
