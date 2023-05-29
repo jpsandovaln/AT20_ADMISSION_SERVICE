@@ -52,5 +52,17 @@ pipeline {
                 sh 'docker push esther12345/admission_service'
            }
         }
+        stage{'DeployToDev'} {
+            steps {
+                sh 'docker-compose -f docker-compose.dev.evv.yaml up -d'
+            }
+        }
+    }
+    post {
+            always {
+                sh 'docker rmi $(docker images -f "dangling=true" -q)'
+                sh 'echo clean dangling images'
+            }
     }
 }
+
