@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: esthervasquez/at20_admission_service
+    image: esther12345/admission_service
     stdin_open: true
     volumes:
       - ./frontend:/usr/src/app
