@@ -1,5 +1,10 @@
 services:
   frontend:
+    build:
+      context: frontend
+      target: development
+    ports:
+      - 3000:3000
     image: esther12345/admission_service
     stdin_open: true
     volumes:
@@ -16,6 +21,7 @@ services:
     build:
       context: backend
       target: development
+    image: esther12345/admission_service
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
