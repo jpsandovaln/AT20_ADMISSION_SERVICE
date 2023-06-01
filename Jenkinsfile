@@ -59,10 +59,20 @@ pipeline {
         }
     }
     post {
-            always {
-                sh 'docker rmi $(docker images -f "dangling=true" -q)'
-                sh 'echo clean dangling images'
+        always {
+            steps {
+                script {
+                    try {
+                        sh 'docker rmi $(docker images -f "dangling=true" -q)'
+                        sh 'docker system prune -a'
+                    } catch (Exception e) {
+                        echo 'Failed to execute the Docker command. Skipping.'
+                        return
+                    }
+                }
             }
-    }
-}
+        }
+    }	    
+}	
+
 
