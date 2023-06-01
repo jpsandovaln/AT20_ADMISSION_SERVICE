@@ -60,9 +60,7 @@ pipeline {
     }
     post {
         always {
-            sh 'docker container prune -f'
-            sh 'docker rmi $(docker images -f "dangling=true" -q)'
-            sh 'docker system prune -a'
+            sh 'echo clean dangling images'
         }
     }	    
 }	
