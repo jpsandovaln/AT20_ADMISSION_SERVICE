@@ -1,9 +1,6 @@
 version: '3.3'
 services:
   frontend:
-    build:
-      context: frontend
-      target: development
     image: admission_service
     ports:
       - 3000:3000
@@ -19,9 +16,6 @@ services:
 
   backend:
     restart: always
-    build:
-      context: backend
-      target: development
     image: admission_service
     volumes:
       - ./backend:/usr/src/app
