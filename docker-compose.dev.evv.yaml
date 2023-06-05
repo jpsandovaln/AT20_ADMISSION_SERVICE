@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   frontend:
-    image: admission_service
+    image: admission_service/frontend
     ports:
       - 3000:3000
     stdin_open: true
@@ -16,7 +16,7 @@ services:
 
   backend:
     restart: always
-    image: admission_service
+    image: admission_service/backend
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
