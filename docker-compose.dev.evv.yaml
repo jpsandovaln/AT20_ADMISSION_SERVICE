@@ -16,7 +16,7 @@ services:
 
   backend:
     restart: always
-    image: admission_service/backend
+    image: admission_service
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules

@@ -2,7 +2,6 @@ version: '3.3'
 services:
   frontend:
     image: esther12345/admission_service/frontend
-    context: frontend
     ports:
       - 3000:3000
     stdin_open: true
@@ -17,7 +16,6 @@ services:
 
   backend:
     restart: always
-    context: backend
     image: esther12345/admission_service/backend
     volumes:
       - ./backend:/usr/src/app
