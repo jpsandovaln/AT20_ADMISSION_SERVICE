@@ -3,6 +3,7 @@ pipeline {
     environment {
         DOCKER_PASS = credentials('docker_pass')
         SONAR_TOKEN = credentials('sonar_token')
+        TARGET_HOST = '192.168.56.61'
     }
     stages {
         stage('Test') {
@@ -55,14 +56,22 @@ pipeline {
         stage('DeployToDev') {
             steps {
                 sh 'docker-compose -f docker-compose.dev.evv.yaml up -d'
+                sh 'echo command to run smoke test'
+            }
+        }
+        stage('DeployToAuto'){
+            steps {
+                sh 'DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-evv.yaml up -d'
             }
         }
     }
-    post {
+    post{
         always {
-            sh 'echo clean dangling images'
+            sh 'docker container prune -f'
+            sh 'docker rmi $(docker images -f "dangling=true" -q)'
+            sh 'docker system prune -a'
         }
-    }	    
+    }    
 }	
 
 
