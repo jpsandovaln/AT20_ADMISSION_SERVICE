@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   frontend:
-    image: esther12345/admission_service/frontend
+    image: esther12345/admission_service
     ports:
       - 3000:3000
     stdin_open: true
@@ -16,7 +16,7 @@ services:
 
   backend:
     restart: always
-    image: esther12345/admission_service/backend
+    image: esther12345/admission_service
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
