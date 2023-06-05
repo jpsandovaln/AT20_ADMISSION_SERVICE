@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   frontend:
-    image: admission_service/frontend
+    image: admission_service
     ports:
       - 3000:3000
     stdin_open: true
