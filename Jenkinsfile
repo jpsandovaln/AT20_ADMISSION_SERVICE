@@ -56,13 +56,13 @@ pipeline {
         }
         stage('DeployToDev') {
             steps {
-                sh 'export TAG_VERSION=${GIT_COMMIT_HASH} && docker-compose -f docker-compose.dev.evv.yaml up -d'
+                sh 'export TAG_VERSION=${GIT_COMMIT_HASH} && docker-compose -f docker-compose-evv.yaml up -d'
                 sh 'echo command to run smoke test'
             }
         }
         stage('DeployToAuto'){
             steps {
-                sh 'export TAG_VERSION=${GIT_COMMIT_HASH} && DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-evv.yaml up -d'
+                sh 'export TAG_VERSION=${GIT_COMMIT_HASH} DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-evv.yaml up -d'
                 sh 'echo command to run automation tests'
             }
         }
