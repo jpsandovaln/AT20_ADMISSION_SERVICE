@@ -3,7 +3,7 @@ services:
   frontend:
     image: esther12345/admission_service
     ports:
-      - 4000:4000
+      - 3000:3000
     stdin_open: true
     volumes:
       - ./frontend:/usr/src/app
@@ -26,7 +26,7 @@ services:
       - express-mongo
       - react-express
     expose: 
-      - 4000
+      - 3000
   mongo:
     restart: always
     image: mongo
