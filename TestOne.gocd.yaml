@@ -1,0 +1,80 @@
+format_version: 10
+pipelines:
+  TestOne:
+    group: AT20Group
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    environment_variables:
+      GIT_COMMIT_HASH: 1.2
+    secure_variables:
+      SONAR_TOKEN: AES:YnrDUaQNfiG+DS1J7EJ1Rg==:eHEM3Cyt0C+z7Pyt0r1sImVI+Yz2kdEHnQOge1S+M8UUz0/f3mapDe5OCalFlJRl
+      DOCKER_PASS: AES:8xVCUavUfqclI+ZWblL07A==:7Gy3ScVE6iA6/pFTCSO+cw==
+    materials:
+      git-5737a45:
+        git: https://github.com/AT20-DevOps/AT20_ADMISSION_SERVICE.git
+        username: esthervasquez
+        shallow_clone: false
+        auto_update: true
+        branch: task11-evv
+    stages:
+    - Test:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          unit-test:
+            timeout: 0
+            resources:
+            - ubuntu
+            tasks:
+            - script: |
+                npm install
+                npm run test
+            artifacts:
+            - build:
+                source: test/report/report.html
+                destination: html_report
+            - build:
+                source: Dockerfile
+    - code-inspection:
+        fetch_materials: false
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          sonar:
+            timeout: 0
+            resources:
+            - ubuntu
+            tasks:
+            - script: |
+                ls -la
+                /godata/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
+                    -Dsonar.organization=at20-evv \
+                    -Dsonar.projectKey=at20_evv \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=https://sonarcloud.io
+    - PackageandPublish:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          docker:
+            timeout: 0
+            resources:
+            - docker
+            tasks:
+            - script: |
+                docker build -t at20_admission_service .
+                docker login -u esther12345 --password-stdin <<< ${DOCKER_PASS}
+                docker tag at20_admission_service esther12345/admission_service:${GIT_COMMIT_HASH}
+                docker push esther12345/admission_service:${GIT_COMMIT_HASH}
