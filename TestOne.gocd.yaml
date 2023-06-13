@@ -151,62 +151,63 @@ pipelines:
               tasks:
               - script: |
                   echo command to run smoke test
+                  
   CapacityTesting:
-      group: AT20Group
-      label_template: ${COUNT}
-      lock_behavior: none
-      display_order: -1
-      environment_variables:
-        GIT_COMMIT_HASH: 1.2
-        TARGET_HOST: 192.168.0.21
-      materials:
-        TestOne:
-          pipeline: TestOne
-          stage: PackageAndPublish
+    group: AT20Group
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    environment_variables:
+      GIT_COMMIT_HASH: 1.2
+      TARGET_HOST: 192.168.0.21
+    materials:
+      TestOne:
+        pipeline: TestOne
+        stage: PackageAndPublish
     stages:
     - DeployToAUTO:
-          fetch_materials: false
-          keep_artifacts: false
-          clean_workspace: false
-          approval:
-            type: success
-            allow_only_on_success: false
-          jobs:
-            deployToAUTO:
-              timeout: 0
-              resources:
-              - docker
-              tasks:
-              - fetch:
-                  pipeline: TestOne
-                  stage: Test
-                  job: unit-test
-                  source: gitH.txt
-                  is_file: true
-                  run_if: passed
-              - fetch:
-                  pipeline: TestOne
-                  stage: PackageAndPublish
-                  job: docker
-                  source: docker-compose-evv.yaml
-                  is_file: true
-                  run_if: passed
-              - script: |
-                  export GIT_COMMIT_HASH=$(cat gitH.txt)
-                  export TAG_VERSION=${GIT_COMMIT_HASH} 
-                  DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose.gb.yaml up -d
-    - CapactyTest:
-          fetch_materials: false
-          keep_artifacts: false
-          clean_workspace: false
-          approval:
-            type: success
-            allow_only_on_success: false
-          jobs:
-            test:
-              timeout: 0
-              resources:
-              - docker
-              tasks:
-              - script: |
-                  echo command capacity testing here
+        fetch_materials: false
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          deployToAUTO:
+            timeout: 0
+            resources:
+            - docker
+            tasks:
+            - fetch:
+                pipeline: TestOne
+                stage: Test
+                job: unit-test
+                source: gitH.txt
+                is_file: true
+                run_if: passed
+            - fetch:
+                pipeline: TestOne
+                stage: PackageAndPublish
+                job: docker
+                source: docker-compose-evv.yaml
+                is_file: true
+                run_if: passed
+            - script: |
+                export GIT_COMMIT_HASH=$(cat gitH.txt)
+                export TAG_VERSION=${GIT_COMMIT_HASH} 
+                DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-evv.yaml up -d
+    - CapacityTest:
+        fetch_materials: false
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          test:
+            timeout: 0
+            resources:
+            - docker
+            tasks:
+            - script: |
+                echo command capacity testing here
