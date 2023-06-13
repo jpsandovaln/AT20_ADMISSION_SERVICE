@@ -86,7 +86,7 @@ pipelines:
                 job: unit-test
                 run_if: passed
             - script: |
-                export GIT_COMMIT_HASH=$(cat gitHash.txt)
+                export GIT_COMMIT_HASH=$(cat gitH.txt)
                 docker build -t at20_admission_service .
                 docker login -u esther12345 --password-stdin <<< ${DOCKER_PASS}
                 docker tag at20_admission_service esther12345/admission_service:${GIT_COMMIT_HASH}
