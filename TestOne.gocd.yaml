@@ -46,6 +46,7 @@ pipelines:
             - build:
                 source: gitH.txt
                 destination: .
+    - code_inspection:
         fetch_materials: false
         keep_artifacts: false
         clean_workspace: false
