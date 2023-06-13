@@ -182,7 +182,7 @@ pipelines:
                   pipeline: TestOne
                   stage: Test
                   job: unit-test
-                  source: gitHash.txt
+                  source: gitH.txt
                   is_file: true
                   run_if: passed
               - fetch:
