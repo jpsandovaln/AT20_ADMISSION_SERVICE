@@ -42,9 +42,10 @@ pipelines:
                 destination: html_report
             - build:
                 source: Dockerfile
+                destination: .
             - build:
                 source: gitH.txt
-    - code-inspection:
+                destination: .
         fetch_materials: false
         keep_artifacts: false
         clean_workspace: false
