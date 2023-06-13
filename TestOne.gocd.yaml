@@ -16,7 +16,7 @@ pipelines:
         username: esthervasquez
         shallow_clone: false
         auto_update: true
-        branch: task14-evv
+        branch: task12-evv
     stages:
     - Test:
         fetch_materials: true
@@ -28,12 +28,10 @@ pipelines:
         jobs:
           unit-test:
             timeout: 0
-            resources :
+            resources:
             - ubuntu
             tasks:
             - script: |
-                git rev-parse --short HEAD > gitH.txt
-                export GIT_COMMIT_HASH=$(cat gitH.txt)
                 npm install
                 npm run test
             artifacts:
@@ -44,9 +42,7 @@ pipelines:
                 source: Dockerfile
             - build:
                 source: docker-compose-evv.yaml
-            - build:
-                source: gitH.txt
-    - code_inspection:
+    - code-inspection:
         fetch_materials: false
         keep_artifacts: false
         clean_workspace: false
@@ -56,17 +52,18 @@ pipelines:
         jobs:
           sonar:
             timeout: 0
-            resources :
+            resources:
             - ubuntu
             tasks:
             - script: |
+                ls -la
                 /godata/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
                     -Dsonar.organization=at20-evv \
                     -Dsonar.projectKey=at20_evv \
                     -Dsonar.sources=. \
                     -Dsonar.host.url=https://sonarcloud.io
     - PackageandPublish:
-        fetch_materials: false
+        fetch_materials: true
         keep_artifacts: false
         clean_workspace: false
         approval:
@@ -75,24 +72,18 @@ pipelines:
         jobs:
           docker:
             timeout: 0
-            resources :
+            resources:
             - docker
             tasks:
-            - fetch:
-                is_file: false
-                source: ./
-                stage: Test
-                job: unit-test
-                run_if: passed
             - script: |
-                export GIT_COMMIT_HASH=$(cat gitCommit.txt)
                 docker build -t at20_admission_service .
                 docker login -u esther12345 --password-stdin <<< ${DOCKER_PASS}
                 docker tag at20_admission_service esther12345/admission_service:${GIT_COMMIT_HASH}
                 docker push esther12345/admission_service:${GIT_COMMIT_HASH}
             artifacts:
-              - build:
-                  source: docker-compose-evv.yaml
+            - build:
+                source: docker-compose-evv.yaml
+
   Acceptance:
     group: AT20Group
     label_template: ${COUNT}
@@ -100,7 +91,6 @@ pipelines:
     display_order: -1
     environment_variables:
       GIT_COMMIT_HASH: 1.2
-      TARGET_HOST: 192.168.0.19
     materials:
       TestOne:
         pipeline: TestOne
@@ -116,16 +106,9 @@ pipelines:
         jobs:
           deployToDev:
             timeout: 0
-            resources :
+            resources:
             - docker
             tasks:
-            - fetch:
-                pipeline: TestOne
-                stage: Test
-                job: unit-test
-                source: gitH.txt
-                is_file: true
-                run_if: passed
             - fetch: 
                 pipeline: TestOne
                 stage: PackageAndPublish
@@ -133,50 +116,22 @@ pipelines:
                 source: docker-compose-evv.yaml
                 is_file: true
                 run_if: passed
-            - fetch: 
-                pipeline: TestOne
-                stage: PackageAndPublish
-                job: docker
-                source: .env
-                is_file: true
-                run_if: passed
             - script: |
-                export GIT_COMMIT_HASH=$(cat gitH.txt)
-                export TAG_VERSION=${GIT_COMMIT_HASH} && docker-compose -f docker-compose-evv.yaml up -d
+                echo deploy here
+                ls -la
+                export TAG_VERSION="${GIT_COMMIT_HASH}" && docker-compose -f docker-compose-evv.yaml up -d
     - Smoke:
-        fetch_materials: false
-        keep_artifacts: false
-        clean_workspace: false
-        approval:
-          type: success
-          allow_only_on_success: false
-        jobs:
-          deployToDev:
-            timeout: 0
-            resources :
-            - docker
-            tasks:
-            - fetch:
-                pipeline: TestOne
-                stage: Test
-                job: unit-test
-                source: gitH.txt
-                is_file: true
-                run_if: passed
-            - fetch: 
-                pipeline: TestOne
-                stage: PackageAndPublish
-                job: docker
-                source: docker-compose-evv.yaml
-                is_file: true
-                run_if: passed
-            - fetch: 
-                pipeline: TestOne
-                stage: PackageAndPublish
-                job: docker
-                is_file: true
-                run_if: passed
-            - script: |
-                export GIT_COMMIT_HASH=$(cat gitH.txt)
-                export TAG_VERSION=${GIT_COMMIT_HASH}
-                DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-evv.yaml up -d
+          fetch_materials: false
+          keep_artifacts: false
+          clean_workspace: false
+          approval:
+            type: success
+            allow_only_on_success: false
+          jobs:
+            test:
+              timeout: 0
+              resources:
+              - docker
+              tasks:
+              - script: |
+                  echo command to run smoke test 
