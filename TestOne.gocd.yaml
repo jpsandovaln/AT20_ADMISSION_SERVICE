@@ -193,7 +193,8 @@ pipelines:
                   run_if: passed
               - script: |
                   export GIT_COMMIT_HASH=$(cat gitH.txt)
-                  DOCKER_HOST=ssh://$GIT_COMMIT_HASH docker-compose -f docker-compose.gb.yaml up -d
+                  export TAG_VERSION=${GIT_COMMIT_HASH} 
+                  DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose.gb.yaml up -d
       - CapactyTest:
         fetch_materials: false
         keep_artifacts: false
