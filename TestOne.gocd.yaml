@@ -33,7 +33,6 @@ pipelines:
             tasks:
             - script: |
                 git rev-parse --short HEAD > gitH.txt
-                export GIT_COMMIT_HASH=$(cat gitH.txt)
                 npm install
                 npm run test
             artifacts:
@@ -194,5 +193,19 @@ pipelines:
                   run_if: passed
               - script: |
                   export GIT_COMMIT_HASH=$(cat gitH.txt)
-                  export TAG_VERSION=${GIT_COMMIT_HASH} 
-                  DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-evv.yaml up -d
+                  DOCKER_HOST=ssh://${GIT_COMMIT_HASH} docker-compose -f docker-compose-evv.yaml up -d
+      -CapactyTest:
+        fetch_materials: false
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          test:
+            timeout: 0
+            resources:
+            - docker
+            tasks:
+            - script: |
+                echo command capacity testing here
