@@ -159,7 +159,7 @@ pipelines:
       display_order: -1
       environment_variables:
         GIT_COMMIT_HASH: 1.2
-        TARGET_HOST: 192.168.0.19
+        TARGET_HOST: 192.168.0.21
       materials:
         TestOne:
           pipeline: TestOne
