@@ -161,7 +161,7 @@ pipelines:
         GIT_COMMIT_HASH: 1.2
         TARGET_HOST: 192.168.0.19
       materials:
-        Test1:
+        TestOne:
           pipeline: TestOne
           stage: PackageAndPublish
       stages:
