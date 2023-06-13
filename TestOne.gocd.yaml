@@ -28,7 +28,7 @@ pipelines:
         jobs:
           unit-test:
             timeout: 0
-            resources:
+            resources :
             - ubuntu
             tasks:
             - script: |
@@ -42,10 +42,10 @@ pipelines:
                 destination: html_report
             - build:
                 source: Dockerfile
-                destination: .
+            - build:
+                source: docker-compose-evv.yaml
             - build:
                 source: gitH.txt
-                destination: .
     - code_inspection:
         fetch_materials: false
         keep_artifacts: false
@@ -56,11 +56,10 @@ pipelines:
         jobs:
           sonar:
             timeout: 0
-            resources:
+            resources :
             - ubuntu
             tasks:
             - script: |
-                ls -la
                 /godata/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
                     -Dsonar.organization=at20-evv \
                     -Dsonar.projectKey=at20_evv \
@@ -76,7 +75,7 @@ pipelines:
         jobs:
           docker:
             timeout: 0
-            resources:
+            resources :
             - docker
             tasks:
             - fetch:
@@ -86,14 +85,14 @@ pipelines:
                 job: unit-test
                 run_if: passed
             - script: |
-                export GIT_COMMIT_HASH=$(cat gitH.txt)
+                export GIT_COMMIT_HASH=$(cat gitCommit.txt)
                 docker build -t at20_admission_service .
                 docker login -u esther12345 --password-stdin <<< ${DOCKER_PASS}
                 docker tag at20_admission_service esther12345/admission_service:${GIT_COMMIT_HASH}
                 docker push esther12345/admission_service:${GIT_COMMIT_HASH}
-              artifacts:
-            - build:
-                source: docker-compose-evv.yaml
+            artifacts:
+              - build:
+                  source: docker-compose-evv.yaml
   Acceptance:
     group: AT20Group
     label_template: ${COUNT}
@@ -117,7 +116,7 @@ pipelines:
         jobs:
           deployToDev:
             timeout: 0
-            resources:
+            resources :
             - docker
             tasks:
             - fetch:
@@ -127,11 +126,18 @@ pipelines:
                 source: gitH.txt
                 is_file: true
                 run_if: passed
-            - fetch:
+            - fetch: 
                 pipeline: TestOne
                 stage: PackageAndPublish
                 job: docker
                 source: docker-compose-evv.yaml
+                is_file: true
+                run_if: passed
+            - fetch: 
+                pipeline: TestOne
+                stage: PackageAndPublish
+                job: docker
+                source: .env
                 is_file: true
                 run_if: passed
             - script: |
