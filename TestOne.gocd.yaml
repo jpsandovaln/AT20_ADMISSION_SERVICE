@@ -77,6 +77,12 @@ pipelines:
             resources:
             - docker
             tasks:
+            - fetch:
+                is_file: false
+                source: ./
+                stage: Test
+                job: unit-test
+                run_if: passed
             - script: |
                 export GIT_COMMIT_HASH=$(cat gitH.txt)
                 docker build -t at20_admission_service .
@@ -93,11 +99,11 @@ pipelines:
     display_order: -1
     environment_variables:
       GIT_COMMIT_HASH: 1.2
+      TARGET_HOST: 192.168.0.19
     materials:
       TestOne:
         pipeline: TestOne
         stage: PackageAndPublish
-        TARGET_HOST: 192.168.0.19
     stages:
     - DeployToDev:
         fetch_materials: false
@@ -144,7 +150,7 @@ pipelines:
             tasks:
             - fetch:
                 pipeline: TestOne
-                stage: TestOne
+                stage: Test
                 job: unit-test
                 source: gitH.txt
                 is_file: true
