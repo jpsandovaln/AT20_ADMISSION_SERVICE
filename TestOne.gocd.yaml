@@ -163,8 +163,8 @@ pipelines:
         TestOne:
           pipeline: TestOne
           stage: PackageAndPublish
-      stages:
-      - DeployToAUTO:
+    stages:
+    - DeployToAUTO:
           fetch_materials: false
           keep_artifacts: false
           clean_workspace: false
@@ -195,18 +195,18 @@ pipelines:
                   export GIT_COMMIT_HASH=$(cat gitH.txt)
                   export TAG_VERSION=${GIT_COMMIT_HASH} 
                   DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose.gb.yaml up -d
-      - CapactyTest:
-        fetch_materials: false
-        keep_artifacts: false
-        clean_workspace: false
-        approval:
-          type: success
-          allow_only_on_success: false
-        jobs:
-          test:
-            timeout: 0
-            resources:
-            - docker
-            tasks:
-            - script: |
-                echo command capacity testing here
+    - CapactyTest:
+          fetch_materials: false
+          keep_artifacts: false
+          clean_workspace: false
+          approval:
+            type: success
+            allow_only_on_success: false
+          jobs:
+            test:
+              timeout: 0
+              resources:
+              - docker
+              tasks:
+              - script: |
+                  echo command capacity testing here
