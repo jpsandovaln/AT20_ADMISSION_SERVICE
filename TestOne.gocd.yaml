@@ -65,7 +65,7 @@ pipelines:
                     -Dsonar.projectKey=at20_evv \
                     -Dsonar.sources=. \
                     -Dsonar.host.url=https://sonarcloud.io
-    - PackageandPublish:
+    - PackageAndPublish:
         fetch_materials: false
         keep_artifacts: false
         clean_workspace: false
@@ -135,6 +135,11 @@ pipelines:
                 run_if: passed
             - script: |
                 export TAG_VERSION=$(cat gitHash.txt) && docker-compose -f docker-compose-evv.yaml up -d
+            artifacts:
+            - build:
+                source: gitHash.txt
+            - build:
+                source: docker-compose-evv.yaml
     - Smoke:
         fetch_materials: false
         keep_artifacts: false
