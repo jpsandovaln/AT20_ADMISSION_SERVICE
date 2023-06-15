@@ -16,7 +16,7 @@ pipelines:
         username: esthervasquez
         shallow_clone: false
         auto_update: true
-        branch: task14-evv
+        branch: task15-evv
     stages:
     - Test:
         fetch_materials: true
@@ -160,9 +160,9 @@ pipelines:
       GIT_COMMIT_HASH: 1.2
       TARGET_HOST: 192.168.0.21
     materials:
-      TestOne:
-        pipeline: TestOne
-        stage: PackageAndPublish
+      Acceptance:
+        pipeline: Acceptance
+        stage: Smoke
     stages:
     - DeployToAUTO:
         fetch_materials: false
@@ -178,17 +178,24 @@ pipelines:
             - docker
             tasks:
             - fetch:
-                pipeline: TestOne
-                stage: Test
-                job: unit-test
+                pipeline: Acceptance
+                stage: DeployToDev
+                job: deployToDev
                 source: gitH.txt
                 is_file: true
                 run_if: passed
             - fetch:
-                pipeline: TestOne
-                stage: PackageAndPublish
-                job: docker
+                pipeline: Acceptance
+                stage: DeployToDev
+                job: deployToDev
                 source: docker-compose-evv.yaml
+                is_file: true
+                run_if: passed
+            - fetch:
+                pipeline: Acceptance
+                stage: Smoke
+                job: test
+                source: result.txt
                 is_file: true
                 run_if: passed
             - script: |
