@@ -136,20 +136,20 @@ pipelines:
             - script: |
                 export TAG_VERSION=$(cat gitH.txt) && docker-compose -f docker-compose-evv.yaml up -d
     - Smoke:
-          fetch_materials: false
-          keep_artifacts: false
-          clean_workspace: false
-          approval:
-            type: success
-            allow_only_on_success: false
-          jobs:
-            test:
-              timeout: 0
-              resources:
-              - docker
-              tasks:
-              - script: |
-                  echo command to run smoke test
+        fetch_materials: false
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          test:
+            timeout: 0
+            resources:
+            - docker
+            tasks:
+            - script: |
+                echo command to run smoke test
 
   CapacityTesting:
     group: AT20Group
