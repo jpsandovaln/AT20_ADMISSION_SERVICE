@@ -134,8 +134,7 @@ pipelines:
                 is_file: true
                 run_if: passed
             - script: |
-                export GIT_COMMIT_HASH=$(cat gitHash.txt)
-                export TAG_VERSION=${GIT_COMMIT_HASH} && docker-compose -f docker-compose-evv.yaml up -d 
+                export TAG_VERSION=$(cat gitH.txt) && docker-compose -f docker-compose-evv.yaml up -d
             artifacts:
             - build:
                 source: gitHash.txt
@@ -198,8 +197,7 @@ pipelines:
                 is_file: true
                 run_if: passed
             - script: |
-                export GIT_COMMIT_HASH=$(cat gitHash.txt)
-                export TAG_VERSION=${GIT_COMMIT_HASH} 
+                export TAG_VERSION=$(cat gitH.txt)
                 DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-evv.yaml up -d
     - CapacityTest:
         fetch_materials: false
