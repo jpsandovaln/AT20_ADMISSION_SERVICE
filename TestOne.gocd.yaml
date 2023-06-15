@@ -191,13 +191,6 @@ pipelines:
                 source: docker-compose-evv.yaml
                 is_file: true
                 run_if: passed
-            - fetch:
-                pipeline: Acceptance
-                stage: Smoke
-                job: test
-                source: result.txt
-                is_file: true
-                run_if: passed
             - script: |
                 export TAG_VERSION=$(cat gitH.txt)
                 DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-evv.yaml up -d
